@@ -1,13 +1,12 @@
 import React from 'react';
 import Header from '../components/Header';
 
-function Foods() {
+function Explorer() {
   return (
-    <section>
+    <h1>
       <Header />
-      FOODS
-    </section>
-  );
+      Explorer
+    </h1>);
 }
 
-export default Foods;
+export default Explorer;

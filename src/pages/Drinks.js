@@ -1,13 +1,13 @@
 import React from 'react';
 import Header from '../components/Header';
 
-function Foods() {
+function Drinks() {
   return (
     <section>
       <Header />
-      FOODS
+      Drinks
     </section>
   );
 }
 
-export default Foods;
+export default Drinks;
