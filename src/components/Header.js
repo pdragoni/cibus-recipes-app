@@ -88,13 +88,47 @@ function Header() {
         isSearching
           && (
             <div>
-              <input onChange={ handleQuery } data-testid="search-input" type="text" placeholder="Search here" />
-              <input onChange={ handleRadio } id="ingredients" type="radio" data-testid="name-search-radio" name="categories" />
-              <label htmlFor="ingredients">Ingredients</label>
-              <input onChange={ handleRadio } id="name" type="radio" data-testid="ingredient-search-radio" name="categories" />
-              <label htmlFor="name">Name</label>
-              <input onChange={ handleRadio } id="first-letter" type="radio" data-testid="first-letter-search-radio" name="categories" />
-              <label htmlFor="first-letter">First letter</label>
+              <input
+                onChange={ handleQuery }
+                data-testid="search-input"
+                type="text"
+                placeholder="Search here"
+              />
+              <label htmlFor="ingredients">
+                Ingredients
+                <input
+                  onChange={ handleRadio }
+                  id="ingredients"
+                  type="radio"
+                  data-testid="name-search-radio"
+                  name="categories"
+                />
+              </label>
+              <label
+                htmlFor="name"
+              >
+                Name
+                <input
+                  onChange={ handleRadio }
+                  id="name"
+                  type="radio"
+                  data-testid="ingredient-search-radio"
+                  name="categories"
+                />
+
+              </label>
+              <label
+                htmlFor="first-letter"
+              >
+                First letter
+                <input
+                  onChange={ handleRadio }
+                  id="first-letter"
+                  type="radio"
+                  data-testid="first-letter-search-radio"
+                  name="categories"
+                />
+              </label>
               <button
                 type="button"
                 data-testid="exec-search-btn"
