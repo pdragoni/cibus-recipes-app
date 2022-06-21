@@ -39,10 +39,10 @@ function Header() {
   const handleSearch = () => {
     const INGREDIENTS_URL = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${query}`;
     const NAME_URL = `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`;
-    const FIRST_LETTER_URL = `https://www.themealdb.com/api/json/v1/1/filter.php?f=${query}`;
+    const FIRST_LETTER_URL = `https://www.themealdb.com/api/json/v1/1/search.php?f=${query}`;
     switch (radio) {
     case 'ingredients':
-      console.log('INGREDIENTS_URL');
+      console.log(INGREDIENTS_URL);
       return setURL(INGREDIENTS_URL);
     case 'name':
       console.log(NAME_URL);
