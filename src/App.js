@@ -16,9 +16,9 @@ import FavoriteRecipes from './pages/FavoriteRecipes';
 
 function App() {
   return (
-    <Provider>
-      <BrowserRouter>
-        <Switch>
+    <BrowserRouter>
+      <Switch>
+        <Provider>
           <Route exact path="/" component={ Login } />
           <Route exact path="/foods" component={ Foods } />
           <Route exact path="/drinks" component={ Drinks } />
@@ -47,9 +47,9 @@ function App() {
           <Route exact path="/profile" component={ Profile } />
           <Route exact path="/done-recipes" component={ DoneRecipes } />
           <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
-        </Switch>
-      </BrowserRouter>
-    </Provider>
+        </Provider>
+      </Switch>
+    </BrowserRouter>
   );
 }
 
