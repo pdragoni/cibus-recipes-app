@@ -13,12 +13,6 @@ function Header() {
     setUsuario(email);
   }, []);
 
-  // const clickToProfile = () => {
-  //   const history = useHistory;
-  //   console.log('Profile');
-  //   history.push('/profile');
-  // };
-
   const clickToSearch = () => {
     console.log('search');
     if (!isSearching) {
@@ -29,16 +23,23 @@ function Header() {
   };
 
   return (
-    <div>
-      <button
-        name="btnProfile"
-        type="button"
-        data-testid="profile-top-btn"
-        onClick={ () => history.push('/profile') }
-      >
-        <img src={ profileIcon } alt="foto-de-perfil" />
-      </button>
-      <h2 data-testid="page-title">{ usuario }</h2>
+    <header>
+      <h3>Receitas Grupo 14</h3>
+      <label htmlFor="btnProfile">
+        <button
+          name="btnProfile"
+          type="button"
+          id="btnProfile"
+          data-testid="profile-top-btn"
+          onClick={ () => history.push('/profile') }
+        >
+          <img src={ profileIcon } alt="foto-de-perfil" />
+        </button>
+        <span data-testid="page-title">
+          { usuario }
+        </span>
+      </label>
+      <br />
       <button
         name="btnSearch"
         type="button"
@@ -49,9 +50,19 @@ function Header() {
       </button>
       {
         isSearching
-          && <input type="text" placeholder="Insert Your Search" />
+          && (
+            <div>
+              <input data-testid="search-input" type="text" placeholder="Search here" />
+              <select data-testid="ingredient-search-radio">
+                <option data-testid="name-search-radio">Name</option>
+                <option data-testid="ingredient-search-radio">Ingredient</option>
+                <option data-testid="first-letter-search-radio">First-Letter</option>
+              </select>
+              <button type="button" data-testid="exec-search-btn">Go!</button>
+            </div>)
       }
-    </div>
+      <br />
+    </header>
   );
 }
 
