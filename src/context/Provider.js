@@ -3,15 +3,21 @@ import PropTypes from 'prop-types';
 import Context from './Context';
 
 function Provider({ children }) {
+  const [pageTitle, setPageTitle] = useState('');
+  const [searchPageButton, setSearchPageButton] = useState(false);
   const [URL, setURL] = useState('');
 
-  const contentProvided = {
+  const contextValue = {
+    setPageTitle,
+    pageTitle,
+    searchPageButton,
+    setSearchPageButton,
     setURL,
     URL,
   };
 
   return (
-    <Context.Provider value={ contentProvided }>
+    <Context.Provider value={ contextValue }>
       {children}
     </Context.Provider>
   );

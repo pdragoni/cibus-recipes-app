@@ -9,14 +9,18 @@ function Header() {
 
   const [isSearching, setIsSearching] = useState(false);
   const [usuario, setUsuario] = useState('');
+  const { pageTitle, searchPageButton } = useContext(Context);
   const [query, setQuery] = useState('');
   const [radio, setRadio] = useState('');
   // const [URL, setURL] = useState('');
   const history = useHistory();
 
   useEffect(() => {
-    const { email } = JSON.parse(localStorage.getItem('user'));
-    setUsuario(email);
+    const email = JSON.parse(localStorage.getItem('user'));
+
+    if (email) {
+      setUsuario(email.email);
+    }
   }, []);
 
   const clickToSearch = () => {
@@ -68,22 +72,28 @@ function Header() {
           id="btnProfile"
           data-testid="profile-top-btn"
           onClick={ () => history.push('/profile') }
+          src={ profileIcon }
         >
           <img src={ profileIcon } alt="foto-de-perfil" />
         </button>
         <span data-testid="page-title">
-          { usuario }
+          { pageTitle }
+        </span>
+        <span>
+          {usuario}
         </span>
       </label>
       <br />
-      <button
-        name="btnSearch"
-        type="button"
-        data-testid="search-top-btn"
-        onClick={ clickToSearch }
-      >
-        <img src={ searchIcon } alt="imagem-de-busca" />
-      </button>
+      { searchPageButton && (
+        <button
+          name="btnSearch"
+          type="button"
+          data-testid="search-top-btn"
+          onClick={ clickToSearch }
+          src={ searchIcon }
+        >
+          <img src={ searchIcon } alt="imagem-de-busca" />
+        </button>)}
       {
         isSearching
           && (
