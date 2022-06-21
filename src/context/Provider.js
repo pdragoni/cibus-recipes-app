@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Context from './Context';
 
 function Provider({ children }) {
+  const [URL, setURL] = useState('');
+
+  const contentProvided = {
+    setURL,
+    URL,
+  };
+
   return (
-    <Context.Provider>
+    <Context.Provider value={ contentProvided }>
       {children}
     </Context.Provider>
   );
