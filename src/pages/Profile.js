@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
+import Context from '../context/Context';
 
 function Profile() {
+  const title = 'Profile';
+  const { setPageTitle } = useContext(Context);
+
+  useEffect(() => {
+    setPageTitle(title);
+  }, []);
+
   return (
     <div>
       <Header />
@@ -22,6 +31,7 @@ function Profile() {
           Bebidas
         </button>
       </body>
+      <Footer />
     </div>);
 }
 
