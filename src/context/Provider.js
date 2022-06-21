@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Context from './Context';
 
 function Provider({ children }) {
+  const [foods, setFoods] = useState('{}');
+  const [drinks, setDrinks] = useState('{}');
+  // const [radio, setRadio] = useState('');
+  const [URL, setURL] = useState('');
+
+  const contentProvided = {
+    drinks,
+    foods,
+    setURL,
+  };
+
   return (
-    <Context.Provider>
+    <Context.Provider value={ contentProvided }>
       {children}
     </Context.Provider>
   );
