@@ -1,9 +1,10 @@
 import React, { useEffect, useContext } from 'react';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import Context from '../context/Context';
 
-function DoneRecipes() {
-  const title = 'DoneRecipes';
+function DrinksDetail() {
+  const title = 'DrinksDetail';
   const { setPageTitle, setSearchPageButton } = useContext(Context);
 
   useEffect(() => {
@@ -14,7 +15,10 @@ function DoneRecipes() {
   return (
     <section>
       <Header />
-    </section>);
+      DrinksDetail
+      <Footer />
+    </section>
+  );
 }
 
-export default DoneRecipes;
+export default DrinksDetail;

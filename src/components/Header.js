@@ -12,7 +12,6 @@ function Header() {
   const { pageTitle, searchPageButton } = useContext(Context);
   const [query, setQuery] = useState('lemon');
   const [radio, setRadio] = useState('ingredients');
-  // const [URL, setURL] = useState('');
   const history = useHistory();
 
   useEffect(() => {
@@ -32,7 +31,6 @@ function Header() {
   };
 
   const clickToSearch = () => {
-    console.log('search');
     if (!isSearching) {
       setIsSearching(true);
     } else {
@@ -46,16 +44,16 @@ function Header() {
     const FIRST_LETTER_URL = `https://www.themealdb.com/api/json/v1/1/search.php?f=${query}`;
     switch (radio) {
     case 'ingredients':
-      console.log(INGREDIENTS_URL);
+      // console.log(INGREDIENTS_URL);
       return setURL(INGREDIENTS_URL);
     case 'name':
-      console.log(NAME_URL);
+      // console.log(NAME_URL);
       return setURL(NAME_URL);
     case 'first-letter':
       if (query.length !== 1) {
         return global.alert('Your search must have only 1 (one) character');
       }
-      console.log(FIRST_LETTER_URL);
+      // console.log(FIRST_LETTER_URL);
       return setURL(FIRST_LETTER_URL);
     default:
       return undefined;
@@ -68,16 +66,16 @@ function Header() {
     const FIRST_LETTER_URL = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${query}`;
     switch (radio) {
     case 'ingredients':
-      console.log(INGREDIENTS_URL);
+      // console.log(INGREDIENTS_URL);
       return setURL(INGREDIENTS_URL);
     case 'name':
-      console.log(NAME_URL);
+      // console.log(NAME_URL);
       return setURL(NAME_URL);
     case 'first-letter':
-      if (query.length > 1) {
+      if (query.length !== 1) {
         return global.alert('Your search must have only 1 (one) character');
       }
-      console.log(FIRST_LETTER_URL);
+      // console.log(FIRST_LETTER_URL);
       return setURL(FIRST_LETTER_URL);
     default:
       return undefined;
@@ -85,8 +83,8 @@ function Header() {
   };
 
   const handleSearch = () => {
-    if (pageTitle !== 'Foods') searchDrinks();
-    else searchMeals();
+    if (pageTitle !== 'Drinks') searchMeals();
+    else searchDrinks();
   };
 
   return (
@@ -102,7 +100,6 @@ function Header() {
           id="btnProfile"
           data-testid="profile-top-btn"
           onClick={ () => history.push('/profile') }
-          src={ profileIcon }
         >
           <img src={ profileIcon } alt="foto-de-perfil" />
         </button>
