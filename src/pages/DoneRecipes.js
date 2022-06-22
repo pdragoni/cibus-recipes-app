@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import Context from '../context/Context';
 
 function DoneRecipes() {
-  const title = 'Done Recipes';
+  const title = 'DoneRecipes';
   const { setPageTitle, setSearchPageButton } = useContext(Context);
 
   useEffect(() => {

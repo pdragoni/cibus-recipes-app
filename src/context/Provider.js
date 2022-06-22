@@ -12,7 +12,7 @@ function Provider({ children }) {
       try {
         const response = await fetch(URL);
         const responseJson = await response.json();
-        console.log(responseJson);
+        console.log(responseJson); // responseJson.meals //.drinks
       } catch (error) {
         // console.log(error);
       }
