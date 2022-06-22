@@ -6,13 +6,19 @@ function Provider({ children }) {
   const [pageTitle, setPageTitle] = useState('');
   const [searchPageButton, setSearchPageButton] = useState(false);
   const [URL, setURL] = useState('');
+  // const [data, setData] = useState([]);
+  const [results, setResults] = useState([]);
 
   useEffect(() => {
     const fetchResults = async () => {
       try {
         const response = await fetch(URL);
         const responseJson = await response.json();
-        console.log(responseJson); // responseJson.meals //.drinks
+        // console.log(responseJson);
+        // setData(responseJson); // responseJson.meals //.drinks
+        const array = Object.values(responseJson)[0];
+        // console.log(array);
+        setResults(array);
       } catch (error) {
         // console.log(error);
       }
@@ -21,12 +27,13 @@ function Provider({ children }) {
   }, [URL]);
 
   const contextValue = {
-    setPageTitle,
     pageTitle,
     searchPageButton,
+    URL,
+    results,
+    setPageTitle,
     setSearchPageButton,
     setURL,
-    URL,
   };
 
   return (

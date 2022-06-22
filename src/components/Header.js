@@ -53,7 +53,7 @@ function Header() {
       if (query.length !== 1) {
         return global.alert('Your search must have only 1 (one) character');
       }
-      console.log(FIRST_LETTER_URL);
+      // console.log(FIRST_LETTER_URL);
       return setURL(FIRST_LETTER_URL);
     default:
       return undefined;
@@ -72,10 +72,10 @@ function Header() {
       // console.log(NAME_URL);
       return setURL(NAME_URL);
     case 'first-letter':
-      if (query.length > 1) {
+      if (query.length !== 1) {
         return global.alert('Your search must have only 1 (one) character');
       }
-      console.log(FIRST_LETTER_URL);
+      // console.log(FIRST_LETTER_URL);
       return setURL(FIRST_LETTER_URL);
     default:
       return undefined;
