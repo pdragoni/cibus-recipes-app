@@ -5,10 +5,11 @@ import Context from '../context/Context';
 
 function Profile() {
   const title = 'Profile';
-  const { setPageTitle } = useContext(Context);
+  const { setPageTitle, setSearchPageButton } = useContext(Context);
 
   useEffect(() => {
     setPageTitle(title);
+    setSearchPageButton(false);
   }, []);
 
   return (

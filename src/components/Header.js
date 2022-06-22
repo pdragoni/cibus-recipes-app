@@ -83,9 +83,10 @@ function Header() {
       return undefined;
     }
   };
+
   const handleSearch = () => {
-    if (pageTitle === 'Foods') searchMeals();
-    else if (pageTitle === 'Drinks') searchDrinks();
+    if (pageTitle !== 'Foods') searchDrinks();
+    else searchMeals();
   };
 
   return (
