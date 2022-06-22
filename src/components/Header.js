@@ -116,6 +116,7 @@ function Header() {
           type="button"
           data-testid="search-top-btn"
           onClick={ clickToSearch }
+          src={ searchIcon }
         >
           <img src={ searchIcon } alt="imagem-de-busca" />
         </button>)}
