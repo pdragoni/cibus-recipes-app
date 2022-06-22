@@ -10,8 +10,8 @@ function Header() {
   const [isSearching, setIsSearching] = useState(false);
   const [usuario, setUsuario] = useState('');
   const { pageTitle, searchPageButton } = useContext(Context);
-  const [query, setQuery] = useState('');
-  const [radio, setRadio] = useState('');
+  const [query, setQuery] = useState('lemon');
+  const [radio, setRadio] = useState('ingredients');
   // const [URL, setURL] = useState('');
   const history = useHistory();
 
@@ -23,6 +23,14 @@ function Header() {
     }
   }, []);
 
+  const handleQuery = ({ target }) => {
+    setQuery(target.value.toLowerCase());
+  };
+
+  const handleRadio = ({ target }) => {
+    setRadio(target.id);
+  };
+
   const clickToSearch = () => {
     console.log('search');
     if (!isSearching) {
@@ -32,18 +40,32 @@ function Header() {
     }
   };
 
-  const handleQuery = ({ target }) => {
-    setQuery(target.value);
-  };
-
-  const handleRadio = ({ target }) => {
-    setRadio(target.id);
-  };
-
-  const handleSearch = () => {
+  const searchMeals = () => {
     const INGREDIENTS_URL = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${query}`;
     const NAME_URL = `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`;
     const FIRST_LETTER_URL = `https://www.themealdb.com/api/json/v1/1/search.php?f=${query}`;
+    switch (radio) {
+    case 'ingredients':
+      console.log(INGREDIENTS_URL);
+      return setURL(INGREDIENTS_URL);
+    case 'name':
+      console.log(NAME_URL);
+      return setURL(NAME_URL);
+    case 'first-letter':
+      if (query.length !== 1) {
+        return global.alert('Your search must have only 1 (one) character');
+      }
+      console.log(FIRST_LETTER_URL);
+      return setURL(FIRST_LETTER_URL);
+    default:
+      return undefined;
+    }
+  };
+
+  const searchDrinks = () => {
+    const INGREDIENTS_URL = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${query}`;
+    const NAME_URL = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}`;
+    const FIRST_LETTER_URL = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${query}`;
     switch (radio) {
     case 'ingredients':
       console.log(INGREDIENTS_URL);
@@ -61,10 +83,17 @@ function Header() {
       return undefined;
     }
   };
+  const handleSearch = () => {
+    if (pageTitle === 'Foods') searchMeals();
+    else if (pageTitle === 'Drinks') searchDrinks();
+  };
 
   return (
     <header>
       <h3>Receitas Grupo 14</h3>
+      <span data-testid="page-title">
+        { pageTitle }
+      </span>
       <label htmlFor="btnProfile">
         <button
           name="btnProfile"
@@ -76,9 +105,6 @@ function Header() {
         >
           <img src={ profileIcon } alt="foto-de-perfil" />
         </button>
-        <span data-testid="page-title">
-          { pageTitle }
-        </span>
         <span>
           {usuario}
         </span>
@@ -110,7 +136,7 @@ function Header() {
                   onChange={ handleRadio }
                   id="ingredients"
                   type="radio"
-                  data-testid="name-search-radio"
+                  data-testid="ingredient-search-radio"
                   name="categories"
                 />
               </label>
@@ -122,7 +148,7 @@ function Header() {
                   onChange={ handleRadio }
                   id="name"
                   type="radio"
-                  data-testid="ingredient-search-radio"
+                  data-testid="name-search-radio"
                   name="categories"
                 />
 
