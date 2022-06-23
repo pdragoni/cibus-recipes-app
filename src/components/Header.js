@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import Context from '../context/Context';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
-import SurpriseFetch from '../Fetch/SurpriseFood';
 
 const EMPTY_RESULTS = `${'Sorry, we haven'}'${'t found any recipes for these filters.'}`;
 function Header() {
@@ -78,7 +77,6 @@ function Header() {
     } else {
       fetchResults('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
     }
-    SurpriseFetch();
   }, [pageTitle]);
 
   return (
