@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 // import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Context from '../context/Context';
@@ -27,13 +28,15 @@ function Drinks() {
           .filter((element, index2) => index2 < DOZE)
           .map((resultado, index) => (
             <div key={ index } data-testid={ `${index}-recipe-card` }>
-              <img
-                className="imagem"
-                src={ resultado.strDrinkThumb }
-                alt={ resultado.strDrink }
-                data-testid={ `${index}-card-img` }
-              />
-              <p data-testid={ `${index}-card-name` }>{resultado.strDrink}</p>
+              <Link to={ `drinks/${resultado.idDrink}` }>
+                <img
+                  className="imagem"
+                  src={ resultado.strDrinkThumb }
+                  alt={ resultado.strDrink }
+                  data-testid={ `${index}-card-img` }
+                />
+                <p data-testid={ `${index}-card-name` }>{resultado.strDrink}</p>
+              </Link>
             </div>)))
         : <p>Drinks</p>}
       <Footer />
