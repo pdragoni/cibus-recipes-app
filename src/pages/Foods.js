@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 // import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Context from '../context/Context';
@@ -22,18 +23,20 @@ function Foods() {
   return (
     <section>
       <Header />
-      { results.length !== 0
+      { results.length > 1
         ? (results
           .filter((element, index2) => index2 < DOZE)
           .map((resultado, index) => (
             <div key={ index } data-testid={ `${index}-recipe-card` }>
-              <img
-                className="imagem"
-                src={ resultado.strMealThumb }
-                alt={ resultado.strMeal }
-                data-testid={ `${index}-card-img` }
-              />
-              <p data-testid={ `${index}-card-name` }>{resultado.strMeal}</p>
+              <Link to={ `foods/${resultado.idMeal}` }>
+                <img
+                  className="imagem"
+                  src={ resultado.strMealThumb }
+                  alt={ resultado.strMeal }
+                  data-testid={ `${index}-card-img` }
+                />
+                <p data-testid={ `${index}-card-name` }>{resultado.strMeal}</p>
+              </Link>
             </div>)))
         : <p>Meals</p>}
       <Footer />
