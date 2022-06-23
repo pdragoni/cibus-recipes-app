@@ -3,7 +3,7 @@ import Context from '../context/Context';
 // import { useHistory } from 'react-router-dom';
 
 function Categories() {
-  const { pageTitle } = useContext(Context);
+  const { pageTitle, setFilteredR, setToggle, toggle } = useContext(Context);
   const [categoriesArr, setCategoriesArr] = useState([]);
   // const history = useHistory();
   const CINCO = 5;
@@ -29,7 +29,16 @@ function Categories() {
       fetchCategories(URL);
     };
     handleFetch();
-  }, []);
+  }, [pageTitle]);
+
+  // https://www.themealdb.com/api.php
+  // https://www.thecocktaildb.com/api.php
+  const handleCategory = ({ target }) => {
+    const categoryName = target.value;
+    const arrayfiltrado = results.filter((el) => el.strCategory === categoryName);
+    setFilteredR(arrayfiltrado);
+    setToggle(!toggle);
+  };
 
   return (
     <div className="categories-div">
@@ -41,6 +50,8 @@ function Categories() {
               type="button"
               data-testid={ `${category.strCategory}-category-filter` }
               key={ index }
+              onClick={ handleCategory }
+              value={ category.strCategory }
             >
               { category.strCategory }
             </button>

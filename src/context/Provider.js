@@ -6,7 +6,9 @@ function Provider({ children }) {
   const [pageTitle, setPageTitle] = useState('');
   const [searchPageButton, setSearchPageButton] = useState(false);
   const [results, setResults] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [filteredR, setFilteredR] = ([]);
+  // const [categories, setCategories] = useState([]);
+  const [toggle, setToggle] = useState(false);
   const contextValue = {
     pageTitle,
     searchPageButton,
@@ -14,6 +16,10 @@ function Provider({ children }) {
     setResults,
     setPageTitle,
     setSearchPageButton,
+    toggle,
+    setToggle,
+    filteredR,
+    setFilteredR,
   };
   return (
     <Context.Provider value={ contextValue }>
