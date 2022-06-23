@@ -3,21 +3,17 @@ import { useHistory } from 'react-router-dom';
 import Context from '../context/Context';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SurpriseFetch from '../Fetch/SurpriseFood';
 
 const EMPTY_RESULTS = `${'Sorry, we haven'}'${'t found any recipes for these filters.'}`;
 function Header() {
   const { pageTitle, setResults, searchPageButton } = useContext(Context);
   const [isSearching, setIsSearching] = useState(false);
   const [usuario, setUsuario] = useState('');
-  const [query, setQuery] = useState('lemon');
+  const [query, setQuery] = useState('');
   const [radio, setRadio] = useState('Name');
   const history = useHistory();
-  useEffect(() => {
-    const email = JSON.parse(localStorage.getItem('user'));
-    if (email) {
-      setUsuario(email.email);
-    }
-  }, []);
+
   const clickToSearch = () => {
     if (!isSearching) {
       setIsSearching(true);
@@ -53,7 +49,7 @@ function Header() {
     }
     if (radio === 'Name') {
       baseFilter = 'search.php?s';
-    } else if (radio === 'Ingredient') {
+    } else if (radio === 'Ingredients') {
       baseFilter = 'filter.php?i';
     } else if (radio === 'First-Letter') {
       baseFilter = 'search.php?f';
@@ -71,6 +67,20 @@ function Header() {
       console.log(query);
     }
   };
+
+  useEffect(() => {
+    const email = JSON.parse(localStorage.getItem('user'));
+    if (email) {
+      setUsuario(email.email);
+    }
+    if (pageTitle === 'Foods') {
+      fetchResults('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    } else {
+      fetchResults('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    }
+    SurpriseFetch();
+  }, [pageTitle]);
+
   return (
     <header>
       <h3>Receitas Grupo 14</h3>
@@ -124,7 +134,7 @@ function Header() {
                 Ingredients
                 <input
                   onChange={ ({ target }) => setRadio(target.id) }
-                  id="Ingredient"
+                  id="Ingredients"
                   type="radio"
                   data-testid="ingredient-search-radio"
                   name="categories"
