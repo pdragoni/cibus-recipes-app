@@ -4,6 +4,7 @@ import Context from '../context/Context';
 function Categories() {
   const { pageTitle, setToggle, toggle, setResults, filteredArray } = useContext(Context);
   const [categoriesArr, setCategoriesArr] = useState([]);
+  const [categoryClicked, setCategoryClicked] = useState('');
   const CINCO = 5;
 
   const fetchCategories = async (URL) => {
@@ -46,8 +47,15 @@ function Categories() {
     const responseJson = await response.json();
     const filteredCategory = Object.values(responseJson)[0];
     if (!toggle) { // se modoFiltro está true (ativado)
+      setCategoryClicked(categoryName);
+      setResults(filteredCategory); // filtra por categoria
+    } else if (toggle && categoryClicked === categoryName) {
+      setResults(filteredArray); // aparece tudo
+      setToggle(!toggle);
+    } else if (toggle) {
       setResults(filteredCategory);
-    } else { setResults(filteredArray); }
+      setCategoryClicked(categoryName);
+    }
     // se modoFiltro está falso (desativado)
     setToggle(!toggle);
   };
