@@ -21,19 +21,20 @@ function Drinks() {
       <Categories />
       { results.length !== 0
         ? (results
-          .filter((element, index2) => index2 < DOZE)
-          .map((resultado, index) => (
-            <div key={ index } data-testid={ `${index}-recipe-card` }>
-              <Link to={ `drinks/${resultado.idDrink}` }>
-                <img
-                  className="imagem"
-                  src={ resultado.strDrinkThumb }
-                  alt={ resultado.strDrink }
-                  data-testid={ `${index}-card-img` }
-                />
-                <p data-testid={ `${index}-card-name` }>{resultado.strDrink}</p>
-              </Link>
-            </div>)))
+          && results
+            .filter((element, index2) => index2 < DOZE)
+            .map((resultado, index) => (
+              <div key={ index } data-testid={ `${index}-recipe-card` }>
+                <Link to={ `drinks/${resultado.idDrink}` }>
+                  <img
+                    className="imagem"
+                    src={ resultado.strDrinkThumb }
+                    alt={ resultado.strDrink }
+                    data-testid={ `${index}-card-img` }
+                  />
+                  <p data-testid={ `${index}-card-name` }>{resultado.strDrink}</p>
+                </Link>
+              </div>)))
         : <p>Drinks</p>}
       <Footer />
     </section>

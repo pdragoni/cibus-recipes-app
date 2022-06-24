@@ -10,6 +10,7 @@ function Provider({ children }) {
   // const [categories, setCategories] = useState([]);
   const [toggle, setToggle] = useState(false);
   const [filteredArray, setFilteredArray] = useState([]);
+  const [explorer, setExplorer] = useState(false);
 
   const contextValue = {
     pageTitle,
@@ -24,6 +25,8 @@ function Provider({ children }) {
     setFilteredR,
     filteredArray,
     setFilteredArray,
+    explorer,
+    setExplorer,
   };
   return (
     <Context.Provider value={ contextValue }>

@@ -3,16 +3,18 @@ import { useHistory } from 'react-router-dom';
 import Context from '../context/Context';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
-import SurpriseFetch from '../Fetch/SurpriseFood';
 
 const EMPTY_RESULTS = `${'Sorry, we haven'}'${'t found any recipes for these filters.'}`;
+
 function Header() {
   const {
     pageTitle,
     setResults,
     searchPageButton,
     setFilteredArray,
+    explorer,
   } = useContext(Context);
+
   const [isSearching, setIsSearching] = useState(false);
   const [usuario, setUsuario] = useState('');
   const [query, setQuery] = useState('');
@@ -30,7 +32,6 @@ function Header() {
     try {
       const response = await fetch(URL);
       const responseJson = await response.json();
-      console.log(responseJson);
       const array = Object.values(responseJson)[0];
       if (array.length === 1) {
         if (pageTitle === 'Foods') {
@@ -82,19 +83,20 @@ function Header() {
       if (email) {
         setUsuario(email.email);
       }
-      if (pageTitle === 'Foods') {
-        const resultMeal = await fetchResults('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-        console.log(resultMeal);
-        setResults(resultMeal);
-        setFilteredArray(resultMeal);
-      } else {
-        const resultDrink = await fetchResults('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-        setResults(resultDrink);
-        setFilteredArray(resultDrink);
+      if (explorer === false) {
+        if (pageTitle === 'Foods' || pageTitle === 'Explore Nationalities') {
+          const resultMeal = await fetchResults('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+          console.log(resultMeal);
+          setResults(resultMeal);
+          setFilteredArray(resultMeal);
+        } else {
+          const resultDrink = await fetchResults('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+          setResults(resultDrink);
+          setFilteredArray(resultDrink);
+        }
       }
     };
     teste();
-    SurpriseFetch();
   }, [pageTitle]);
 
   return (
