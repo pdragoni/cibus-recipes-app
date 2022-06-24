@@ -11,6 +11,7 @@ function ExplorerFoodsNationality() {
   const [select, setSelect] = useState('false');
   const [allCountries, setAllCountries] = useState([]);
   const [filterCountrie, setFilterCountrie] = useState([]);
+  const [all, setAll] = useState(false);
 
   useEffect(() => {
     setPageTitle(title);
@@ -33,7 +34,7 @@ function ExplorerFoodsNationality() {
       console.log(responseJson);
       setFilterCountrie(responseJson.meals);
     };
-    if (select === true) {
+    if (select === true && all === false) {
       fi(nationality);
     }
   }, [select, nationality]);
@@ -41,8 +42,13 @@ function ExplorerFoodsNationality() {
   const DOZE = 12;
 
   const handleNationality = ({ target }) => {
-    setNationality(target.value);
-    setSelect(true);
+    if (target.value === 'All') {
+      setAll('true');
+      setSelect('false');
+    } else {
+      setSelect(true);
+      setNationality(target.value);
+    }
   };
 
   return (
@@ -52,6 +58,7 @@ function ExplorerFoodsNationality() {
         onChange={ handleNationality }
         data-testid="explore-by-nationality-dropdown"
       >
+        <option data-testid="All-option">All</option>
         {allCountries
         && allCountries.map((nationalities) => (
           <option
