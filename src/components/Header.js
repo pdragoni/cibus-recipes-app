@@ -6,7 +6,7 @@ import searchIcon from '../images/searchIcon.svg';
 
 const EMPTY_RESULTS = `${'Sorry, we haven'}'${'t found any recipes for these filters.'}`;
 function Header() {
-  const { pageTitle, setResults, searchPageButton } = useContext(Context);
+  const { pageTitle, setResults, searchPageButton, explorer } = useContext(Context);
   const [isSearching, setIsSearching] = useState(false);
   const [usuario, setUsuario] = useState('');
   const [query, setQuery] = useState('');
@@ -72,10 +72,12 @@ function Header() {
     if (email) {
       setUsuario(email.email);
     }
-    if (pageTitle === 'Foods') {
-      fetchResults('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-    } else {
-      fetchResults('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    if (explorer === false) {
+      if (pageTitle === 'Foods') {
+        fetchResults('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      } else {
+        fetchResults('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      }
     }
   }, [pageTitle]);
 
