@@ -32,7 +32,6 @@ function ExploreFoodsIngredients() {
     const URL = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingrediente}`;
     const response = await fetch(URL);
     const responseJson = await response.json();
-    console.log(responseJson);
     setResults(responseJson.meals);
     history.push('/foods');
   };

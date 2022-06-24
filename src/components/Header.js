@@ -73,7 +73,7 @@ function Header() {
       setUsuario(email.email);
     }
     if (explorer === false) {
-      if (pageTitle === 'Foods') {
+      if (pageTitle === 'Foods' || pageTitle === 'Explore Nationalities') {
         fetchResults('https://www.themealdb.com/api/json/v1/1/search.php?s=');
       } else {
         fetchResults('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
