@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Context from '../context/Context';
 
 function Categories() {
-  const { pageTitle, setToggle, toggle, setResults } = useContext(Context);
+  const { pageTitle, setToggle, toggle, setResults, filteredArray } = useContext(Context);
   const [categoriesArr, setCategoriesArr] = useState([]);
   const CINCO = 5;
 
@@ -45,8 +45,10 @@ function Categories() {
     const response = await fetch(categoryURL);
     const responseJson = await response.json();
     const filteredCategory = Object.values(responseJson)[0];
-    setResults(filteredCategory);
-    console.log(filteredCategory);
+    if (!toggle) { // se modoFiltro está true (ativado)
+      setResults(filteredCategory);
+    } else { setResults(filteredArray); }
+    // se modoFiltro está falso (desativado)
     setToggle(!toggle);
   };
 

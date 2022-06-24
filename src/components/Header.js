@@ -7,7 +7,12 @@ import SurpriseFetch from '../Fetch/SurpriseFood';
 
 const EMPTY_RESULTS = `${'Sorry, we haven'}'${'t found any recipes for these filters.'}`;
 function Header() {
-  const { pageTitle, setResults, searchPageButton } = useContext(Context);
+  const {
+    pageTitle,
+    setResults,
+    searchPageButton,
+    setFilteredArray,
+  } = useContext(Context);
   const [isSearching, setIsSearching] = useState(false);
   const [usuario, setUsuario] = useState('');
   const [query, setQuery] = useState('');
@@ -34,7 +39,8 @@ function Header() {
           history.push(`/drinks/${array[0].idDrink}`);
         }
       } else if (array.length > 1) {
-        setResults(array);
+        // setResults(array);
+        return array;
       }
     } catch (error) {
       global.alert(EMPTY_RESULTS);
@@ -56,7 +62,8 @@ function Header() {
       baseFilter = 'search.php?f';
     }
     const URL = `https://www.${baseUrl}.com/api/json/v1/1/${baseFilter}=${query}`;
-    fetchResults(URL);
+    const result = fetchResults(URL);
+    setResults(result);
   };
   const handleSearch = () => {
     if (radio === 'First-Letter' && query.length > 1) {
@@ -70,15 +77,23 @@ function Header() {
   };
 
   useEffect(() => {
-    const email = JSON.parse(localStorage.getItem('user'));
-    if (email) {
-      setUsuario(email.email);
-    }
-    if (pageTitle === 'Foods') {
-      fetchResults('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-    } else {
-      fetchResults('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-    }
+    const teste = async () => {
+      const email = JSON.parse(localStorage.getItem('user'));
+      if (email) {
+        setUsuario(email.email);
+      }
+      if (pageTitle === 'Foods') {
+        const resultMeal = await fetchResults('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+        console.log(resultMeal);
+        setResults(resultMeal);
+        setFilteredArray(resultMeal);
+      } else {
+        const resultDrink = await fetchResults('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+        setResults(resultDrink);
+        setFilteredArray(resultDrink);
+      }
+    };
+    teste();
     SurpriseFetch();
   }, [pageTitle]);
 
