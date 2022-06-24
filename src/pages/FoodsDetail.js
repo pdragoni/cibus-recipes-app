@@ -4,8 +4,9 @@ import Footer from '../components/Footer';
 import Context from '../context/Context';
 
 function FoodsDetail() {
-  const title = 'FoodsDetail';
-  const { setPageTitle, setSearchPageButton } = useContext(Context);
+  const { setPageTitle, setSearchPageButton, filteredArray,
+  } = useContext(Context);
+  const title = 'Foods Detail';
 
   useEffect(() => {
     setPageTitle(title);
@@ -13,11 +14,17 @@ function FoodsDetail() {
   }, []);
 
   return (
-    <section>
+    <div>
       <Header />
-      FoodsDetail
+      <div>
+        {filteredArray.map((resultado, index) => (
+          <div key={ index } data-testid={ `${index}-recipe-card` }>
+            <p>{resultado.strMeal}</p>
+          </div>
+        ))}
+      </div>
       <Footer />
-    </section>
+    </div>
   );
 }
 

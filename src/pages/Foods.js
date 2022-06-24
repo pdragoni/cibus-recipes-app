@@ -19,7 +19,7 @@ function Foods() {
     <section>
       <Header />
       <Categories />
-      { results.length > 1
+      { results.length >= 1
         ? (results
           .filter((element, index2) => index2 < DOZE)
           .map((resultado, index) => (

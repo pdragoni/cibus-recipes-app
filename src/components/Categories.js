@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
 import Context from '../context/Context';
 
 function Categories() {
   const { pageTitle, setToggle, toggle, setResults } = useContext(Context);
   const [categoriesArr, setCategoriesArr] = useState([]);
-  const history = useHistory();
   const CINCO = 5;
 
   const fetchCategories = async (URL) => {
@@ -22,7 +20,7 @@ function Categories() {
       let baseUrl = '';
       if (pageTitle === 'Drinks') {
         baseUrl = 'thecocktaildb';
-      } else {
+      } else if (pageTitle !== 'Drinks') {
         baseUrl = 'themealdb';
       }
       const URL = `https://www.${baseUrl}.com/api/json/v1/1/list.php?c=list`;
@@ -47,15 +45,7 @@ function Categories() {
     const response = await fetch(categoryURL);
     const responseJson = await response.json();
     const filteredCategory = Object.values(responseJson)[0];
-    if (filteredCategory.length === 1) {
-      if (pageTitle === 'Foods') {
-        history.push(`/foods/${filteredCategory[0].idMeal}`);
-      } else if (pageTitle === 'Drinks') {
-        history.push(`/drinks/${filteredCategory[0].idDrink}`);
-      }
-    } else if (filteredCategory.length > 1) {
-      setResults(filteredCategory);
-    }
+    setResults(filteredCategory);
     console.log(filteredCategory);
     setToggle(!toggle);
   };

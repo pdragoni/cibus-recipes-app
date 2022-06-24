@@ -9,6 +9,7 @@ function Provider({ children }) {
   const [filteredR, setFilteredR] = useState([]);
   // const [categories, setCategories] = useState([]);
   const [toggle, setToggle] = useState(false);
+
   const contextValue = {
     pageTitle,
     searchPageButton,
