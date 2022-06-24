@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import Context from '../context/Context';
-// import { useHistory } from 'react-router-dom';
 
 function Categories() {
-  const { pageTitle, setFilteredR, setToggle, toggle } = useContext(Context);
+  const { pageTitle, setToggle, toggle, setResults } = useContext(Context);
   const [categoriesArr, setCategoriesArr] = useState([]);
-  // const history = useHistory();
+  const history = useHistory();
   const CINCO = 5;
 
   const fetchCategories = async (URL) => {
@@ -33,10 +33,30 @@ function Categories() {
 
   // https://www.themealdb.com/api.php
   // https://www.thecocktaildb.com/api.php
-  const handleCategory = ({ target }) => {
+  // www.themealdb.com/api/json/v1/1/filter.php?c=Seafood filter by category
+  // www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail filtra categoria
+  const handleCategory = async ({ target }) => {
     const categoryName = target.value;
-    const arrayfiltrado = results.filter((el) => el.strCategory === categoryName);
-    setFilteredR(arrayfiltrado);
+    let baseUrl = '';
+    if (pageTitle === 'Drinks') {
+      baseUrl = 'thecocktaildb';
+    } else {
+      baseUrl = 'themealdb';
+    }
+    const categoryURL = `https://www.${baseUrl}.com/api/json/v1/1/filter.php?c=${categoryName}`;
+    const response = await fetch(categoryURL);
+    const responseJson = await response.json();
+    const filteredCategory = Object.values(responseJson)[0];
+    if (filteredCategory.length === 1) {
+      if (pageTitle === 'Foods') {
+        history.push(`/foods/${filteredCategory[0].idMeal}`);
+      } else if (pageTitle === 'Drinks') {
+        history.push(`/drinks/${filteredCategory[0].idDrink}`);
+      }
+    } else if (filteredCategory.length > 1) {
+      setResults(filteredCategory);
+    }
+    console.log(filteredCategory);
     setToggle(!toggle);
   };
 
