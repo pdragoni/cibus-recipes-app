@@ -36,7 +36,7 @@ function Categories() {
   const handleCategory = async ({ target }) => {
     const categoryName = target.value;
     let baseUrl = '';
-    if (pageTitle === 'Drinks') {
+    if (pageTitle === 'DrinksDetail') {
       baseUrl = 'thecocktaildb';
     } else {
       baseUrl = 'themealdb';
