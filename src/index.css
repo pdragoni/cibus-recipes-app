@@ -15,3 +15,7 @@ code {
 .imagem {
   width: 100px;
 }
+
+.categories-div {
+  border: solid 3px red;
+}

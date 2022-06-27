@@ -1,14 +1,13 @@
 import React, { useEffect, useContext } from 'react';
-// import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Context from '../context/Context';
+import Categories from '../components/Categories';
 
 function Drinks() {
   const title = 'Drinks';
   const { setPageTitle, setSearchPageButton, results } = useContext(Context);
-  // const history = useHistory();
   const DOZE = 12;
 
   useEffect(() => {
@@ -16,19 +15,19 @@ function Drinks() {
     setSearchPageButton(true);
   }, []);
 
-  // useEffect(() => {
-  //   if (results.length === 1) history.push(`/drinks/${results[0].idDrink}`);
-  // }, [results]);
-
   return (
     <section>
       <Header />
-      { results.length !== 0
+      <Categories />
+      { results.length >= 1
         ? (results
           .filter((element, index2) => index2 < DOZE)
           .map((resultado, index) => (
-            <div key={ index } data-testid={ `${index}-recipe-card` }>
-              <Link to={ `drinks/${resultado.idDrink}` }>
+            <div key={ index }>
+              <Link
+                to={ `/drinks/${resultado.idDrink}` }
+                data-testid={ `${index}-recipe-card` }
+              >
                 <img
                   className="imagem"
                   src={ resultado.strDrinkThumb }

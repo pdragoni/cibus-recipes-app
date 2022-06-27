@@ -7,8 +7,8 @@ import Context from '../context/Context';
 function ExplorerDrinks() {
   const title = 'Explore Drinks';
   const { setPageTitle } = useContext(Context);
-  const [randomDrink, setRandomDrink] = useState('');
 
+  const [randomDrink, setRandomDrink] = useState('');
   const history = useHistory();
 
   useEffect(() => {

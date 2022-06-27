@@ -1,11 +1,9 @@
 import React, { useEffect, useContext } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import Context from '../context/Context';
 
 function DrinksDetail() {
+  const { setPageTitle, setSearchPageButton, filteredArray } = useContext(Context);
   const title = 'DrinksDetail';
-  const { setPageTitle, setSearchPageButton } = useContext(Context);
 
   useEffect(() => {
     setPageTitle(title);
@@ -14,9 +12,13 @@ function DrinksDetail() {
 
   return (
     <section>
-      <Header />
-      DrinksDetail
-      <Footer />
+      <div>
+        {filteredArray.map((resultado, index) => (
+          <div key={ index } data-testid={ `${index}-recipe-card` }>
+            <p>{resultado.strDrink}</p>
+          </div>
+        ))}
+      </div>
     </section>
   );
 }

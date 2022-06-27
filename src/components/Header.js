@@ -5,8 +5,16 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
 const EMPTY_RESULTS = `${'Sorry, we haven'}'${'t found any recipes for these filters.'}`;
+
 function Header() {
-  const { pageTitle, setResults, searchPageButton } = useContext(Context);
+  const {
+    pageTitle,
+    setResults,
+    searchPageButton,
+    setFilteredArray,
+    explorer,
+  } = useContext(Context);
+
   const [isSearching, setIsSearching] = useState(false);
   const [usuario, setUsuario] = useState('');
   const [query, setQuery] = useState('');
@@ -20,6 +28,7 @@ function Header() {
       setIsSearching(false);
     }
   };
+
   const fetchResults = async (URL) => {
     try {
       const response = await fetch(URL);
@@ -32,13 +41,15 @@ function Header() {
           history.push(`/drinks/${array[0].idDrink}`);
         }
       } else if (array.length > 1) {
-        setResults(array);
+        // setResults(array);
+        return array;
       }
     } catch (error) {
       global.alert(EMPTY_RESULTS);
     }
   };
-  const handleFetch = () => {
+
+  const handleFetch = async () => {
     let baseUrl = '';
     let baseFilter = '';
     if (pageTitle === 'Drinks') {
@@ -54,29 +65,38 @@ function Header() {
       baseFilter = 'search.php?f';
     }
     const URL = `https://www.${baseUrl}.com/api/json/v1/1/${baseFilter}=${query}`;
-    fetchResults(URL);
+    const result = await fetchResults(URL);
+    if (result !== undefined) setResults(result);
   };
+
   const handleSearch = () => {
     if (radio === 'First-Letter' && query.length > 1) {
       global.alert('Your search must have only 1 (one) character');
     } else {
       handleFetch();
-      console.log(pageTitle);
-      console.log(radio);
-      console.log(query);
     }
   };
 
   useEffect(() => {
-    const email = JSON.parse(localStorage.getItem('user'));
-    if (email) {
-      setUsuario(email.email);
-    }
-    if (pageTitle === 'Foods') {
-      fetchResults('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-    } else {
-      fetchResults('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-    }
+    const teste = async () => {
+      const email = JSON.parse(localStorage.getItem('user'));
+      if (email) {
+        setUsuario(email.email);
+      }
+      if (explorer === false) {
+        if (pageTitle === 'Foods' || pageTitle === 'Explore Nationalities') {
+          const resultMeal = await fetchResults('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+          console.log(resultMeal);
+          setResults(resultMeal);
+          setFilteredArray(resultMeal);
+        } else {
+          const resultDrink = await fetchResults('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+          setResults(resultDrink);
+          setFilteredArray(resultDrink);
+        }
+      }
+    };
+    teste();
   }, [pageTitle]);
 
   return (

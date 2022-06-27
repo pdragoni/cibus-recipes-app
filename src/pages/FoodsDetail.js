@@ -1,23 +1,28 @@
 import React, { useEffect, useContext } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import Context from '../context/Context';
 
 function FoodsDetail() {
-  const title = 'FoodsDetail';
-  const { setPageTitle, setSearchPageButton } = useContext(Context);
+  const { setPageTitle, setSearchPageButton, filteredArray,
+  } = useContext(Context);
+  const title = 'Foods Detail';
 
   useEffect(() => {
     setPageTitle(title);
     setSearchPageButton(false);
   }, []);
 
+  console.log(filteredArray);
+
   return (
-    <section>
-      <Header />
-      FoodsDetail
-      <Footer />
-    </section>
+    <div>
+      <div>
+        {filteredArray.map((resultado, index) => (
+          <div key={ index } data-testid={ `${index}-recipe-card` }>
+            <p>{resultado.strMeal}</p>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
