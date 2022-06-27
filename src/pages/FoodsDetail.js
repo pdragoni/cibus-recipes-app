@@ -1,6 +1,4 @@
 import React, { useEffect, useContext } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import Context from '../context/Context';
 
 function FoodsDetail() {
@@ -13,9 +11,10 @@ function FoodsDetail() {
     setSearchPageButton(false);
   }, []);
 
+  console.log(filteredArray);
+
   return (
     <div>
-      <Header />
       <div>
         {filteredArray.map((resultado, index) => (
           <div key={ index } data-testid={ `${index}-recipe-card` }>
@@ -23,7 +22,6 @@ function FoodsDetail() {
           </div>
         ))}
       </div>
-      <Footer />
     </div>
   );
 }

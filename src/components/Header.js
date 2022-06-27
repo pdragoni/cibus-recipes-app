@@ -28,6 +28,7 @@ function Header() {
       setIsSearching(false);
     }
   };
+
   const fetchResults = async (URL) => {
     try {
       const response = await fetch(URL);
@@ -47,7 +48,8 @@ function Header() {
       global.alert(EMPTY_RESULTS);
     }
   };
-  const handleFetch = () => {
+
+  const handleFetch = async () => {
     let baseUrl = '';
     let baseFilter = '';
     if (pageTitle === 'Drinks') {
@@ -63,17 +65,15 @@ function Header() {
       baseFilter = 'search.php?f';
     }
     const URL = `https://www.${baseUrl}.com/api/json/v1/1/${baseFilter}=${query}`;
-    const result = fetchResults(URL);
-    setResults(result);
+    const result = await fetchResults(URL);
+    if (result !== undefined) setResults(result);
   };
+
   const handleSearch = () => {
     if (radio === 'First-Letter' && query.length > 1) {
       global.alert('Your search must have only 1 (one) character');
     } else {
       handleFetch();
-      console.log(pageTitle);
-      console.log(radio);
-      console.log(query);
     }
   };
 

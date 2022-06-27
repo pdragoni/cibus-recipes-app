@@ -23,8 +23,11 @@ function Foods() {
         ? (results
           .filter((element, index2) => index2 < DOZE)
           .map((resultado, index) => (
-            <div key={ index } data-testid={ `${index}-recipe-card` }>
-              <Link to={ `foods/${resultado.idMeal}` }>
+            <div key={ index }>
+              <Link
+                data-testid={ `${index}-recipe-card` }
+                to={ `/foods/${resultado.idMeal}` }
+              >
                 <img
                   className="imagem"
                   src={ resultado.strMealThumb }

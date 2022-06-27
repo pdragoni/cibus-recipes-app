@@ -12,7 +12,6 @@ function Categories() {
     const responseJson = await response.json();
     const categories = Object.values(responseJson)[0];
     const categoriesFilter = categories.filter((element, index2) => index2 < CINCO);
-    console.log(categoriesFilter);
     setCategoriesArr(categoriesFilter);
   };
 
@@ -43,21 +42,27 @@ function Categories() {
       baseUrl = 'themealdb';
     }
     const categoryURL = `https://www.${baseUrl}.com/api/json/v1/1/filter.php?c=${categoryName}`;
-    const response = await fetch(categoryURL);
-    const responseJson = await response.json();
-    const filteredCategory = Object.values(responseJson)[0];
-    if (!toggle) { // se modoFiltro está true (ativado)
-      setCategoryClicked(categoryName);
-      setResults(filteredCategory); // filtra por categoria
-    } else if (toggle && categoryClicked === categoryName) {
-      setResults(filteredArray); // aparece tudo
+
+    if (categoryName !== 'All') {
+      const response = await fetch(categoryURL);
+      const responseJson = await response.json();
+      const filteredCategory = Object.values(responseJson)[0];
+      if (!toggle) { // se modoFiltro está true (ativado)
+        setCategoryClicked(categoryName);
+        setResults(filteredCategory); // filtra por categoria
+      } else if (toggle && categoryClicked === categoryName) {
+        setResults(filteredArray); // aparece tudo
+        setToggle(!toggle);
+      } else if (toggle) {
+        setResults(filteredCategory);
+        setCategoryClicked(categoryName);
+      }
+      // se modoFiltro está falso (desativado)
       setToggle(!toggle);
-    } else if (toggle) {
-      setResults(filteredCategory);
-      setCategoryClicked(categoryName);
+    } else {
+      setResults(filteredArray);
+      setToggle(false);
     }
-    // se modoFiltro está falso (desativado)
-    setToggle(!toggle);
   };
 
   return (
@@ -77,6 +82,14 @@ function Categories() {
             </button>
           ))
       }
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ handleCategory }
+        value="All"
+      >
+        All
+      </button>
     </div>
   );
 }
