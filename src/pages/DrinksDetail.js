@@ -61,16 +61,19 @@ function DrinksDetail() {
                 key={ ingredient }
                 data-testid={ `${i}-ingredient-name-and-measure` }
               >
-                {i}
+                {ingredient}
               </li>))}
           </ul>
           <p data-testid="instructions">{details.strInstructions}</p>
           <div data-testid={ `${index}-recomendation-card` }>
             Recomendation
-            {/* <h1 data-testid={ `${index}-recomendation-title` } />
-            <button data-testid="start-recipe-btn">
+            <h1 data-testid={ `${index}-recomendation-title` }>{details.strDrink}</h1>
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+            >
               Start Recipe
-            </button> */}
+            </button>
           </div>
         </div>
       ))}
