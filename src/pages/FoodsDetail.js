@@ -1,28 +1,92 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Context from '../context/Context';
+import Carousel from '../components/Carousel';
 
 function FoodsDetail() {
-  const { setPageTitle, setSearchPageButton, filteredArray,
+  const { setPageTitle, setSearchPageButton,
   } = useContext(Context);
+  const [foodCard, setFoodCard] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
+  const [measure, setMeasure] = useState([]);
   const title = 'Foods Detail';
+
+  const location = useLocation();
+  const { pathname } = location;
+  const locationId = pathname.replace(/\D/g, '');
+
+  const requestFetch = async () => {
+    const idURL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${locationId}`;
+    const response = await fetch(idURL);
+    const responseJson = await response.json();
+    console.log(responseJson.meals);
+    setFoodCard(responseJson.meals);
+  };
 
   useEffect(() => {
     setPageTitle(title);
     setSearchPageButton(false);
+    requestFetch();
   }, []);
 
-  console.log(filteredArray);
+  useEffect(() => {
+    // const func = async () => {
+    //   console.log(newArray);
+    //   const test = newArray[0];
+    //   console.log(test);
+    // };
+    const NOVE = 9;
+    const VINTE_OITO = 28;
+    const newArray = foodCard.map((ingredient) => (
+      Object.values(ingredient).slice(NOVE, VINTE_OITO)))[0];
+    console.log(newArray);
+    setIngredients(newArray?.filter((details) => details));
+    // const filteredIngredients = newArray.filter((ingredient, index) => console.log(ingredient ) );
+    // console.log(test);
+    // func();
 
+    const TRINTA_E_DOIS = 29;
+    const CINQUENTA_E_UM = 49;
+
+    const newArray2 = foodCard.map((ingredient) => (
+      Object.values(ingredient).slice(TRINTA_E_DOIS, CINQUENTA_E_UM)))[0];
+    console.log(newArray2);
+    setIngredients(newArray?.filter((details) => details));
+    setMeasure(newArray2?.filter((details) => details));
+  }, [foodCard]);
   return (
-    <div>
-      <div>
-        {filteredArray.map((resultado, index) => (
-          <div key={ index } data-testid={ `${index}-recipe-card` }>
-            <p>{resultado.strMeal}</p>
+    <section>
+      {console.log(ingredients)}
+      {foodCard.map((details, index) => (
+        <div key={ index }>
+          <img src={ details.strMealThumb } data-testid="recipe-photo" alt="recipe" />
+          <h1 data-testid="recipe-title">{details.strMeal}</h1>
+          <button type="button" data-testid="share-btn">Share</button>
+          <button type="button" data-testid="favorite-btn">Favorite</button>
+          <p data-testid="recipe-category">{details.strCategory}</p>
+          <ul>
+            { ingredients && ingredients.map((ingredient, i) => (
+              <li
+                key={ ingredient }
+                data-testid={ `${i}-ingredient-name-and-measure` }
+              >
+                {`${measure[i]} ${ingredient}`}
+              </li>))}
+          </ul>
+          <p data-testid="instructions">{ details.strInstructions }</p>
+          <video data-testid="video" controls>
+            <source src={ details.strYoutube } type="video/mp4" />
+            <track src="" kind="captions" srcLang="en" label="english_captions" />
+            Your browser does not support the video tag.
+          </video>
+          <div data-testid={ `${index}-recomendation-card` }>
+            Recomendation
+            <h1 data-testid={ `${index}-recomendation-title` }>{details.strMeal}</h1>
+            <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
           </div>
-        ))}
-      </div>
-    </div>
+        </div>))}
+      <Carousel />
+    </section>
   );
 }
 
