@@ -7,7 +7,9 @@ function DrinksDetail() {
   const [drinkCard, setDrinkCard] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   // const [measure, setMeasure] = useState([]);
+  const [recomendations, setRecomendations] = useState([]);
   const title = 'DrinksDetail';
+  const SEIS = 6;
 
   const location = useLocation();
   const { pathname } = location;
@@ -20,10 +22,20 @@ function DrinksDetail() {
     setDrinkCard(responseJson.drinks);
   };
 
+  const getRecomendation = async () => {
+    // const DOZE = 12;
+    const recomendURL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+    const response = await fetch(recomendURL);
+    const responseJson = await response.json();
+    setRecomendations(responseJson.meals);
+    console.log(responseJson.meals);
+  };
+
   useEffect(() => {
     setPageTitle(title);
     setSearchPageButton(false);
     requestFetch();
+    getRecomendation();
 
     // const NOVE = 9;
     // const VINTE_OITO = 28;
@@ -66,7 +78,7 @@ function DrinksDetail() {
 
   return (
     <section>
-      {drinkCard.map((details, index) => (
+      {drinkCard.map((details) => (
         <div key={ details.idDrink }>
           <img
             data-testid="recipe-photo"
@@ -94,16 +106,30 @@ function DrinksDetail() {
               </li>))}
           </ul>
           <p data-testid="instructions">{details.strInstructions}</p>
-          <div data-testid={ `${index}-recomendation-card` }>
-            Recomendation
-            <h1 data-testid={ `${index}-recomendation-title` }>{details.strDrink}</h1>
-            <button
-              type="button"
-              data-testid="start-recipe-btn"
-            >
-              Start Recipe
-            </button>
+
+          <div>
+            Recomendations
+            { recomendations.length >= 1
+              ? (recomendations
+                .filter((element2, index2) => index2 < SEIS)
+                .map((resultado, index3) => (
+                  <div key={ index3 } data-testid={ `${index3}-recomendation-card` }>
+                    <div
+                      data-testid={ `${index3}-recomendation-title` }
+                    >
+                      {resultado.strMeal}
+                    </div>
+                    <img src={ resultado.strMealThumb } alt="DrinkRecomendation" />
+                  </div>)))
+              : <p>Recomendations</p>}
           </div>
+
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+          >
+            Start Recipe
+          </button>
         </div>
       ))}
     </section>
