@@ -6,6 +6,7 @@ function DrinksDetail() {
   const { setPageTitle, setSearchPageButton } = useContext(Context);
   const [drinkCard, setDrinkCard] = useState([]);
   const [ingredients, setIngredients] = useState([]);
+  // const [measure, setMeasure] = useState([]);
   const title = 'DrinksDetail';
 
   const location = useLocation();
@@ -16,7 +17,6 @@ function DrinksDetail() {
     const idURL = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${locationId}`;
     const response = await fetch(idURL);
     const responseJson = await response.json();
-    console.log(responseJson.drinks);
     setDrinkCard(responseJson.drinks);
   };
 
@@ -32,13 +32,36 @@ function DrinksDetail() {
     // setIngredients(newArray?.filter((details) => details));
   }, []);
 
+  const setIngredMeasures = (drink) => {
+    const VINTE = 20;
+    const ingredMeasures = [];
+    if (drink.length !== 0) {
+      for (let i = 1; i <= VINTE; i += 1) {
+        if (drink[0][`strIngredient${i}`]) {
+          ingredMeasures
+            .push(`${drink[0][`strMeasure${i}`]} ${drink[0][`strIngredient${i}`]}`);
+        }
+      }
+      console.log(ingredMeasures);
+      return ingredMeasures;
+    }
+  };
+
   useEffect(() => {
-    const DEZESSETE = 17;
-    const VINTE_OITO = 28;
-    const newArray = drinkCard.map((ingredient) => (
-      Object.values(ingredient).slice(DEZESSETE, VINTE_OITO)))[0];
-    setIngredients(newArray?.filter((details) => details));
-    console.log(newArray?.filter((details) => details));
+    // const DEZESSETE = 17;
+    // const VINTE_OITO = 26;
+    // const newArray = drinkCard.map((ingredient) => (
+    //   Object.values(ingredient).slice(DEZESSETE, VINTE_OITO)))[0];
+    // setIngredients(newArray?.filter((details) => details));
+
+    // const TRINTA_E_DOIS = 32;
+    // const CINQUENTA_E_UM = 49;
+    // const newArray2 = drinkCard.map((measures) => (
+    //   Object.values(measures).slice(TRINTA_E_DOIS, CINQUENTA_E_UM)))[0];
+    // console.log(newArray2);
+    // setMeasure(newArray2?.filter((details) => details !== ' '));
+    const ingredMeasures = setIngredMeasures(drinkCard);
+    setIngredients(ingredMeasures);
   }, [drinkCard]);
 
   return (
@@ -52,7 +75,13 @@ function DrinksDetail() {
           />
           <h1 data-testid="recipe-title">{details.strDrink}</h1>
           <button type="button" data-testid="share-btn">Share</button>
-          <button type="button" data-testid="favorite-btn">Favorite</button>
+          <button
+            type="button"
+            data-testid="favorite-btn"
+            onClick={ () => setIngredMeasures(drinkCard) }
+          >
+            Favorite
+          </button>
           <p data-testid="recipe-category">{details.strCategory}</p>
           <p data-testid="recipe-category">{details.strAlcoholic}</p>
           <ul>
@@ -61,7 +90,7 @@ function DrinksDetail() {
                 key={ ingredient }
                 data-testid={ `${i}-ingredient-name-and-measure` }
               >
-                {ingredient}
+                {`${ingredient}`}
               </li>))}
           </ul>
           <p data-testid="instructions">{details.strInstructions}</p>
