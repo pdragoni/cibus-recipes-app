@@ -1,6 +1,12 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import Context from '../context/Context';
+import './DetailsStyle.css';
+import Share from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+
+const copy = require('clipboard-copy');
 
 function FoodsDetail() {
   const { setPageTitle, setSearchPageButton,
@@ -10,7 +16,9 @@ function FoodsDetail() {
   const [ingredients, setIngredients] = useState([]);
   const [measure, setMeasure] = useState([]);
   const [recomendations, setRecomendations] = useState([]);
-  // const [startedRecipes, setStartedRecipes] = useState({ cocktails: {}, meals: {} });
+  const [toClipBoard, setToClipboard] = useState('');
+  const [copied, setCopied] = useState(false);
+  const [favorite, setFavorite] = useState(false);
   const title = 'Foods Detail';
   const SEIS = 6;
 
@@ -22,7 +30,6 @@ function FoodsDetail() {
     const idURL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${locationId}`;
     const response = await fetch(idURL);
     const responseJson = await response.json();
-    console.log(responseJson.meals);
     setFoodCard(responseJson.meals);
   };
 
@@ -31,29 +38,56 @@ function FoodsDetail() {
     const response = await fetch(recomendURL);
     const responseJson = await response.json();
     setRecomendations(responseJson.drinks);
-    console.log(responseJson.drinks);
   };
-
+  const favoritesData = JSON.parse(localStorage.getItem('favoriteRecipes'));
   useEffect(() => {
     setPageTitle(title);
     setSearchPageButton(false);
     requestFetch();
     getRecomendation();
+    setToClipboard(pathname.toString());
+    if (favoritesData !== null) {
+      const favoriteData = favoritesData.filter((fav) => fav.id === locationId);
+      if (favoriteData.length > 0) {
+        setFavorite('true');
+      }
+    }
   }, []);
+
+  const handleFavorite = () => {
+    setFavorite(!favorite);
+
+    if (favorite === false) {
+      const { idMeal, strArea, strCategory, strMeal, strMealThumb } = foodCard[0];
+      const favObj = {
+        id: idMeal,
+        type: 'food',
+        nationality: strArea,
+        category: strCategory,
+        alcoholicOrNot: '',
+        name: strMeal,
+        image: strMealThumb,
+      };
+      if (favoritesData !== null) {
+        localStorage.setItem('favoriteRecipes',
+          JSON.stringify([...favoritesData, favObj]));
+      } else {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([favObj]));
+      }
+    }
+  };
 
   useEffect(() => {
     const NOVE = 9;
     const VINTE_OITO = 28;
     const newArray = foodCard.map((ingredient) => (
       Object.values(ingredient).slice(NOVE, VINTE_OITO)))[0];
-    // console.log(newArray);
     setIngredients(newArray?.filter((details) => details));
 
     const TRINTA_E_DOIS = 29;
     const CINQUENTA_E_UM = 49;
     const newArray2 = foodCard.map((measures) => (
       Object.values(measures).slice(TRINTA_E_DOIS, CINQUENTA_E_UM)))[0];
-    // console.log(newArray2);
     setMeasure(newArray2?.filter((details) => details !== ' '));
   }, [foodCard]);
 
@@ -74,25 +108,8 @@ function FoodsDetail() {
       localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
     }
     history.push(`/drinks/${locationId}/in-progress`);
-    // console.log(parsed);
-    // const pushIgridients = { cocktails: {}, meals: { ...storageIngredients } };
-    // localStorage.setItem(pushIgridients);
-    // const storage = JSON.parselocalStorage.getItem('inProgressRecipes');
-    // setStartedRecipes(storageIngredients);
-    // console.log(storageIngredients); // isso tem que ir pra chave meals, adiciona no objeto
-    // localStorage.setItem('inProgressRecipes', JSON.stringify(startedRecipes));
-    // console.log('iniciadas', storage);
   };
 
-  /*
-const startedData = JSON.parse(localStorage.getItem('inProgressRecipes'));
-const newStorage = startedData.meals.push(storageIngredients)
-    if (startedData !== null) {
-      localStorage.setItem('inProgressRecipes', JSON.stringify([...startedData, favObj]));
-    } else {
-      localStorage.setItem('inProgressRecipes', JSON.stringify([favObj]));
-    }
-    */
   return (
     <section>
       {/* {console.log(ingredients)}
@@ -106,8 +123,33 @@ const newStorage = startedData.meals.push(storageIngredients)
             className="imagem-detalhes-comida"
           />
           <h4 data-testid="recipe-title">{details.strMeal}</h4>
-          <button type="button" data-testid="share-btn">Share</button>
-          <button type="button" data-testid="favorite-btn">Favorite</button>
+          <button type="button" data-testid="share-btn" onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied('true'); } }>
+            <img src={ Share } alt="Share button" />
+          </button>
+          {copied && <p>Link copied!</p>}
+          {favorite
+            ? (
+              <button
+                type="button"
+                onClick={ handleFavorite }
+              >
+                <img
+                  data-testid="favorite-btn"
+                  src={ blackHeartIcon }
+                  alt="button favorite"
+                />
+              </button>)
+            : (
+              <button
+                type="button"
+                onClick={ handleFavorite }
+              >
+                <img
+                  data-testid="favorite-btn"
+                  src={ whiteHeartIcon }
+                  alt="button favorite"
+                />
+              </button>)}
           <p data-testid="recipe-category">{details.strCategory}</p>
           <ul>
             { ingredients && ingredients.map((ingredient, i) => (
@@ -127,19 +169,29 @@ const newStorage = startedData.meals.push(storageIngredients)
 
           <div>
             Recomendations
-            { recomendations.length >= 1
-              ? (recomendations
-                .filter((element2, index2) => index2 < SEIS)
-                .map((resultado, index3) => (
-                  <div key={ index3 } data-testid={ `${index3}-recomendation-card` }>
+            <div className="wrapper">
+              { recomendations.length >= 1
+                ? (recomendations
+                  .filter((element2, index2) => index2 < SEIS)
+                  .map((resultado, index3) => (
                     <div
-                      data-testid={ `${index3}-recomendation-title` }
+                      key={ index3 }
+                      data-testid={ `${index3}-recomendation-card` }
+                      className="recomendation-card"
                     >
-                      {resultado.strDrink}
-                    </div>
-                    {/* <img src={ resultado.strDrinkThumb } alt="DrinkRecomendation" /> */}
-                  </div>)))
-              : <p>Recomendations</p>}
+                      <div
+                        data-testid={ `${index3}-recomendation-title` }
+                      >
+                        {resultado.strDrink}
+                      </div>
+                      {/* <img
+                        src={ resultado.strDrinkThumb }
+                        alt="DrinkRecomendation"
+                        className="recomendation-image"
+                      /> */}
+                    </div>)))
+                : <p>There are no recommendations</p>}
+            </div>
           </div>
           <button
             type="button"
