@@ -1,13 +1,20 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Context from '../context/Context';
+import Share from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+
+const copy = require('clipboard-copy');
 
 function DrinksDetail() {
   const { setPageTitle, setSearchPageButton } = useContext(Context);
   const [drinkCard, setDrinkCard] = useState([]);
   const [ingredients, setIngredients] = useState([]);
-  // const [measure, setMeasure] = useState([]);
   const [recomendations, setRecomendations] = useState([]);
+  const [toClipBoard, setToClipboard] = useState('');
+  const [copied, setCopied] = useState(false);
+  const [favorite, setFavorite] = useState(false);
   const title = 'DrinksDetail';
   const SEIS = 6;
 
@@ -23,26 +30,54 @@ function DrinksDetail() {
   };
 
   const getRecomendation = async () => {
-    // const DOZE = 12;
     const recomendURL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
     const response = await fetch(recomendURL);
     const responseJson = await response.json();
     setRecomendations(responseJson.meals);
     console.log(responseJson.meals);
   };
-
+  const favoritesData = JSON.parse(localStorage.getItem('favoriteRecipes'));
   useEffect(() => {
     setPageTitle(title);
     setSearchPageButton(false);
     requestFetch();
     getRecomendation();
 
-    // const NOVE = 9;
-    // const VINTE_OITO = 28;
-    // const newArray = drinkCard.map((ingredient) => (
-    //   Object.values(ingredient).slice(NOVE, [VINTE_OITO]))[0]);
-    // setIngredients(newArray?.filter((details) => details));
+    setToClipboard(pathname.toString());
+    if (favoritesData !== null) {
+      const favoriteData = favoritesData.filter((fav) => fav.id === locationId);
+      if (favoriteData.length > 0) {
+        setFavorite('true');
+      }
+    }
   }, []);
+  const handleFavorite = () => {
+    setFavorite(!favorite);
+    console.log(drinkCard[0]);
+    if (favorite === false) {
+      const { idDrink,
+        strCategory,
+        strAlcoholic,
+        strDrink,
+        strDrinkThumb } = drinkCard[0];
+      const favObj = {
+        id: idDrink,
+        type: 'drink',
+        nationality: '',
+        category: strCategory,
+        alcoholicOrNot: strAlcoholic,
+        name: strDrink,
+        image: strDrinkThumb,
+      };
+
+      if (favoritesData !== null) {
+        localStorage.setItem('favoriteRecipes',
+          JSON.stringify([...favoritesData, favObj]));
+      } else {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([favObj]));
+      }
+    }
+  };
 
   const setIngredMeasures = (drink) => {
     const VINTE = 20;
@@ -60,18 +95,6 @@ function DrinksDetail() {
   };
 
   useEffect(() => {
-    // const DEZESSETE = 17;
-    // const VINTE_OITO = 26;
-    // const newArray = drinkCard.map((ingredient) => (
-    //   Object.values(ingredient).slice(DEZESSETE, VINTE_OITO)))[0];
-    // setIngredients(newArray?.filter((details) => details));
-
-    // const TRINTA_E_DOIS = 32;
-    // const CINQUENTA_E_UM = 49;
-    // const newArray2 = drinkCard.map((measures) => (
-    //   Object.values(measures).slice(TRINTA_E_DOIS, CINQUENTA_E_UM)))[0];
-    // console.log(newArray2);
-    // setMeasure(newArray2?.filter((details) => details !== ' '));
     const ingredMeasures = setIngredMeasures(drinkCard);
     setIngredients(ingredMeasures);
   }, [drinkCard]);
@@ -86,14 +109,29 @@ function DrinksDetail() {
             alt={ details.strDrink }
           />
           <h1 data-testid="recipe-title">{details.strDrink}</h1>
-          <button type="button" data-testid="share-btn">Share</button>
-          <button
-            type="button"
-            data-testid="favorite-btn"
-            onClick={ () => setIngredMeasures(drinkCard) }
-          >
-            Favorite
+          <button type="button" data-testid="share-btn" onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied('true'); } }>
+            <img src={ Share } alt="Share button" />
           </button>
+          {copied && <p>Link copied!</p>}
+          {favorite
+            ? (
+              <button
+                type="button"
+                data-testid="favorite-btn"
+                src={ blackHeartIcon }
+                onClick={ handleFavorite }
+              >
+                <img src={ blackHeartIcon } alt="button favorite" />
+              </button>)
+            : (
+              <button
+                type="button"
+                data-testid="favorite-btn"
+                src={ whiteHeartIcon }
+                onClick={ handleFavorite }
+              >
+                <img src={ whiteHeartIcon } alt="button favorite" />
+              </button>)}
           <p data-testid="recipe-category">{details.strCategory}</p>
           <p data-testid="recipe-category">{details.strAlcoholic}</p>
           <ul>

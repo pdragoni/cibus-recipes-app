@@ -1,6 +1,11 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Context from '../context/Context';
+import Share from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+
+const copy = require('clipboard-copy');
 
 function FoodsDetail() {
   const { setPageTitle, setSearchPageButton,
@@ -9,6 +14,9 @@ function FoodsDetail() {
   const [ingredients, setIngredients] = useState([]);
   const [measure, setMeasure] = useState([]);
   const [recomendations, setRecomendations] = useState([]);
+  const [toClipBoard, setToClipboard] = useState('');
+  const [copied, setCopied] = useState(false);
+  const [favorite, setFavorite] = useState(false);
   const title = 'Foods Detail';
   const SEIS = 6;
 
@@ -20,7 +28,6 @@ function FoodsDetail() {
     const idURL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${locationId}`;
     const response = await fetch(idURL);
     const responseJson = await response.json();
-    console.log(responseJson.meals);
     setFoodCard(responseJson.meals);
   };
 
@@ -29,42 +36,92 @@ function FoodsDetail() {
     const response = await fetch(recomendURL);
     const responseJson = await response.json();
     setRecomendations(responseJson.drinks);
-    console.log(responseJson.drinks);
   };
-
+  const favoritesData = JSON.parse(localStorage.getItem('favoriteRecipes'));
   useEffect(() => {
     setPageTitle(title);
     setSearchPageButton(false);
     requestFetch();
     getRecomendation();
+    setToClipboard(pathname.toString());
+    if (favoritesData !== null) {
+      const favoriteData = favoritesData.filter((fav) => fav.id === locationId);
+      if (favoriteData.length > 0) {
+        setFavorite('true');
+      }
+    }
   }, []);
+
+  const handleFavorite = () => {
+    setFavorite(!favorite);
+
+    if (favorite === false) {
+      const { idMeal, strArea, strCategory, strMeal, strMealThumb } = foodCard[0];
+      const favObj = {
+        id: idMeal,
+        type: 'food',
+        nationality: strArea,
+        category: strCategory,
+        alcoholicOrNot: '',
+        name: strMeal,
+        image: strMealThumb,
+      };
+      if (favoritesData !== null) {
+        localStorage.setItem('favoriteRecipes',
+          JSON.stringify([...favoritesData, favObj]));
+      } else {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([favObj]));
+      }
+    }
+  };
 
   useEffect(() => {
     const NOVE = 9;
     const VINTE_OITO = 28;
     const newArray = foodCard.map((ingredient) => (
       Object.values(ingredient).slice(NOVE, VINTE_OITO)))[0];
-    console.log(newArray);
     setIngredients(newArray?.filter((details) => details));
 
     const TRINTA_E_DOIS = 29;
     const CINQUENTA_E_UM = 49;
     const newArray2 = foodCard.map((measures) => (
       Object.values(measures).slice(TRINTA_E_DOIS, CINQUENTA_E_UM)))[0];
-    console.log(newArray2);
     setMeasure(newArray2?.filter((details) => details !== ' '));
   }, [foodCard]);
 
   return (
     <section>
-      {console.log(ingredients)}
-      {console.log(measure)}
       {foodCard.map((details, index) => (
         <div key={ index }>
           <img src={ details.strMealThumb } data-testid="recipe-photo" alt="recipe" />
           <h1 data-testid="recipe-title">{details.strMeal}</h1>
-          <button type="button" data-testid="share-btn">Share</button>
-          <button type="button" data-testid="favorite-btn">Favorite</button>
+          <button type="button" data-testid="share-btn" onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied('true'); } }>
+            <img src={ Share } alt="Share button" />
+          </button>
+          {copied && <p>Link copied!</p>}
+          {favorite
+            ? (
+              <button
+                type="button"
+                onClick={ handleFavorite }
+              >
+                <img
+                  data-testid="favorite-btn"
+                  src={ blackHeartIcon }
+                  alt="button favorite"
+                />
+              </button>)
+            : (
+              <button
+                type="button"
+                onClick={ handleFavorite }
+              >
+                <img
+                  data-testid="favorite-btn"
+                  src={ whiteHeartIcon }
+                  alt="button favorite"
+                />
+              </button>)}
           <p data-testid="recipe-category">{details.strCategory}</p>
           <ul>
             { ingredients && ingredients.map((ingredient, i) => (
