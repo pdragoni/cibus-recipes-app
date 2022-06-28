@@ -8,7 +8,6 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 const copy = require('clipboard-copy');
 
-
 function DrinksDetail() {
   const { setPageTitle, setSearchPageButton } = useContext(Context);
   const [drinkCard, setDrinkCard] = useState([]);

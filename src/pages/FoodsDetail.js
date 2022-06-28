@@ -8,7 +8,6 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 const copy = require('clipboard-copy');
 
-
 function FoodsDetail() {
   const { setPageTitle, setSearchPageButton,
   } = useContext(Context);
