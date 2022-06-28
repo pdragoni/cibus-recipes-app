@@ -84,6 +84,7 @@ function DrinksDetail() {
             data-testid="recipe-photo"
             src={ details.strDrinkThumb }
             alt={ details.strDrink }
+            className="imagem-detalhes-comida"
           />
           <h1 data-testid="recipe-title">{details.strDrink}</h1>
           <button type="button" data-testid="share-btn">Share</button>
@@ -126,6 +127,8 @@ function DrinksDetail() {
 
           <button
             type="button"
+            className="start-button"
+            onClick={ () => console.log('recipe started') }
             data-testid="start-recipe-btn"
           >
             Start Recipe

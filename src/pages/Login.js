@@ -33,7 +33,7 @@ function Login({ history }) {
     localStorage.setItem('cocktailsToken', 1);
     localStorage.setItem('doneRecipes', []);
     localStorage.setItem('favoriteRecipes', []);
-    localStorage.setItem('inProgressRecipes', {});
+    localStorage.setItem('inProgressRecipes', { cocktails: {}, meals: {} });
     history.push('/foods');
   };
 

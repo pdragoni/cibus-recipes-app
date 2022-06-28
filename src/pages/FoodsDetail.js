@@ -1,14 +1,16 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import Context from '../context/Context';
 
 function FoodsDetail() {
   const { setPageTitle, setSearchPageButton,
   } = useContext(Context);
+  const history = useHistory();
   const [foodCard, setFoodCard] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [measure, setMeasure] = useState([]);
   const [recomendations, setRecomendations] = useState([]);
+  // const [startedRecipes, setStartedRecipes] = useState({ cocktails: {}, meals: {} });
   const title = 'Foods Detail';
   const SEIS = 6;
 
@@ -44,25 +46,66 @@ function FoodsDetail() {
     const VINTE_OITO = 28;
     const newArray = foodCard.map((ingredient) => (
       Object.values(ingredient).slice(NOVE, VINTE_OITO)))[0];
-    console.log(newArray);
+    // console.log(newArray);
     setIngredients(newArray?.filter((details) => details));
 
     const TRINTA_E_DOIS = 29;
     const CINQUENTA_E_UM = 49;
     const newArray2 = foodCard.map((measures) => (
       Object.values(measures).slice(TRINTA_E_DOIS, CINQUENTA_E_UM)))[0];
-    console.log(newArray2);
+    // console.log(newArray2);
     setMeasure(newArray2?.filter((details) => details !== ' '));
   }, [foodCard]);
 
+  const clickToStart = () => {
+    const storedArray = localStorage.getItem('inProgressRecipes');
+    const storageIngredients = { [foodCard[0].idMeal]: [...ingredients] };
+    if (storedArray) {
+      const parsed = JSON.parse(storedArray);
+      console.log(parsed);
+      const reLoc = {
+        cocktails: { ...parsed.cocktails },
+        meals: { ...parsed.meals, ...storageIngredients },
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(reLoc));
+      console.log(reLoc); // fim do reLoc
+    } else {
+      const newStorage = { cocktails: {}, meals: storageIngredients };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
+    }
+    history.push(`/drinks/${locationId}/in-progress`);
+    // console.log(parsed);
+    // const pushIgridients = { cocktails: {}, meals: { ...storageIngredients } };
+    // localStorage.setItem(pushIgridients);
+    // const storage = JSON.parselocalStorage.getItem('inProgressRecipes');
+    // setStartedRecipes(storageIngredients);
+    // console.log(storageIngredients); // isso tem que ir pra chave meals, adiciona no objeto
+    // localStorage.setItem('inProgressRecipes', JSON.stringify(startedRecipes));
+    // console.log('iniciadas', storage);
+  };
+
+  /*
+const startedData = JSON.parse(localStorage.getItem('inProgressRecipes'));
+const newStorage = startedData.meals.push(storageIngredients)
+    if (startedData !== null) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify([...startedData, favObj]));
+    } else {
+      localStorage.setItem('inProgressRecipes', JSON.stringify([favObj]));
+    }
+    */
   return (
     <section>
-      {console.log(ingredients)}
-      {console.log(measure)}
+      {/* {console.log(ingredients)}
+      {console.log(measure)} */}
       {foodCard.map((details, index) => (
         <div key={ index }>
-          <img src={ details.strMealThumb } data-testid="recipe-photo" alt="recipe" />
-          <h1 data-testid="recipe-title">{details.strMeal}</h1>
+          <img
+            data-testid="recipe-photo"
+            src={ details.strMealThumb }
+            alt={ details.strDrink }
+            className="imagem-detalhes-comida"
+          />
+          <h4 data-testid="recipe-title">{details.strMeal}</h4>
           <button type="button" data-testid="share-btn">Share</button>
           <button type="button" data-testid="favorite-btn">Favorite</button>
           <p data-testid="recipe-category">{details.strCategory}</p>
@@ -98,8 +141,14 @@ function FoodsDetail() {
                   </div>)))
               : <p>Recomendations</p>}
           </div>
-
-          <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
+          <button
+            type="button"
+            className="start-button"
+            onClick={ clickToStart }
+            data-testid="start-recipe-btn"
+          >
+            Start Recipe
+          </button>
         </div>))}
     </section>
   );
