@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Context from '../context/Context';
+import './DetailsStyle.css';
 
 function FoodsDetail() {
   const { setPageTitle, setSearchPageButton,
@@ -84,19 +85,29 @@ function FoodsDetail() {
 
           <div>
             Recomendations
-            { recomendations.length >= 1
-              ? (recomendations
-                .filter((element2, index2) => index2 < SEIS)
-                .map((resultado, index3) => (
-                  <div key={ index3 } data-testid={ `${index3}-recomendation-card` }>
+            <div className="wrapper">
+              { recomendations.length >= 1
+                ? (recomendations
+                  .filter((element2, index2) => index2 < SEIS)
+                  .map((resultado, index3) => (
                     <div
-                      data-testid={ `${index3}-recomendation-title` }
+                      key={ index3 }
+                      data-testid={ `${index3}-recomendation-card` }
+                      className="recomendation-card"
                     >
-                      {resultado.strDrink}
-                    </div>
-                    {/* <img src={ resultado.strDrinkThumb } alt="DrinkRecomendation" /> */}
-                  </div>)))
-              : <p>Recomendations</p>}
+                      <div
+                        data-testid={ `${index3}-recomendation-title` }
+                      >
+                        {resultado.strDrink}
+                      </div>
+                      {/* <img
+                        src={ resultado.strDrinkThumb }
+                        alt="DrinkRecomendation"
+                        className="recomendation-image"
+                      /> */}
+                    </div>)))
+                : <p>Recomendations</p>}
+            </div>
           </div>
 
           <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
