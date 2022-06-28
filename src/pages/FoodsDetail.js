@@ -30,33 +30,25 @@ function FoodsDetail() {
   }, []);
 
   useEffect(() => {
-    // const func = async () => {
-    //   console.log(newArray);
-    //   const test = newArray[0];
-    //   console.log(test);
-    // };
     const NOVE = 9;
     const VINTE_OITO = 28;
     const newArray = foodCard.map((ingredient) => (
       Object.values(ingredient).slice(NOVE, VINTE_OITO)))[0];
     console.log(newArray);
     setIngredients(newArray?.filter((details) => details));
-    // const filteredIngredients = newArray.filter((ingredient, index) => console.log(ingredient ) );
-    // console.log(test);
-    // func();
 
     const TRINTA_E_DOIS = 29;
     const CINQUENTA_E_UM = 49;
-
-    const newArray2 = foodCard.map((ingredient) => (
-      Object.values(ingredient).slice(TRINTA_E_DOIS, CINQUENTA_E_UM)))[0];
+    const newArray2 = foodCard.map((measures) => (
+      Object.values(measures).slice(TRINTA_E_DOIS, CINQUENTA_E_UM)))[0];
     console.log(newArray2);
-    setIngredients(newArray?.filter((details) => details));
-    setMeasure(newArray2?.filter((details) => details));
+    setMeasure(newArray2?.filter((details) => details !== ' '));
   }, [foodCard]);
+
   return (
     <section>
       {console.log(ingredients)}
+      {console.log(measure)}
       {foodCard.map((details, index) => (
         <div key={ index }>
           <img src={ details.strMealThumb } data-testid="recipe-photo" alt="recipe" />
