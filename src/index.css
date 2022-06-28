@@ -16,6 +16,16 @@ code {
   width: 100px;
 }
 
+.imagem-detalhes-comida {
+  width: 20em;
+  border-radius: 2em;
+}
+
+.start-button {
+  position: fixed;
+  bottom: 0px;
+}
+
 .categories-div {
   border: solid 3px red;
 }
