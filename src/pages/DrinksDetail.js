@@ -36,7 +36,21 @@ function DrinksDetail() {
     setRecomendations(responseJson.meals);
     console.log(responseJson.meals);
   };
+  const favoritesData = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  useEffect(() => {
+    setPageTitle(title);
+    setSearchPageButton(false);
+    requestFetch();
+    getRecomendation();
 
+    setToClipboard(pathname.toString());
+    if (favoritesData !== null) {
+      const favoriteData = favoritesData.filter((fav) => fav.id === locationId);
+      if (favoriteData.length > 0) {
+        setFavorite('true');
+      }
+    }
+  }, []);
   const handleFavorite = () => {
     setFavorite(!favorite);
     console.log(drinkCard[0]);
@@ -55,7 +69,7 @@ function DrinksDetail() {
         name: strDrink,
         image: strDrinkThumb,
       };
-      const favoritesData = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
       if (favoritesData !== null) {
         localStorage.setItem('favoriteRecipes',
           JSON.stringify([...favoritesData, favObj]));
@@ -64,15 +78,6 @@ function DrinksDetail() {
       }
     }
   };
-
-  useEffect(() => {
-    setPageTitle(title);
-    setSearchPageButton(false);
-    requestFetch();
-    getRecomendation();
-
-    setToClipboard(pathname.toString());
-  }, [favorite]);
 
   const setIngredMeasures = (drink) => {
     const VINTE = 20;
