@@ -1,7 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Context from '../context/Context';
-import Carousel from '../components/Carousel';
 
 function FoodsDetail() {
   const { setPageTitle, setSearchPageButton,
@@ -9,7 +8,9 @@ function FoodsDetail() {
   const [foodCard, setFoodCard] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [measure, setMeasure] = useState([]);
+  const [recomendations, setRecomendations] = useState([]);
   const title = 'Foods Detail';
+  const SEIS = 6;
 
   const location = useLocation();
   const { pathname } = location;
@@ -23,10 +24,19 @@ function FoodsDetail() {
     setFoodCard(responseJson.meals);
   };
 
+  const getRecomendation = async () => {
+    const recomendURL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+    const response = await fetch(recomendURL);
+    const responseJson = await response.json();
+    setRecomendations(responseJson.drinks);
+    console.log(responseJson.drinks);
+  };
+
   useEffect(() => {
     setPageTitle(title);
     setSearchPageButton(false);
     requestFetch();
+    getRecomendation();
   }, []);
 
   useEffect(() => {
@@ -71,13 +81,26 @@ function FoodsDetail() {
             <track src="" kind="captions" srcLang="en" label="english_captions" />
             Your browser does not support the video tag.
           </video>
-          <div data-testid={ `${index}-recomendation-card` }>
-            Recomendation
-            <h1 data-testid={ `${index}-recomendation-title` }>{details.strMeal}</h1>
-            <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
+
+          <div>
+            Recomendations
+            { recomendations.length >= 1
+              ? (recomendations
+                .filter((element2, index2) => index2 < SEIS)
+                .map((resultado, index3) => (
+                  <div key={ index3 } data-testid={ `${index3}-recomendation-card` }>
+                    <div
+                      data-testid={ `${index3}-recomendation-title` }
+                    >
+                      {resultado.strDrink}
+                    </div>
+                    {/* <img src={ resultado.strDrinkThumb } alt="DrinkRecomendation" /> */}
+                  </div>)))
+              : <p>Recomendations</p>}
           </div>
+
+          <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
         </div>))}
-      <Carousel />
     </section>
   );
 }
