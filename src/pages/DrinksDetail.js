@@ -20,18 +20,15 @@ function DrinksDetail() {
   const history = useHistory();
   const title = 'DrinksDetail';
   const SEIS = 6;
-
   const location = useLocation();
   const { pathname } = location;
   const locationId = pathname.replace(/\D/g, '');
-
   const requestFetch = async () => {
     const idURL = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${locationId}`;
     const response = await fetch(idURL);
     const responseJson = await response.json();
     setDrinkCard(responseJson.drinks);
   };
-
   const getRecomendation = async () => {
     const recomendURL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
     const response = await fetch(recomendURL);
@@ -39,7 +36,6 @@ function DrinksDetail() {
     setRecomendations(responseJson.meals);
     console.log(responseJson.meals);
   };
-
   const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
   const handleStarted = () => {
     if (recipesInProgress) {
@@ -48,7 +44,6 @@ function DrinksDetail() {
       setIfStarted(checkStarted);
     }
   };
-
   const favoritesData = JSON.parse(localStorage.getItem('favoriteRecipes'));
   useEffect(() => {
     setPageTitle(title);
@@ -56,7 +51,6 @@ function DrinksDetail() {
     requestFetch();
     handleStarted();
     getRecomendation();
-
     setToClipboard(pathname.toString());
     if (favoritesData !== null) {
       const favoriteData = favoritesData.filter((fav) => fav.id === locationId);
@@ -65,7 +59,6 @@ function DrinksDetail() {
       }
     }
   }, []);
-
   const handleFavorite = () => {
     setFavorite(!favorite);
     console.log(drinkCard[0]);
@@ -84,7 +77,6 @@ function DrinksDetail() {
         name: strDrink,
         image: strDrinkThumb,
       };
-
       if (favoritesData !== null) {
         localStorage.setItem('favoriteRecipes',
           JSON.stringify([...favoritesData, favObj]));
@@ -93,7 +85,6 @@ function DrinksDetail() {
       }
     }
   };
-
   const setIngredMeasures = (drink) => {
     const VINTE = 20;
     const ingredMeasures = [];
@@ -108,7 +99,6 @@ function DrinksDetail() {
       return ingredMeasures;
     }
   };
-
   useEffect(() => {
     const ingredMeasures = setIngredMeasures(drinkCard);
     setIngredients(ingredMeasures);
@@ -116,9 +106,10 @@ function DrinksDetail() {
 
   const clickToStart = () => {
     const storedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    storedRecipes.cocktails[drinkCard[0].idDrink] = [...ingredients];
-    localStorage.setItem('inProgressRecipes', JSON.stringify(storedRecipes));
-
+    if (storedRecipes) {
+      storedRecipes.cocktails[drinkCard[0]?.idDrink] = [...ingredients];
+      localStorage.setItem('inProgressRecipes', JSON.stringify(storedRecipes));
+    }
     history.push(`/drinks/${locationId}/in-progress`);
   };
 
@@ -168,7 +159,6 @@ function DrinksDetail() {
               </li>))}
           </ul>
           <p data-testid="instructions">{details.strInstructions}</p>
-
           <div>
             Recomendations
             <div className="wrapper">
@@ -191,7 +181,6 @@ function DrinksDetail() {
                 : <p>Recomendations</p>}
             </div>
           </div>
-
           <button
             type="button"
             className="start-button"
@@ -207,5 +196,4 @@ function DrinksDetail() {
     </section>
   );
 }
-
 export default DrinksDetail;
