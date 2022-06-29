@@ -1,10 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import Share from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+
+const copy = require('clipboard-copy');
+
 function FoodsInProgress() {
   const [foodCard, setFoodCard] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [measure, setMeasure] = useState([]);
+  const [finishBtn, setFinishBtn] = useState(true);
+  const [ingredCount, setIngredCount] = useState(0);
+  const [copied, setCopied] = useState(false);
+  const [toClipBoard, setToClipboard] = useState('');
+  const [favorite, setFavorite] = useState(false);
+  const favoritesData = JSON.parse(localStorage.getItem('favoriteRecipes'));
   const location = useLocation();
   const { pathname } = location;
   const locationId = pathname.replace(/\D/g, '');
@@ -16,8 +28,32 @@ function FoodsInProgress() {
     setFoodCard(responseJson.meals);
   };
 
+  const handleFavorite = () => {
+    setFavorite(!favorite);
+
+    if (favorite === false) {
+      const { idMeal, strArea, strCategory, strMeal, strMealThumb } = foodCard[0];
+      const favObj = {
+        id: idMeal,
+        type: 'food',
+        nationality: strArea,
+        category: strCategory,
+        alcoholicOrNot: '',
+        name: strMeal,
+        image: strMealThumb,
+      };
+      if (favoritesData !== null) {
+        localStorage.setItem('favoriteRecipes',
+          JSON.stringify([...favoritesData, favObj]));
+      } else {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([favObj]));
+      }
+    }
+  };
+
   useEffect(() => {
     requestFetch();
+    setToClipboard(pathname.toString());
   }, []);
 
   useEffect(() => {
@@ -35,6 +71,24 @@ function FoodsInProgress() {
     setMeasure(newArray2?.filter((details) => details !== ' '));
   }, [foodCard]);
 
+  const checkboxClick = ({ target }) => {
+    console.log(ingredients.length);
+    if (target.checked === true) {
+      const newCount = ingredCount + 1;
+      setIngredCount(newCount);
+    } else if (target.checked === false) {
+      const newCount = ingredCount - 1;
+      setIngredCount(newCount);
+    }
+
+    if (ingredients.length - 1 === ingredCount) {
+      console.log('if funciona');
+      setFinishBtn(false);
+    } else {
+      setFinishBtn(true);
+    }
+  };
+
   return (
     <section>
       { foodCard.map((details, index) => (
@@ -46,8 +100,35 @@ function FoodsInProgress() {
             className="imagem-comida-progresso"
           />
           <h1 data-testid="recipe-title">{details.strMeal}</h1>
-          <button type="button" data-testid="share-btn">Share</button>
-          <button type="button" data-testid="favorite-btn">Favorite</button>
+
+          <button type="button" data-testid="share-btn" onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied('true'); } }>
+            <img src={ Share } alt="Share button" />
+          </button>
+          {copied && <p>Link copied!</p>}
+          {favorite
+            ? (
+              <button
+                type="button"
+                onClick={ handleFavorite }
+              >
+                <img
+                  data-testid="favorite-btn"
+                  src={ blackHeartIcon }
+                  alt="button favorite"
+                />
+              </button>)
+            : (
+              <button
+                type="button"
+                onClick={ handleFavorite }
+              >
+                <img
+                  data-testid="favorite-btn"
+                  src={ whiteHeartIcon }
+                  alt="button favorite"
+                />
+              </button>)}
+
           <ul>
             { ingredients && ingredients.map((ingredient, i) => (
               <li
@@ -57,6 +138,9 @@ function FoodsInProgress() {
                 <label
                   htmlFor="checkboxIngredient"
                   data-testid={ `${i}-ingredient-step` }
+                  name={ `checkbox-${i}` }
+                  onChange={ checkboxClick }
+
                 >
                   <input type="checkbox" className="checkboxIngredient" />
                   {`${measure[i]} ${ingredient}`}
@@ -66,7 +150,15 @@ function FoodsInProgress() {
           <p data-testid="recipe-category">{details.strCategory}</p>
           <p data-testid="instructions">{ details.strInstructions }</p>
         </div>))}
-      <button type="button" data-testid="finish-recipe-btn">Finalizar Receita</button>
+
+      <button
+        type="button"
+        data-testid="finish-recipe-btn"
+        disabled={ finishBtn }
+      >
+        Finalizar Receita
+      </button>
+
     </section>
   );
 }

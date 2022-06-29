@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import Share from '../images/shareIcon.svg';
+
+const copy = require('clipboard-copy');
+
 function DrinksInProgress() {
   const [drinkCard, setDrinkCard] = useState([]);
   const [ingredients, setIngredients] = useState([]);
+  const [copied, setCopied] = useState(false);
+  const [toClipBoard, setToClipboard] = useState('');
+  const [finishBtn, setFinishBtn] = useState(true);
+  const [ingredCount, setIngredCount] = useState(0);
+
   const location = useLocation();
   const { pathname } = location;
   const locationId = pathname.replace(/\D/g, '');
@@ -30,9 +39,27 @@ function DrinksInProgress() {
       return ingredMeasures;
     }
   };
+  const checkboxClick = ({ target }) => {
+    console.log(ingredients.length);
+    if (target.checked === true) {
+      const newCount = ingredCount + 1;
+      setIngredCount(newCount);
+    } else if (target.checked === false) {
+      const newCount = ingredCount - 1;
+      setIngredCount(newCount);
+    }
+
+    if (ingredients.length - 1 === ingredCount) {
+      console.log('if funciona');
+      setFinishBtn(false);
+    } else {
+      setFinishBtn(true);
+    }
+  };
 
   useEffect(() => {
     requestFetch();
+    setToClipboard(pathname.toString());
   }, []);
 
   useEffect(() => {
@@ -46,7 +73,11 @@ function DrinksInProgress() {
         <div key={ index }>
           <img src={ details.strDrinkThumb } data-testid="recipe-photo" alt="recipe" />
           <h1 data-testid="recipe-title">{details.strDrink}</h1>
-          <button type="button" data-testid="share-btn">Share</button>
+          <button type="button" data-testid="share-btn" onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied('true'); } }>
+            <img src={ Share } alt="Share button" />
+          </button>
+          {copied && <p>Link copied!</p>}
+
           <button type="button" data-testid="favorite-btn">Favorite</button>
           <ul>
             { ingredients && ingredients.map((ingredient, i) => (
@@ -57,6 +88,9 @@ function DrinksInProgress() {
                 <label
                   htmlFor="checkboxIngredient"
                   data-testid={ `${i}-ingredient-step` }
+                  name={ `checkbox-${i}` }
+                  onChange={ checkboxClick }
+
                 >
                   <input type="checkbox" className="checkboxIngredient" />
                   {`${ingredient}`}
@@ -66,7 +100,15 @@ function DrinksInProgress() {
           <p data-testid="recipe-category">{details.strCategory}</p>
           <p data-testid="instructions">{ details.strInstructions }</p>
         </div>))}
-      <button type="button" data-testid="finish-recipe-btn">Finalizar Receita</button>
+      <button
+        type="button"
+        data-testid="finish-recipe-btn"
+        disabled={ finishBtn }
+      >
+        Finalizar Receita
+
+      </button>
+
     </section>
   );
 }
