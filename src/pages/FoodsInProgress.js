@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 
 import Share from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -16,10 +16,15 @@ function FoodsInProgress() {
   const [copied, setCopied] = useState(false);
   const [toClipBoard, setToClipboard] = useState('');
   const [favorite, setFavorite] = useState(false);
+
+  const history = useHistory();
+
   const favoritesData = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
   const location = useLocation();
   const { pathname } = location;
   const locationId = pathname.replace(/\D/g, '');
+
   const requestFetch = async () => {
     const idURL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${locationId}`;
     const response = await fetch(idURL);
@@ -53,7 +58,13 @@ function FoodsInProgress() {
 
   useEffect(() => {
     requestFetch();
-    setToClipboard(pathname.toString());
+    setToClipboard(pathname.toString().replace('/in-progress', ''));
+    if (favoritesData !== null) {
+      const favoriteData = favoritesData.filter((fav) => fav.id === locationId);
+      if (favoriteData.length > 0) {
+        setFavorite('true');
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -155,8 +166,9 @@ function FoodsInProgress() {
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ finishBtn }
+        onClick={ () => history.push('/done-recipes') }
       >
-        Finalizar Receita
+        Finish Recipe
       </button>
 
     </section>

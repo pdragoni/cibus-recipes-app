@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 
 import Share from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 const copy = require('clipboard-copy');
 
@@ -12,10 +14,15 @@ function DrinksInProgress() {
   const [toClipBoard, setToClipboard] = useState('');
   const [finishBtn, setFinishBtn] = useState(true);
   const [ingredCount, setIngredCount] = useState(0);
+  const [favorite, setFavorite] = useState(false);
+
+  const history = useHistory();
 
   const location = useLocation();
   const { pathname } = location;
   const locationId = pathname.replace(/\D/g, '');
+
+  const favoritesData = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
   const requestFetch = async () => {
     const idURL = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${locationId}`;
@@ -39,6 +46,34 @@ function DrinksInProgress() {
       return ingredMeasures;
     }
   };
+
+  const handleFavorite = () => {
+    setFavorite(!favorite);
+    console.log(drinkCard[0]);
+    if (favorite === false) {
+      const { idDrink,
+        strCategory,
+        strAlcoholic,
+        strDrink,
+        strDrinkThumb } = drinkCard[0];
+      const favObj = {
+        id: idDrink,
+        type: 'drink',
+        nationality: '',
+        category: strCategory,
+        alcoholicOrNot: strAlcoholic,
+        name: strDrink,
+        image: strDrinkThumb,
+      };
+      if (favoritesData !== null) {
+        localStorage.setItem('favoriteRecipes',
+          JSON.stringify([...favoritesData, favObj]));
+      } else {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([favObj]));
+      }
+    }
+  };
+
   const checkboxClick = ({ target }) => {
     console.log(ingredients.length);
     if (target.checked === true) {
@@ -59,7 +94,13 @@ function DrinksInProgress() {
 
   useEffect(() => {
     requestFetch();
-    setToClipboard(pathname.toString());
+    setToClipboard(pathname.toString().replace('/in-progress', ''));
+    if (favoritesData !== null) {
+      const favoriteData = favoritesData.filter((fav) => fav.id === locationId);
+      if (favoriteData.length > 0) {
+        setFavorite('true');
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -73,12 +114,40 @@ function DrinksInProgress() {
         <div key={ index }>
           <img src={ details.strDrinkThumb } data-testid="recipe-photo" alt="recipe" />
           <h1 data-testid="recipe-title">{details.strDrink}</h1>
-          <button type="button" data-testid="share-btn" onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied('true'); } }>
+
+          <button
+            type="button"
+            data-testid="share-btn"
+            onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied('true'); } }
+          >
             <img src={ Share } alt="Share button" />
           </button>
+
           {copied && <p>Link copied!</p>}
 
-          <button type="button" data-testid="favorite-btn">Favorite</button>
+          {favorite
+            ? (
+              <button
+                type="button"
+                onClick={ handleFavorite }
+              >
+                <img
+                  data-testid="favorite-btn"
+                  src={ blackHeartIcon }
+                  alt="button favorite"
+                />
+              </button>)
+            : (
+              <button
+                type="button"
+                onClick={ handleFavorite }
+              >
+                <img
+                  data-testid="favorite-btn"
+                  src={ whiteHeartIcon }
+                  alt="button favorite"
+                />
+              </button>)}
           <ul>
             { ingredients && ingredients.map((ingredient, i) => (
               <li
@@ -104,8 +173,9 @@ function DrinksInProgress() {
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ finishBtn }
+        onClick={ () => history.push('/done-recipes') }
       >
-        Finalizar Receita
+        Finish Recipe
 
       </button>
 
