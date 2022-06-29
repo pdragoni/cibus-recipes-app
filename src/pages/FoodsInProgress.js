@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+
 import Share from '../images/shareIcon.svg';
-// import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-// import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 const copy = require('clipboard-copy');
 
@@ -14,7 +15,8 @@ function FoodsInProgress() {
   const [ingredCount, setIngredCount] = useState(0);
   const [copied, setCopied] = useState(false);
   const [toClipBoard, setToClipboard] = useState('');
-  // const [favorite, setFavorite] = useState(false);
+  const [favorite, setFavorite] = useState(false);
+  const favoritesData = JSON.parse(localStorage.getItem('favoriteRecipes'));
   const location = useLocation();
   const { pathname } = location;
   const locationId = pathname.replace(/\D/g, '');
@@ -24,6 +26,29 @@ function FoodsInProgress() {
     const responseJson = await response.json();
     // console.log(responseJson.meals);
     setFoodCard(responseJson.meals);
+  };
+
+  const handleFavorite = () => {
+    setFavorite(!favorite);
+
+    if (favorite === false) {
+      const { idMeal, strArea, strCategory, strMeal, strMealThumb } = foodCard[0];
+      const favObj = {
+        id: idMeal,
+        type: 'food',
+        nationality: strArea,
+        category: strCategory,
+        alcoholicOrNot: '',
+        name: strMeal,
+        image: strMealThumb,
+      };
+      if (favoritesData !== null) {
+        localStorage.setItem('favoriteRecipes',
+          JSON.stringify([...favoritesData, favObj]));
+      } else {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([favObj]));
+      }
+    }
   };
 
   useEffect(() => {
@@ -64,14 +89,6 @@ function FoodsInProgress() {
     }
   };
 
-  // useEffect(() => {
-  //   console.log(ingredients.length === ingredCount);
-  //   if (ingredients.length === ingredCount) {
-  //     console.log('if funciona')
-
-  //   }
-  // }, [ingredCount]);
-
   return (
     <section>
       { foodCard.map((details, index) => (
@@ -83,11 +100,12 @@ function FoodsInProgress() {
             className="imagem-comida-progresso"
           />
           <h1 data-testid="recipe-title">{details.strMeal}</h1>
+
           <button type="button" data-testid="share-btn" onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied('true'); } }>
             <img src={ Share } alt="Share button" />
           </button>
           {copied && <p>Link copied!</p>}
-          {/* {favorite
+          {favorite
             ? (
               <button
                 type="button"
@@ -109,7 +127,8 @@ function FoodsInProgress() {
                   src={ whiteHeartIcon }
                   alt="button favorite"
                 />
-              </button>)} */}
+              </button>)}
+
           <ul>
             { ingredients && ingredients.map((ingredient, i) => (
               <li
@@ -121,6 +140,7 @@ function FoodsInProgress() {
                   data-testid={ `${i}-ingredient-step` }
                   name={ `checkbox-${i}` }
                   onChange={ checkboxClick }
+
                 >
                   <input type="checkbox" className="checkboxIngredient" />
                   {`${measure[i]} ${ingredient}`}
@@ -130,6 +150,7 @@ function FoodsInProgress() {
           <p data-testid="recipe-category">{details.strCategory}</p>
           <p data-testid="instructions">{ details.strInstructions }</p>
         </div>))}
+
       <button
         type="button"
         data-testid="finish-recipe-btn"
@@ -137,6 +158,7 @@ function FoodsInProgress() {
       >
         Finalizar Receita
       </button>
+
     </section>
   );
 }

@@ -12,6 +12,7 @@ function DrinksInProgress() {
   const [toClipBoard, setToClipboard] = useState('');
   const [finishBtn, setFinishBtn] = useState(true);
   const [ingredCount, setIngredCount] = useState(0);
+
   const location = useLocation();
   const { pathname } = location;
   const locationId = pathname.replace(/\D/g, '');
@@ -76,6 +77,7 @@ function DrinksInProgress() {
             <img src={ Share } alt="Share button" />
           </button>
           {copied && <p>Link copied!</p>}
+
           <button type="button" data-testid="favorite-btn">Favorite</button>
           <ul>
             { ingredients && ingredients.map((ingredient, i) => (
@@ -88,6 +90,7 @@ function DrinksInProgress() {
                   data-testid={ `${i}-ingredient-step` }
                   name={ `checkbox-${i}` }
                   onChange={ checkboxClick }
+
                 >
                   <input type="checkbox" className="checkboxIngredient" />
                   {`${ingredient}`}
@@ -105,6 +108,7 @@ function DrinksInProgress() {
         Finalizar Receita
 
       </button>
+
     </section>
   );
 }
