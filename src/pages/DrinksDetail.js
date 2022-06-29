@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import Context from '../context/Context';
 import './DetailsStyle.css';
 import Share from '../images/shareIcon.svg';
@@ -14,8 +14,10 @@ function DrinksDetail() {
   const [ingredients, setIngredients] = useState([]);
   const [recomendations, setRecomendations] = useState([]);
   const [toClipBoard, setToClipboard] = useState('');
+  const [ifStarted, setIfStarted] = useState(false);
   const [copied, setCopied] = useState(false);
   const [favorite, setFavorite] = useState(false);
+  const history = useHistory();
   const title = 'DrinksDetail';
   const SEIS = 6;
 
@@ -37,11 +39,22 @@ function DrinksDetail() {
     setRecomendations(responseJson.meals);
     console.log(responseJson.meals);
   };
+
+  const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  const handleStarted = () => {
+    if (recipesInProgress) {
+      const idsStarted = Object.keys(recipesInProgress.cocktails); // array de ids, strings
+      const checkStarted = idsStarted?.some((id) => id === locationId); // verifica se o locationId da página é igual a um dos elementos
+      setIfStarted(checkStarted);
+    }
+  };
+
   const favoritesData = JSON.parse(localStorage.getItem('favoriteRecipes'));
   useEffect(() => {
     setPageTitle(title);
     setSearchPageButton(false);
     requestFetch();
+    handleStarted();
     getRecomendation();
 
     setToClipboard(pathname.toString());
@@ -52,6 +65,7 @@ function DrinksDetail() {
       }
     }
   }, []);
+
   const handleFavorite = () => {
     setFavorite(!favorite);
     console.log(drinkCard[0]);
@@ -99,6 +113,14 @@ function DrinksDetail() {
     const ingredMeasures = setIngredMeasures(drinkCard);
     setIngredients(ingredMeasures);
   }, [drinkCard]);
+
+  const clickToStart = () => {
+    const storedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    storedRecipes.cocktails[drinkCard[0].idDrink] = [...ingredients];
+    localStorage.setItem('inProgressRecipes', JSON.stringify(storedRecipes));
+
+    history.push(`/drinks/${locationId}/in-progress`);
+  };
 
   return (
     <section>
@@ -173,10 +195,12 @@ function DrinksDetail() {
           <button
             type="button"
             className="start-button"
-            onClick={ () => console.log('recipe started') }
+            onClick={ clickToStart }
             data-testid="start-recipe-btn"
           >
-            Start Recipe
+            {
+              ifStarted ? 'Continue Recipe' : 'Start Recipe'
+            }
           </button>
         </div>
       ))}

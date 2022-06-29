@@ -19,6 +19,7 @@ function FoodsDetail() {
   const [toClipBoard, setToClipboard] = useState('');
   const [copied, setCopied] = useState(false);
   const [favorite, setFavorite] = useState(false);
+  const [ifStarted, setIfStarted] = useState(false);
   const title = 'Foods Detail';
   const SEIS = 6;
 
@@ -39,13 +40,26 @@ function FoodsDetail() {
     const responseJson = await response.json();
     setRecomendations(responseJson.drinks);
   };
+
+  const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  const handleStarted = () => {
+    if (recipesInProgress) {
+      const idsStarted = Object.keys(recipesInProgress.meals); // array de ids, strings
+      const checkStarted = idsStarted?.some((id) => id === locationId); // verifica se o locationId da página é igual a um dos elementos
+      setIfStarted(checkStarted);
+    }
+  };
+
   const favoritesData = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  console.log(favoritesData);
+
   useEffect(() => {
     setPageTitle(title);
     setSearchPageButton(false);
     requestFetch();
     getRecomendation();
     setToClipboard(pathname.toString());
+    handleStarted();
     if (favoritesData !== null) {
       const favoriteData = favoritesData.filter((fav) => fav.id === locationId);
       if (favoriteData.length > 0) {
@@ -92,22 +106,10 @@ function FoodsDetail() {
   }, [foodCard]);
 
   const clickToStart = () => {
-    const storedArray = localStorage.getItem('inProgressRecipes');
-    const storageIngredients = { [foodCard[0].idMeal]: [...ingredients] };
-    if (storedArray) {
-      const parsed = JSON.parse(storedArray);
-      console.log(parsed);
-      const reLoc = {
-        cocktails: { ...parsed.cocktails },
-        meals: { ...parsed.meals, ...storageIngredients },
-      };
-      localStorage.setItem('inProgressRecipes', JSON.stringify(reLoc));
-      console.log(reLoc); // fim do reLoc
-    } else {
-      const newStorage = { cocktails: {}, meals: storageIngredients };
-      localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
-    }
-    history.push(`/drinks/${locationId}/in-progress`);
+    const storedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    storedRecipes.meals[foodCard[0].idMeal] = [...ingredients];
+    localStorage.setItem('inProgressRecipes', JSON.stringify(storedRecipes));
+    history.push(`/foods/${locationId}/in-progress`);
   };
 
   return (
@@ -199,7 +201,9 @@ function FoodsDetail() {
             onClick={ clickToStart }
             data-testid="start-recipe-btn"
           >
-            Start Recipe
+            {
+              ifStarted ? 'Continue Recipe' : 'Start Recipe'
+            }
           </button>
         </div>))}
     </section>

@@ -80,6 +80,7 @@ function Header() {
   useEffect(() => {
     const teste = async () => {
       const email = JSON.parse(localStorage.getItem('user'));
+      console.log(email);
       if (email) {
         setUsuario(email.email);
       }
