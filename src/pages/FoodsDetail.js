@@ -107,8 +107,10 @@ function FoodsDetail() {
 
   const clickToStart = () => {
     const storedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    storedRecipes.meals[foodCard[0].idMeal] = [...ingredients];
-    localStorage.setItem('inProgressRecipes', JSON.stringify(storedRecipes));
+    if (storedRecipes) {
+      storedRecipes.meals[foodCard[0]?.idMeal] = [...ingredients];
+      localStorage.setItem('inProgressRecipes', JSON.stringify(storedRecipes));
+    }
     history.push(`/foods/${locationId}/in-progress`);
   };
 
