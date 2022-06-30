@@ -39,28 +39,40 @@ function Login({ history }) {
   };
 
   return (
-    <section>
-      <input
-        data-testid="email-input"
-        type="email"
-        name="email"
-        onChange={ onInputChange }
-      />
-      <input
-        data-testid="password-input"
-        type="password"
-        name="password"
-        onChange={ onInputChange }
-      />
-      <button
-        data-testid="login-submit-btn"
-        type="button"
-        disabled={ isValidateBtn }
-        onClick={ onLoginBtnClick }
-      >
-        Enter
-      </button>
-    </section>
+    <div>
+      <section className="section-login">
+        <h1 className="app-title">CIBUS App</h1>
+        <h5 className="app-subtitle">The best recipes for you</h5>
+        <input
+          data-testid="email-input"
+          type="email"
+          name="email"
+          placeholder="Insert your email"
+          onChange={ onInputChange }
+        />
+        <input
+          data-testid="password-input"
+          type="password"
+          name="password"
+          placeholder="*******"
+          onChange={ onInputChange }
+        />
+        <button
+          data-testid="login-submit-btn"
+          type="button"
+          disabled={ isValidateBtn }
+          onClick={ onLoginBtnClick }
+        >
+          Enter
+        </button>
+      </section>
+      <div className="group-info">
+        <p className="developed-by">developed by:</p>
+        <p className="group-14-minds">
+          Group14 Minds
+        </p>
+      </div>
+    </div>
   );
 }
 

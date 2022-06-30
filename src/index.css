@@ -5,11 +5,79 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #FFBA7C;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: Verdana, source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.section-login {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 30px 15px 30px;
+  padding: 1.25em;
+  text-align: center;
+  color: #7C8046;
+  border: solid 0.25em #919974;
+  border-radius: 2em;
+}
+
+.section-login input {
+  border: #919974 5px solid;
+  margin: 2px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 20px;
+}
+
+.section-login button {
+  padding: 08px;
+  font-size: 20px;
+  border-radius: 28px;
+  border: #7C8046 5px solid;
+  background-color: #d18129;
+  margin-bottom: 10px;
+}
+
+.app-title {
+  font-size: 3em;
+  color: saddlebrown;
+  background-color: sandybrown;
+  border-radius: 28px;
+  border: solid 0.12em ;
+  margin-top: 0%;
+}
+
+.app-subtitle {
+  justify-content: center;
+  font-size: 1.25em;
+  margin-top: 0%;
+  color: saddlebrown;
+}
+
+.group-info {
+  padding: 0.5em;
+  background-color: sandybrown;
+  border-radius: 2em;
+  margin: 10px 30px 10px 30px;
+  border: solid 0.15em #919974;
+}
+
+.developed-by {
+  text-align: center;
+  font-size: 18px;
+  color: saddlebrown;
+  height: 0.15rem;
+}
+
+.group-14-minds {
+  font-size: 30px;
+  color: saddlebrown;
+  text-align: center;
+  text-decoration: overline underline;
+  text-decoration-color: #7C8046;
 }
 
 .imagem {
