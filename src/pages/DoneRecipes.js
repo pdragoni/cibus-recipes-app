@@ -7,22 +7,47 @@ function DoneRecipes() {
   const title = 'Done Recipes';
   const { setPageTitle, setSearchPageButton } = useContext(Context);
   const [cardRecipe, setCardRecipe] = useState([]);
+  const [cardFilter, setCardFilter] = useState([]);
 
   useEffect(() => {
     setPageTitle(title);
     setSearchPageButton(false);
     const storage = JSON.parse(localStorage.getItem('doneRecipes'));
     setCardRecipe(storage);
+    setCardFilter(storage);
   }, []);
+
+  const handleClickFilter = (type) => {
+    const filter = cardRecipe.filter((recipe) => recipe.type === type);
+    setCardFilter(filter);
+  };
 
   return (
     <section>
       <Header />
       <div>
-        <button type="button" data-testid="filter-by-all-btn">All</button>
-        <button type="button" data-testid="filter-by-food-btn">Food</button>
-        <button type="button" data-testid="filter-by-drink-btn">Drink</button>
-        { cardRecipe.map((recipe, index) => (
+        <button
+          type="button"
+          onClick={ () => setCardFilter(cardRecipe) }
+          data-testid="filter-by-all-btn"
+        >
+          All
+        </button>
+        <button
+          type="button"
+          onClick={ () => handleClickFilter('food') }
+          data-testid="filter-by-food-btn"
+        >
+          Food
+        </button>
+        <button
+          type="button"
+          onClick={ () => handleClickFilter('drink') }
+          data-testid="filter-by-drink-btn"
+        >
+          Drink
+        </button>
+        { cardFilter.map((recipe, index) => (
           <div key={ recipe.id }>
             <p
               data-testid={ `${index}-horizontal-name` }
