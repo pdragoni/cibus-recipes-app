@@ -51,7 +51,7 @@ function DoneRecipes() {
         >
           Drink
         </button>
-        { cardFilter.map((recipe, index) => (
+        { cardFilter && cardFilter.map((recipe, index) => (
           <div key={ recipe.id }>
             <p>{recipe.id}</p>
             <Link to={ `/${recipe.type}s/${recipe.id}` }>

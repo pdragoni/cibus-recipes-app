@@ -108,7 +108,7 @@ function DrinksInProgress() {
       doneDate: recipe.dateModified,
       tags: tag,
     };
-    const finishRecipe = storage.push(newObject);
+    const finishRecipe = storage?.push(newObject);
     console.log(finishRecipe);
     localStorage.setItem('doneRecipes', JSON.stringify(storage));
     history.push('/done-recipes');
