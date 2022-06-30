@@ -99,17 +99,16 @@ code {
 .app-name {
   text-decoration: overline underline;
   text-align: center;
-  font-size: 1.5em;
+  font-size: 1.25em;
   color: saddlebrown;
   border-radius: 2em;
 }
 
 .page-title {
   text-align: center;
-  font-size: 1.25em;
+  font-size: 1.15em;
   background-color: #d18129;
   border: solid 0.15em #919974;
-  margin: 0.15em;
 }
 
 .search-div {
@@ -128,11 +127,21 @@ code {
 }
 
 .search-div label {
-  font-size: 1.25em;
+  font-size: 1em;
 }
 
 .search-div button {
-  font-size: 1.25em;
+  font-size: 1em;
+}
+
+.footer-div {
+  display: flex;
+  width: 360px;
+}
+
+.footer-div button {
+  flex-direction: row;
+  width: 100%;
 }
 
 .categories-div {
@@ -153,3 +162,4 @@ code {
   position: fixed;
   bottom: 0px;
 }
+
