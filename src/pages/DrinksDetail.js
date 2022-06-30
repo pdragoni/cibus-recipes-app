@@ -28,13 +28,13 @@ function DrinksDetail() {
     const response = await fetch(idURL);
     const responseJson = await response.json();
     setDrinkCard(responseJson.drinks);
+    console.log(responseJson.drinks);
   };
   const getRecomendation = async () => {
     const recomendURL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
     const response = await fetch(recomendURL);
     const responseJson = await response.json();
     setRecomendations(responseJson.meals);
-    console.log(responseJson.meals);
   };
   const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
   const handleStarted = () => {

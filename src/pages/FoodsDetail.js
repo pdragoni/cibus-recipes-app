@@ -31,6 +31,7 @@ function FoodsDetail() {
     const idURL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${locationId}`;
     const response = await fetch(idURL);
     const responseJson = await response.json();
+    console.log(responseJson.meals);
     setFoodCard(responseJson.meals);
   };
 

@@ -92,6 +92,28 @@ function DrinksInProgress() {
     }
   };
 
+  const handleFinishRecipe = () => {
+    const storage = JSON.parse(localStorage.getItem('doneRecipes'));
+    const recipe = drinkCard[0];
+    let tag = [];
+    if (recipe.strTags !== null) tag = recipe.strTags;
+    const newObject = {
+      id: drinkCard.idDrink,
+      type: 'drink',
+      nationality: '',
+      category: recipe.strCategory,
+      alcoholicOrNot: recipe.strAlcoholic,
+      name: recipe.strDrink,
+      image: recipe.strDrinkThumb,
+      doneDate: recipe.dateModified,
+      tags: tag,
+    };
+    const finishRecipe = storage.push(newObject);
+    console.log(finishRecipe);
+    localStorage.setItem('doneRecipes', JSON.stringify(storage));
+    history.push('/done-recipes');
+  };
+
   useEffect(() => {
     requestFetch();
     setToClipboard(pathname.toString().replace('/in-progress', ''));
@@ -173,7 +195,7 @@ function DrinksInProgress() {
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ finishBtn }
-        onClick={ () => history.push('/done-recipes') }
+        onClick={ handleFinishRecipe }
       >
         Finish Recipe
 
