@@ -41,7 +41,7 @@ function Login({ history }) {
   return (
     <div>
       <section className="section-login">
-        <h1 className="app-title">CIBUS App</h1>
+        <h1 className="app-title">Cibus Recipes</h1>
         <h5 className="app-subtitle">The best recipes for you</h5>
         <input
           data-testid="email-input"

@@ -16,7 +16,6 @@ function Header() {
   } = useContext(Context);
 
   const [isSearching, setIsSearching] = useState(false);
-  const [usuario, setUsuario] = useState('');
   const [query, setQuery] = useState('');
   const [radio, setRadio] = useState('Name');
   const history = useHistory();
@@ -101,12 +100,9 @@ function Header() {
   }, [pageTitle]);
 
   return (
-    <header>
-      <h3>Receitas Grupo 14</h3>
-      <span data-testid="page-title">
-        { pageTitle }
-      </span>
-      <label htmlFor="btnProfile">
+    <header className="header">
+      <h3 className="app-name">Cibus Recipes</h3>
+      <div className="profile-header">
         <button
           name="btnProfile"
           type="button"
@@ -117,32 +113,21 @@ function Header() {
         >
           <img src={ profileIcon } alt="foto-de-perfil" />
         </button>
-        <span>{ usuario }</span>
-      </label>
-      <br />
-      {/* <button
-        name="btnSearch"
-        type="button"
-        data-testid="search-top-btn"
-        src={ searchIcon }
-        onClick={ clickToSearch }
-      >
-        <img src={ searchIcon } alt="imagem-de-busca" />
-      </button> */}
-      { searchPageButton && (
-        <button
-          name="btnSearch"
-          type="button"
-          data-testid="search-top-btn"
-          onClick={ clickToSearch }
-          src={ searchIcon }
-        >
-          <img src={ searchIcon } alt="imagem-de-busca" />
-        </button>)}
+        { searchPageButton && (
+          <button
+            name="btnSearch"
+            type="button"
+            data-testid="search-top-btn"
+            onClick={ clickToSearch }
+            src={ searchIcon }
+          >
+            <img src={ searchIcon } alt="imagem-de-busca" />
+          </button>)}
+      </div>
       {
         isSearching
           && (
-            <div>
+            <div className="search-div">
               <input
                 onChange={ ({ target }) => setQuery(target.value) }
                 data-testid="search-input"
@@ -150,38 +135,38 @@ function Header() {
                 placeholder="Search here"
               />
               <label htmlFor="ingredients">
-                Ingredients
                 <input
                   onChange={ ({ target }) => setRadio(target.id) }
-                  id="Ingredients"
+                  id="ingredients"
                   type="radio"
                   data-testid="ingredient-search-radio"
                   name="categories"
                 />
+                Ingredients
               </label>
               <label
                 htmlFor="name"
               >
-                Name
                 <input
                   onChange={ ({ target }) => setRadio(target.id) }
-                  id="Name"
+                  id="name"
                   type="radio"
                   data-testid="name-search-radio"
                   name="categories"
                 />
+                Name
               </label>
               <label
                 htmlFor="first-letter"
               >
-                First letter
                 <input
                   onChange={ ({ target }) => setRadio(target.id) }
-                  id="First-Letter"
+                  id="first-Letter"
                   type="radio"
                   data-testid="first-letter-search-radio"
                   name="categories"
                 />
+                First letter
               </label>
               <button
                 type="button"
@@ -192,7 +177,13 @@ function Header() {
               </button>
             </div>)
       }
-      <br />
+      <p className="page-title" data-testid="page-title">
+        {
+          `You are on
+        ${pageTitle}
+        `
+        }
+      </p>
     </header>
   );
 }
