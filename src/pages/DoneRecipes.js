@@ -1,13 +1,17 @@
 import React, { useEffect, useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Context from '../context/Context';
 import Share from '../images/shareIcon.svg';
+
+const copy = require('clipboard-copy');
 
 function DoneRecipes() {
   const title = 'Done Recipes';
   const { setPageTitle, setSearchPageButton } = useContext(Context);
   const [cardRecipe, setCardRecipe] = useState([]);
   const [cardFilter, setCardFilter] = useState([]);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     setPageTitle(title);
@@ -49,16 +53,20 @@ function DoneRecipes() {
         </button>
         { cardFilter.map((recipe, index) => (
           <div key={ recipe.id }>
-            <p
-              data-testid={ `${index}-horizontal-name` }
-            >
-              { recipe.name }
-            </p>
-            <img
-              data-testid={ `${index}-horizontal-image` }
-              src={ recipe.image }
-              alt="Recipe"
-            />
+            <p>{recipe.id}</p>
+            <Link to={ `/${recipe.type}s/${recipe.id}` }>
+              <p
+                data-testid={ `${index}-horizontal-name` }
+              >
+                { recipe.name }
+              </p>
+              <img
+                data-testid={ `${index}-horizontal-image` }
+                src={ recipe.image }
+                width="100px"
+                alt="Recipe"
+              />
+            </Link>
             {/* <p data-testid={ `${index}-horizontal-top-text` }>{ recipe.category }</p> */}
             { recipe.type === 'food' ? (
               <p data-testid={ `${index}-horizontal-top-text` }>
@@ -79,8 +87,10 @@ function DoneRecipes() {
               </p>
 
             ))}
+            {copied && <p>Link copied!</p>}
             <button
               type="button"
+              onClick={ () => { copy(`http://localhost:3000/${recipe.type}s/${recipe.id}`); setCopied(true); } }
               data-testid={ `${index}-horizontal-share-btn` }
               src={ Share }
             >

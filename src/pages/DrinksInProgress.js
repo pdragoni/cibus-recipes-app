@@ -98,7 +98,7 @@ function DrinksInProgress() {
     let tag = [];
     if (recipe.strTags !== null) tag = recipe.strTags;
     const newObject = {
-      id: drinkCard.idDrink,
+      id: recipe.idDrink,
       type: 'drink',
       nationality: '',
       category: recipe.strCategory,
