@@ -73,7 +73,7 @@ function FavoriteRecipes() {
         All
 
       </button>
-      {data.filter((types) => type.includes(types.type))
+      { data && data.filter((types) => type.includes(types.type))
         .map((favoriteRecipes, index) => (
           <div key={ favoriteRecipes.name }>
             <Link
