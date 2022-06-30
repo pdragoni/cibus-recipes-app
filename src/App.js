@@ -27,8 +27,8 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Switch>
-        <Provider>
+      <Provider>
+        <Switch>
           <Route exact path="/" component={ Login } />
           <Route exact path="/foods" component={ Foods } />
           <Route exact path="/drinks" component={ Drinks } />
@@ -68,8 +68,8 @@ function App() {
           <Route exact path="/done-recipes" component={ DoneRecipes } />
           <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
           <Route exact path="" component={ NotFound } />
-        </Provider>
-      </Switch>
+        </Switch>
+      </Provider>
     </BrowserRouter>
   );
 }
