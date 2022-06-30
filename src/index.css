@@ -38,6 +38,7 @@ code {
   border-radius: 28px;
   border: #7C8046 5px solid;
   background-color: #d18129;
+  cursor: pointer;
   margin-bottom: 10px;
 }
 
@@ -93,6 +94,7 @@ code {
 .profile-header button {
   border-radius: 1em;
   margin:5px;
+  cursor: pointer;
   width: 80%;
 }
 
@@ -108,12 +110,12 @@ code {
   text-align: center;
   font-size: 1.15em;
   background-color: #d18129;
-  border: solid 0.15em #919974;
+  border: solid 0.15em #7C8046;
 }
 
 .search-div {
   display: grid;
-  border: #919974 0.5em solid;
+  border: #7C8046 0.25em solid;
   margin: 0.15em;
 }
 
@@ -132,6 +134,7 @@ code {
 
 .search-div button {
   font-size: 1em;
+  cursor: pointer;
 }
 
 .footer-div {
@@ -142,11 +145,26 @@ code {
 .footer-div button {
   flex-direction: row;
   width: 100%;
+  cursor: pointer;
 }
 
 .categories-div {
   border: solid 0.25em #7C8046;
   margin: 0.25em 0 0.25em 0;
+  display: grid;
+}
+
+.categories-div h4 {
+  font-size: 1.15em;
+  text-align: center;
+  margin: 0%;
+  background-color: #d18129;
+  color: black;
+}
+
+.categories-div button {
+  cursor: pointer;
+  width: 100%;
 }
 
 .imagem {
@@ -160,6 +178,7 @@ code {
 
 .start-button {
   position: fixed;
+  cursor: pointer;
   bottom: 0px;
 }
 
