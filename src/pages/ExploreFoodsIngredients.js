@@ -56,7 +56,7 @@ function ExploreFoodsIngredients() {
                  data-testid={ `${index}-card-img` }
                  alt={ food.strMeal }
                />
-               <p data-testid={ `${index}-card-name` } className="">
+               <p data-testid={ `${index}-card-name` }>
                  {food.strIngredient}
                </p>
              </button>

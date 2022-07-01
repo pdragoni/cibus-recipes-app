@@ -44,6 +44,7 @@ function ExplorerDrinksIngredients() {
 
           <div
             key={ drink + index }
+            className="ingredients-card"
           >
             <button
               type="button"
