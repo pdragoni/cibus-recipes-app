@@ -44,6 +44,7 @@ function ExploreFoodsIngredients() {
 
            <div
              key={ food + index }
+             className="ingredients-card"
            >
              <button
                data-testid={ `${index}-ingredient-card` }

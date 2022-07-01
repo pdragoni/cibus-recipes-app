@@ -26,31 +26,32 @@ function Footer() {
 
   return (
     <footer className={ style.container } data-testid="footer">
-      <button
-        data-testid="drinks-bottom-btn"
-        onClick={ () => handleToDrinks() }
-        type="button"
-        src={ drinkIcon }
-      >
-        <img src={ drinkIcon } alt="drinkIcon" />
-      </button>
-      <button
-        data-testid="explore-bottom-btn"
-        onClick={ () => handleToExplorer() }
-        type="button"
-        src={ exploreIcon }
-      >
-        <img src={ exploreIcon } alt="exploreIcon" />
-      </button>
-
-      <button
-        data-testid="food-bottom-btn"
-        onClick={ () => handleToFoods() }
-        type="button"
-        src={ mealIcon }
-      >
-        <img src={ mealIcon } alt="mealIcon" />
-      </button>
+      <div className="footer-div">
+        <button
+          data-testid="drinks-bottom-btn"
+          onClick={ () => handleToDrinks() }
+          type="button"
+          src={ drinkIcon }
+        >
+          <img src={ drinkIcon } alt="drinkIcon" />
+        </button>
+        <button
+          data-testid="explore-bottom-btn"
+          onClick={ () => handleToExplorer() }
+          type="button"
+          src={ exploreIcon }
+        >
+          <img src={ exploreIcon } alt="exploreIcon" />
+        </button>
+        <button
+          data-testid="food-bottom-btn"
+          onClick={ () => handleToFoods() }
+          type="button"
+          src={ mealIcon }
+        >
+          <img src={ mealIcon } alt="mealIcon" />
+        </button>
+      </div>
     </footer>
   );
 }

@@ -33,10 +33,14 @@ function ExplorerDrinks() {
   return (
     <section>
       <Header />
-      <section>
+      <div className="explore-food-title-div">
+        <h4 className="explore-food-title">Choose a category</h4>
+      </div>
+      <section className="explore-buttons-div">
         <button
           type="button"
           data-testid="explore-by-ingredient"
+          className="explore-button"
           onClick={ handleIngredientes }
         >
           By Ingredient
@@ -44,6 +48,7 @@ function ExplorerDrinks() {
         <button
           type="button"
           data-testid="explore-surprise"
+          className="explore-button"
           onClick={ supriseFunc }
         >
           Surprise me!

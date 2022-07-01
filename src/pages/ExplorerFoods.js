@@ -37,18 +37,22 @@ function ExplorerFoods() {
   return (
     <section>
       <Header />
-      <h1>ExplorerFoods</h1>
-      <section>
+      <div className="explore-food-title-div">
+        <h4 className="explore-food-title">Choose a category</h4>
+      </div>
+      <section className="explore-buttons-div">
         <button
           type="button"
           data-testid="explore-by-ingredient"
           onClick={ handleIngredientes }
+          className="explore-button"
         >
           By Ingredient
         </button>
         <button
           type="button"
           data-testid="explore-by-nationality"
+          className="explore-button"
           onClick={ handleNationality }
         >
           By Nationality
@@ -56,6 +60,7 @@ function ExplorerFoods() {
         <button
           type="button"
           data-testid="explore-surprise"
+          className="explore-button"
           onClick={ supriseFunc }
         >
           Surprise me!

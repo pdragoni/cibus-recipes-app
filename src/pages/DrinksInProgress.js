@@ -141,47 +141,59 @@ function DrinksInProgress() {
     <section>
       { drinkCard.map((details, index) => (
         <div key={ index }>
-          <img src={ details.strDrinkThumb } data-testid="recipe-photo" alt="recipe" />
-          <h1 data-testid="recipe-title">{details.strDrink}</h1>
-
-          <button
-            type="button"
-            data-testid="share-btn"
-            onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied(true); } }
+          <p
+            data-testid="recipe-category"
+            className="recipe-category"
           >
-            <img src={ Share } alt="Share button" />
-          </button>
-
-          {copied && <p>Link copied!</p>}
-
-          {favorite
-            ? (
-              <button
-                type="button"
-                onClick={ handleFavorite }
-              >
-                <img
-                  data-testid="favorite-btn"
-                  src={ blackHeartIcon }
-                  alt="button favorite"
-                />
-              </button>)
-            : (
-              <button
-                type="button"
-                onClick={ handleFavorite }
-              >
-                <img
-                  data-testid="favorite-btn"
-                  src={ whiteHeartIcon }
-                  alt="button favorite"
-                />
-              </button>)}
+            {details.strCategory}
+          </p>
+          <img
+            data-testid="recipe-photo"
+            src={ details.strDrinkThumb }
+            alt={ details.strDrink }
+            className="imagem-detalhes-comida"
+          />
+          <div className="buttons-category">
+            <button
+              type="button"
+              data-testid="share-btn"
+              onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied(true); } }
+            >
+              <img src={ Share } alt="Share button" />
+            </button>
+            {copied && <p>Link copied!</p>}
+            {favorite
+              ? (
+                <button
+                  type="button"
+                  onClick={ handleFavorite }
+                >
+                  <img
+                    data-testid="favorite-btn"
+                    src={ blackHeartIcon }
+                    alt="button favorite"
+                  />
+                </button>)
+              : (
+                <button
+                  type="button"
+                  onClick={ handleFavorite }
+                >
+                  <img
+                    data-testid="favorite-btn"
+                    src={ whiteHeartIcon }
+                    alt="button favorite"
+                  />
+                </button>)}
+          </div>
+          <h4 className="recipe-title" data-testid="recipe-title">{details.strDrink}</h4>
           <ul>
             { ingredients && ingredients.map((ingredient, i) => (
               <li
                 key={ ingredient }
                 data-testid={ `${i}-ingredient-name-and-measure` }
+                className="ingredient-li"
+
               >
                 <label
                   htmlFor="checkboxIngredient"
@@ -195,13 +207,18 @@ function DrinksInProgress() {
                 </label>
               </li>))}
           </ul>
-          <p data-testid="recipe-category">{details.strCategory}</p>
-          <p data-testid="instructions">{ details.strInstructions }</p>
+          <p
+            data-testid="instructions"
+            className="instructions"
+          >
+            { details.strInstructions }
+          </p>
         </div>))}
       <button
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ finishBtn }
+        className="finish-button"
         onClick={ handleFinishRecipe }
       >
         Finish Recipe

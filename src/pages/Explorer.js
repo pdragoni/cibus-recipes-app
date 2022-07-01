@@ -25,21 +25,24 @@ function Explorer() {
   return (
     <section>
       <Header />
-      <button
-        type="button"
-        data-testid="explore-foods"
-        onClick={ handleFoods }
-      >
-        Explore Foods
-      </button>
-      <button
-        type="button"
-        data-testid="explore-drinks"
-        onClick={ handleDrinks }
-      >
-        Explore Drinks
-      </button>
-
+      <div className="explore-buttons-div">
+        <button
+          type="button"
+          data-testid="explore-foods"
+          onClick={ handleFoods }
+          className="explore-button"
+        >
+          Explore Foods
+        </button>
+        <button
+          type="button"
+          data-testid="explore-drinks"
+          onClick={ handleDrinks }
+          className="explore-button"
+        >
+          Explore Drinks
+        </button>
+      </div>
       <Footer />
     </section>);
 }

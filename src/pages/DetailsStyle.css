@@ -1,26 +1,30 @@
 .wrapper {
-  border: 1px solid red;
   display: flex;
-  height: 110px;
+  margin-left: 15px;
   overflow-x: auto;
+  text-align: center;
   width: 200px;
 }
 
-/* .wrapper::-webkit-scrollbar {
+.wrapper::-webkit-scrollbar {
   width: 0;
-} */
-
-.recomendation-card {
-  background-color: aqua;
-  border: 1px solid red;
-  height: 80px;
-  line-height: 90px;
-  margin-right: 2px;
-  min-width: 100px;
-  text-align: center;
 }
 
-/* .recomendation-image {
-  width: 20px;
-  height: 20px;
-} */
+.recomendation-card {
+  border: 0.2em solid saddlebrown;
+  height: fit-content;
+  margin-right: 12px;
+  width: fit-content;
+}
+
+.recomendation-image {
+  margin-bottom: -04px;
+  width: 100px;
+}
+
+.recommendation-title {
+  background-color: sandybrown;
+  font-size: 1.25em;
+  margin-bottom: 0.5em;
+  text-align: center;
+}

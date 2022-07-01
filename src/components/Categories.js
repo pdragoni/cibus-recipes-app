@@ -67,7 +67,6 @@ function Categories() {
 
   return (
     <div className="categories-div">
-      <h4>Categories</h4>
       {
         categoriesArr
           .map((category, index) => (
@@ -90,6 +89,7 @@ function Categories() {
       >
         All
       </button>
+      <h4>Categories</h4>
     </div>
   );
 }

@@ -1,31 +1,339 @@
-body {
-  margin: 0;
+@media only screen and (min-width: 360px) {
+  body {
+  background-color: #FFBA7C;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: Verdana, source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
-.imagem {
-  width: 100px;
-}
-
-.imagem-detalhes-comida {
-  width: 20em;
+.section-login {
+  display: flex;
+  border: solid 0.25em #919974;
   border-radius: 2em;
+  color: #7C8046;
+  flex-direction: column;
+  margin: 15px 30px 15px 30px;
+  padding: 1.25em;
+  text-align: center;
 }
 
-.start-button {
-  position: fixed;
-  bottom: 0px;
+.section-login input {
+  border: #919974 5px solid;
+  border-radius: 20px;
+  font-size: 16px;
+  margin: 2px;
+  padding: 10px;
+}
+
+.section-login button {
+  background-color: #d18129;
+  border: #7C8046 5px solid;
+  border-radius: 28px;
+  cursor: pointer;
+  font-size: 20px;
+  margin-bottom: 10px;
+  padding: 08px;
+}
+
+.app-title {
+  background-color: sandybrown;
+  border: solid 0.12em ;
+  border-radius: 28px;
+  color: saddlebrown;
+  font-size: 3em;
+  margin-top: 0%;
+}
+
+.app-subtitle {
+  color: saddlebrown;
+  font-size: 1.25em;
+  justify-content: center;
+  margin-top: 0;
+}
+
+.group-info {
+  background-color: sandybrown;
+  border: solid 0.15em #919974;
+  border-radius: 2em;
+  margin: 10px 30px 10px 30px;
+  padding: 0.5em;
+}
+
+.developed-by {
+  color: saddlebrown;
+  font-size: 18px;
+  height: 0.15rem;
+  text-align: center;
+}
+
+.group-14-minds {
+  color: saddlebrown;
+  font-size: 30px;
+  text-align: center;
+  text-decoration: overline underline;
+  text-decoration-color: #7C8046;
+}
+
+.header {
+  background-color: sandybrown;
+  border: solid 0.25em #7C8046;
+}
+
+.profile-header {
+  display: grid;
+  justify-items: center;
+}
+
+.profile-header button {
+  border-radius: 1em;
+  cursor: pointer;
+  margin:5px;
+  width: 80%;
+}
+
+.app-name {
+  border-radius: 2em;
+  color: saddlebrown;
+  font-size: 1.25em;
+  text-decoration: overline underline;
+  text-align: center;
+}
+
+.page-title {
+  background-color: #d18129;
+  border: solid 0.15em #7C8046;
+  font-size: 1.15em;
+  text-align: center;
+}
+
+.search-div {
+  border: #7C8046 0.25em solid;
+  display: grid;
+  margin: 0.15em;
+}
+
+.search-div input {
+  border-radius: 1em;
+  font-size: 1.25em;
+  justify-self: center;
+  margin:5px;
+  padding: 10px;
+  text-align: center;
+}
+
+.search-div label {
+  font-size: 1em;
+}
+
+.search-div button {
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.footer-div {
+  display: flex;
+  width: 360px;
+}
+
+.footer-div button {
+  cursor: pointer;
+  flex-direction: row;
+  width: 100%;
 }
 
 .categories-div {
-  border: solid 3px red;
+  border: solid 0.25em #7C8046;
+  display: flex;
+  flex-direction: column-reverse;
+  margin: 0.25em 0 0.25em 0;
+}
+
+.categories-div h4 {
+  background-color: #d18129;
+  color: black;
+  font-size: 1.15em;
+  margin: 0%;
+  text-align: center;
+}
+
+.categories-div button {
+  cursor: pointer;
+  font-size: 1em;
+  width: 100%;
+}
+
+.standard-text {
+  color: saddlebrown;
+  font-size: 1.25em;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.foodcard {
+  align-items: center;
+  background-color: sandybrown;
+  border: 0.15em solid #7C8046;
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 0.35em;
+  width: 100%;
+}
+
+.foodcard a {
+  color: black;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.foodcard p {
+  background-color: #d18129;
+  border: 0.1em solid #7C8046;
+  font-size: 1.15em;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding: 0.2em;
+  text-align: center;
+}
+
+.imagem {
+  width: 135px;
+}
+
+.imagem-detalhes-comida {
+  border: solid 0.25em #7C8046;
+  border-radius: 2em;
+  text-align: center;
+  width: 22em;
+}
+
+.recipe-title {
+  text-align: center;
+  font-size: 1.5em;
+  margin: 0.25em;
+  background-color: sandybrown;
+  border: #7C8046 solid 0.25em;
+  border-radius: 15em;
+}
+
+.buttons-category {
+  display: flex;
+  justify-content: space-around;
+  margin: 0.75em;
+  width: 100%;
+}
+
+.recipe-category {
+  background-color: #d18129;
+  border-radius: 20em;
+  color: black;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.ingredient-li {
+  font-size: 1.15em;
+  margin-bottom: 05px;
+}
+
+.start-button {
+  background-color: #d18129;
+  border: #7C8046 solid 5px;
+  bottom: 0em;
+  cursor: pointer;
+  font-size: 1.25em;
+  right: 15px;
+}
+
+.finish-button {
+  background-color: #d18129;
+  border: #7C8046 solid 5px;
+  cursor: pointer;
+  font-size: 1.25em;
+}
+
+.imagem-comida-progresso {
+  border-radius: 2em;
+  width: 22em;
+}
+
+.explore-buttons-div {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.explore-button {
+  background-color: #919974;
+  font-size: 1.5em;
+  margin-top: 1em;
+  width: 80%;
+}
+
+.explore-food-title-div {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.explore-food-title {
+  background-color: #919974;
+  border-radius: 1.25em;
+  color: black;
+  font-size: 1.5em;
+  font-weight: 500;
+  padding: 0.5em;
+  text-align: center;
+}
+
+.ingredients-card {
+  background-color: sandybrown;
+  display: grid;
+  margin: 15px 100px;
+}
+
+.ingredients-card p {
+  font-size: 1.25em;
+  margin: 0;
+}
+
+.ingredients-card button {
+  background-color: transparent;
+}
+
+.select-div {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+select {
+  display: flex;
+  font-size: 1.25em;
+  margin: 10px;
+  text-align: center;
+}
+
+option {
+  font-size: 0.7em;
+  max-height: fit-content;
+}
+
+.logout-button {
+  background-color: saddlebrown;
+  border: black 0.5em solid;
+  color: whitesmoke;
+  font-size: 1.15em;
+  margin-top: 2em;
+  width: 80%;
+}
 }

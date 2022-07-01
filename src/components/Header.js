@@ -5,7 +5,6 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
 const EMPTY_RESULTS = `${'Sorry, we haven'}'${'t found any recipes for these filters.'}`;
-
 function Header() {
   const {
     pageTitle,
@@ -14,13 +13,11 @@ function Header() {
     setFilteredArray,
     explorer,
   } = useContext(Context);
-
   const [isSearching, setIsSearching] = useState(false);
-  const [usuario, setUsuario] = useState('');
+  // const [usuario, setUsuario] = useState('');
   const [query, setQuery] = useState('');
   const [radio, setRadio] = useState('Name');
   const history = useHistory();
-
   const clickToSearch = () => {
     if (!isSearching) {
       setIsSearching(true);
@@ -28,7 +25,6 @@ function Header() {
       setIsSearching(false);
     }
   };
-
   const fetchResults = async (URL) => {
     try {
       const response = await fetch(URL);
@@ -48,7 +44,6 @@ function Header() {
       global.alert(EMPTY_RESULTS);
     }
   };
-
   const handleFetch = async () => {
     let baseUrl = '';
     let baseFilter = '';
@@ -68,7 +63,6 @@ function Header() {
     const result = await fetchResults(URL);
     if (result !== undefined) setResults(result);
   };
-
   const handleSearch = () => {
     if (radio === 'First-Letter' && query.length > 1) {
       global.alert('Your search must have only 1 (one) character');
@@ -76,13 +70,12 @@ function Header() {
       handleFetch();
     }
   };
-
   useEffect(() => {
     const teste = async () => {
-      const email = JSON.parse(localStorage.getItem('user'));
-      if (email) {
-        setUsuario(email.email);
-      }
+      // const email = JSON.parse(localStorage.getItem('user'));
+      // if (email) {
+      //   setUsuario(email.email);
+      // }
       if (explorer === false) {
         if (pageTitle === 'Foods' || pageTitle === 'Explore Nationalities') {
           const resultMeal = await fetchResults('https://www.themealdb.com/api/json/v1/1/search.php?s=');
@@ -99,12 +92,9 @@ function Header() {
   }, [pageTitle]);
 
   return (
-    <header>
-      <h3>Receitas Grupo 14</h3>
-      <span data-testid="page-title">
-        { pageTitle }
-      </span>
-      <label htmlFor="btnProfile">
+    <header className="header">
+      <h3 className="app-name">Cibus Recipes</h3>
+      <div className="profile-header">
         <button
           name="btnProfile"
           type="button"
@@ -115,31 +105,28 @@ function Header() {
         >
           <img src={ profileIcon } alt="foto-de-perfil" />
         </button>
-        <span>{ usuario }</span>
-      </label>
-      <br />
-      { searchPageButton && (
-        <button
-          name="btnSearch"
-          type="button"
-          data-testid="search-top-btn"
-          onClick={ clickToSearch }
-          src={ searchIcon }
-        >
-          <img src={ searchIcon } alt="imagem-de-busca" />
-        </button>)}
+        { searchPageButton && (
+          <button
+            name="btnSearch"
+            type="button"
+            data-testid="search-top-btn"
+            onClick={ clickToSearch }
+            src={ searchIcon }
+          >
+            <img src={ searchIcon } alt="imagem-de-busca" />
+          </button>)}
+      </div>
       {
         isSearching
           && (
-            <div>
+            <div className="search-div">
               <input
                 onChange={ ({ target }) => setQuery(target.value) }
                 data-testid="search-input"
                 type="text"
                 placeholder="Search here"
               />
-              <label htmlFor="ingredients">
-                Ingredients
+              <label htmlFor="Ingredients">
                 <input
                   onChange={ ({ target }) => setRadio(target.id) }
                   id="Ingredients"
@@ -147,11 +134,11 @@ function Header() {
                   data-testid="ingredient-search-radio"
                   name="categories"
                 />
+                Ingredients
               </label>
               <label
-                htmlFor="name"
+                htmlFor="Name"
               >
-                Name
                 <input
                   onChange={ ({ target }) => setRadio(target.id) }
                   id="Name"
@@ -159,11 +146,11 @@ function Header() {
                   data-testid="name-search-radio"
                   name="categories"
                 />
+                Name
               </label>
               <label
-                htmlFor="first-letter"
+                htmlFor="First-letter"
               >
-                First letter
                 <input
                   onChange={ ({ target }) => setRadio(target.id) }
                   id="First-Letter"
@@ -171,6 +158,7 @@ function Header() {
                   data-testid="first-letter-search-radio"
                   name="categories"
                 />
+                First letter
               </label>
               <button
                 type="button"
@@ -181,8 +169,15 @@ function Header() {
               </button>
             </div>)
       }
-      <br />
+      <p className="page-title" data-testid="page-title">
+        {
+          `You are on
+        ${pageTitle}
+        `
+        }
+      </p>
     </header>
   );
 }
+
 export default Header;

@@ -106,62 +106,76 @@ function FoodsInProgress() {
     <section>
       { foodCard.map((details, index) => (
         <div key={ index }>
+          <p
+            data-testid="recipe-category"
+            className="recipe-category"
+          >
+            {details.strCategory}
+          </p>
           <img
-            src={ details.strMealThumb }
             data-testid="recipe-photo"
-            alt="recipe"
-            className="imagem-comida-progresso"
+            src={ details.strMealThumb }
+            alt={ details.strMeal }
+            className="imagem-detalhes-comida"
           />
-          <h1 data-testid="recipe-title">{details.strMeal}</h1>
-
-          <button type="button" data-testid="share-btn" onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied(true); } }>
-            <img src={ Share } alt="Share button" />
-          </button>
-          {copied && <p>Link copied!</p>}
-          {favorite
-            ? (
-              <button
-                type="button"
-                onClick={ handleFavorite }
-              >
-                <img
-                  data-testid="favorite-btn"
-                  src={ blackHeartIcon }
-                  alt="button favorite"
-                />
-              </button>)
-            : (
-              <button
-                type="button"
-                onClick={ handleFavorite }
-              >
-                <img
-                  data-testid="favorite-btn"
-                  src={ whiteHeartIcon }
-                  alt="button favorite"
-                />
-              </button>)}
-
+          <div className="buttons-category">
+            <button
+              type="button"
+              data-testid="share-btn"
+              onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied('true'); } }
+            >
+              <img src={ Share } alt="Share button" />
+            </button>
+            {copied && <p>Link copied!</p>}
+            {favorite
+              ? (
+                <button
+                  type="button"
+                  onClick={ handleFavorite }
+                >
+                  <img
+                    data-testid="favorite-btn"
+                    src={ blackHeartIcon }
+                    alt="button favorite"
+                  />
+                </button>)
+              : (
+                <button
+                  type="button"
+                  onClick={ handleFavorite }
+                >
+                  <img
+                    data-testid="favorite-btn"
+                    src={ whiteHeartIcon }
+                    alt="button favorite"
+                  />
+                </button>)}
+          </div>
+          <h4 className="recipe-title" data-testid="recipe-title">{details.strMeal}</h4>
           <ul>
             { ingredients && ingredients.map((ingredient, i) => (
               <li
                 key={ ingredient }
                 data-testid={ `${i}-ingredient-name-and-measure` }
+                className="ingredient-li"
               >
                 <label
                   htmlFor="checkboxIngredient"
                   data-testid={ `${i}-ingredient-step` }
                   name={ `checkbox-${i}` }
                   onChange={ checkboxClick }
-
                 >
                   <input type="checkbox" className="checkboxIngredient" />
                   {`${measure[i]} ${ingredient}`}
                 </label>
               </li>))}
           </ul>
-          <p data-testid="recipe-category">{details.strCategory}</p>
-          <p data-testid="instructions">{ details.strInstructions }</p>
+          <p
+            data-testid="instructions"
+            className="instructions"
+          >
+            { details.strInstructions }
+          </p>
         </div>))}
 
       <button
@@ -169,6 +183,7 @@ function FoodsInProgress() {
         data-testid="finish-recipe-btn"
         disabled={ finishBtn }
         onClick={ () => history.push('/done-recipes') }
+        className="finish-button"
       >
         Finish Recipe
       </button>
