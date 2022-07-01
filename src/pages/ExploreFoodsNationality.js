@@ -52,12 +52,13 @@ function ExplorerFoodsNationality() {
   return (
     <section>
       <Header />
-      <select
-        onChange={ handleNationality }
-        data-testid="explore-by-nationality-dropdown"
-      >
-        <option data-testid="All-option">All</option>
-        {allCountries
+      <div className="select-div">
+        <select
+          onChange={ handleNationality }
+          data-testid="explore-by-nationality-dropdown"
+        >
+          <option data-testid="All-option">All</option>
+          {allCountries
         && allCountries.map((nationalities) => (
           <option
             data-testid={ `${nationalities.strArea}-option` }
@@ -66,11 +67,12 @@ function ExplorerFoodsNationality() {
           >
             {nationalities.strArea}
           </option>))}
-      </select>
+        </select>
+      </div>
       { select === true
         ? (filterCountrie.filter((element, index2) => index2 < DOZE)
           .map((resultado, index) => (
-            <div key={ index }>
+            <div key={ index } className="foodcard">
               <Link
                 data-testid={ `${index}-recipe-card` }
                 to={ `/foods/${resultado.idMeal}` }

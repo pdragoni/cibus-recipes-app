@@ -180,6 +180,7 @@ code {
   margin-bottom: 0.35em;
   background-color: sandybrown;
   display: flex;
+  align-items: center;
   width: 100%;
   flex-flow: column;
   border: 0.15em solid #7C8046
@@ -306,5 +307,23 @@ code {
 
 .ingredients-card button {
   background-color: transparent;
+}
 
+.select-div {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+select {
+  text-align: center;
+  font-size: 1.25em;
+  margin: 10px;
+  display: flex;
+}
+
+option {
+  font-size: 0.7em;
+  max-height: fit-content;
 }
