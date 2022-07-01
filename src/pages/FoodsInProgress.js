@@ -109,7 +109,6 @@ function FoodsInProgress() {
             className="recipe-category"
           >
             {details.strCategory}
-
           </p>
           <img
             data-testid="recipe-photo"
@@ -118,7 +117,11 @@ function FoodsInProgress() {
             className="imagem-detalhes-comida"
           />
           <div className="buttons-category">
-            <button type="button" data-testid="share-btn" onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied('true'); } }>
+            <button
+              type="button"
+              data-testid="share-btn"
+              onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied('true'); } }
+            >
               <img src={ Share } alt="Share button" />
             </button>
             {copied && <p>Link copied!</p>}
@@ -178,6 +181,7 @@ function FoodsInProgress() {
         data-testid="finish-recipe-btn"
         disabled={ finishBtn }
         onClick={ () => history.push('/done-recipes') }
+        className="finish-button"
       >
         Finish Recipe
       </button>

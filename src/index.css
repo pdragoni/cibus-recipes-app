@@ -246,10 +246,17 @@ code {
   position: fixed;
   cursor: pointer;
   bottom: 3em;
-  font-size: 1.5em;
+  font-size: 1.25em;
   border: #7C8046 solid 5px;
   background-color: #d18129;
   right: 15px;
+}
+
+.finish-button {
+  cursor: pointer;
+  font-size: 1.25em;
+  border: #7C8046 solid 5px;
+  background-color: #d18129;
 }
 
 .imagem-comida-progresso {
