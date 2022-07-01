@@ -120,59 +120,73 @@ function FoodsDetail() {
       {console.log(measure)} */}
       {foodCard.map((details, index) => (
         <div key={ index }>
+          <p
+            data-testid="recipe-category"
+            className="recipe-category"
+          >
+            {details.strCategory}
+          </p>
           <img
             data-testid="recipe-photo"
             src={ details.strMealThumb }
-            alt={ details.strDrink }
+            alt={ details.strMeal }
             className="imagem-detalhes-comida"
           />
-          <h4 data-testid="recipe-title">{details.strMeal}</h4>
-          <button type="button" data-testid="share-btn" onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied('true'); } }>
-            <img src={ Share } alt="Share button" />
-          </button>
-          {copied && <p>Link copied!</p>}
-          {favorite
-            ? (
-              <button
-                type="button"
-                onClick={ handleFavorite }
-              >
-                <img
-                  data-testid="favorite-btn"
-                  src={ blackHeartIcon }
-                  alt="button favorite"
-                />
-              </button>)
-            : (
-              <button
-                type="button"
-                onClick={ handleFavorite }
-              >
-                <img
-                  data-testid="favorite-btn"
-                  src={ whiteHeartIcon }
-                  alt="button favorite"
-                />
-              </button>)}
-          <p data-testid="recipe-category">{details.strCategory}</p>
+          <div className="buttons-category">
+            <button className="share-button" type="button" data-testid="share-btn" onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied('true'); } }>
+              <img src={ Share } alt="Share button" />
+            </button>
+            {copied && <p>Link copied!</p>}
+            {favorite
+              ? (
+                <button
+                  type="button"
+                  onClick={ handleFavorite }
+                >
+                  <img
+                    data-testid="favorite-btn"
+                    src={ blackHeartIcon }
+                    alt="button favorite"
+                  />
+                </button>)
+              : (
+                <button
+                  type="button"
+                  onClick={ handleFavorite }
+                >
+                  <img
+                    data-testid="favorite-btn"
+                    src={ whiteHeartIcon }
+                    alt="button favorite"
+                  />
+                </button>)}
+
+          </div>
+          <h4 className="recipe-title" data-testid="recipe-title">{details.strMeal}</h4>
+
           <ul>
             { ingredients && ingredients.map((ingredient, i) => (
               <li
                 key={ ingredient }
                 data-testid={ `${i}-ingredient-name-and-measure` }
+                className="ingredient-li"
               >
                 {`${measure[i]} ${ingredient}`}
               </li>))}
           </ul>
-          <p data-testid="instructions">{ details.strInstructions }</p>
+          <p
+            data-testid="instructions"
+            className="instructions"
+          >
+            { details.strInstructions }
+          </p>
           <video data-testid="video" controls>
             <source src={ details.strYoutube } type="video/mp4" />
             <track src="" kind="captions" srcLang="en" label="english_captions" />
             Your browser does not support the video tag.
           </video>
-
           <div>
-            Recomendations
+            <h4 className="recommendation-title">Recommendations</h4>
             <div className="wrapper">
               { recomendations.length >= 1
                 ? (recomendations
@@ -183,16 +197,16 @@ function FoodsDetail() {
                       data-testid={ `${index3}-recomendation-card` }
                       className="recomendation-card"
                     >
-                      <div
+                      <p
                         data-testid={ `${index3}-recomendation-title` }
                       >
+                        <img
+                          src={ resultado.strDrinkThumb }
+                          alt="DrinkRecomendation"
+                          className="recomendation-image"
+                        />
                         {resultado.strDrink}
-                      </div>
-                      {/* <img
-                        src={ resultado.strDrinkThumb }
-                        alt="DrinkRecomendation"
-                        className="recomendation-image"
-                      /> */}
+                      </p>
                     </div>)))
                 : <p>There are no recommendations</p>}
             </div>

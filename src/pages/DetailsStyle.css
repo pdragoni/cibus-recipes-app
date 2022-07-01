@@ -1,26 +1,29 @@
 .wrapper {
-  border: 1px solid red;
   display: flex;
-  height: 110px;
   overflow-x: auto;
   width: 200px;
+  text-align: center;
+  justify-content: center;
 }
 
 /* .wrapper::-webkit-scrollbar {
-  width: 0;
+  width: 10px;
+  height: 10px;
 } */
 
 .recomendation-card {
-  background-color: aqua;
-  border: 1px solid red;
-  height: 80px;
-  line-height: 90px;
-  margin-right: 2px;
+  height: fit-content;
   min-width: 100px;
-  text-align: center;
+  display: flex;
 }
 
-/* .recomendation-image {
-  width: 20px;
-  height: 20px;
-} */
+.recomendation-image {
+  width: 100px;
+}
+
+.recommendation-title {
+  font-size: 1.25em;
+  margin-bottom: 0.5em;
+  text-align: center;
+  background-color: sandybrown;
+}

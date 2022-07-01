@@ -151,7 +151,8 @@ code {
 .categories-div {
   border: solid 0.25em #7C8046;
   margin: 0.25em 0 0.25em 0;
-  display: grid;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .categories-div h4 {
@@ -165,20 +166,82 @@ code {
 .categories-div button {
   cursor: pointer;
   width: 100%;
+  font-size: 1em;
+}
+
+.foodcard {
+  margin-bottom: 0.35em;
+  background-color: sandybrown;
+  display: flex;
+  width: 100%;
+  flex-flow: column;
+  border: 0.15em solid #7C8046
+}
+
+.foodcard a {
+  padding: 10px;
+  color: black;
+  text-decoration: none;
+  text-align: center;
+}
+
+.foodcard p {
+  font-size: 1.15em;
+  margin-bottom: 0;
+  margin-top: 0;
+  text-align: center;
+  padding: 0.2em;
+  background-color: #d18129;
+  border: 0.1em solid #7C8046;
 }
 
 .imagem {
-  width: 100px;
+  width: 135px;
 }
 
 .imagem-detalhes-comida {
-  width: 20em;
+  text-align: center;
+  border: solid 0.25em #7C8046;
+  width: 22em;
   border-radius: 2em;
+}
+
+.recipe-title {
+  text-align: center;
+  font-size: 1.5em;
+  margin: 0.25em;
+  background-color: sandybrown;
+  border: #7C8046 solid 0.25em;
+  border-radius: 15em;
+}
+
+.buttons-category {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  margin: 0.75em;
+}
+
+.recipe-category {
+  font-size: 1.5em;
+  color: black;
+  text-align: center;
+  background-color: #d18129;
+  border-radius: 20em;
+}
+
+.ingredient-li {
+  font-size: 1.15em;
+  margin-bottom: 05px;
 }
 
 .start-button {
   position: fixed;
   cursor: pointer;
-  bottom: 0px;
+  bottom: 3em;
+  font-size: 1.5em;
+  border: #7C8046 solid 5px;
+  background-color: #d18129;
+  right: 15px;
 }
 
