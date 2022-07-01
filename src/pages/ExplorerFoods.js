@@ -37,7 +37,7 @@ function ExplorerFoods() {
   return (
     <section>
       <Header />
-      <h1>ExplorerFoods</h1>
+      <h1>hdfgdfgdgd</h1>
       <section>
         <button
           type="button"

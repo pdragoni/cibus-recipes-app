@@ -263,3 +263,16 @@ code {
   border-radius: 2em;
   width: 22em;
 }
+
+.explore-buttons-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.explore-button {
+  background-color: #919974;
+  margin-top: 1em;
+  font-size: 1.25em;
+  width: 80%;
+}
