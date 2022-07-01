@@ -28,10 +28,8 @@ function ExplorerFoodsNationality() {
     allNationalities();
     const fi = async (countrie) => {
       const URL = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${countrie}`;
-      console.log(URL);
       const response = await fetch(URL);
       const responseJson = await response.json();
-      console.log(responseJson);
       setFilterCountrie(responseJson.meals);
     };
     if (select === true && all === false) {

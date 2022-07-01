@@ -34,7 +34,6 @@ function DrinksDetail() {
     const response = await fetch(recomendURL);
     const responseJson = await response.json();
     setRecomendations(responseJson.meals);
-    console.log(responseJson.meals);
   };
   const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
   const handleStarted = () => {
@@ -58,10 +57,17 @@ function DrinksDetail() {
         setFavorite('true');
       }
     }
-  }, []);
+    const DOISMS = 2000;
+
+    if (copied === true) {
+      setTimeout(() => {
+        setCopied(false);
+      }, DOISMS);
+    }
+  }, [copied]);
+
   const handleFavorite = () => {
     setFavorite(!favorite);
-    console.log(drinkCard[0]);
     if (favorite === false) {
       const { idDrink,
         strCategory,

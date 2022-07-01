@@ -51,7 +51,6 @@ function FoodsDetail() {
   };
 
   const favoritesData = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  console.log(favoritesData);
 
   useEffect(() => {
     setPageTitle(title);
@@ -66,7 +65,14 @@ function FoodsDetail() {
         setFavorite('true');
       }
     }
-  }, []);
+    const DOISMS = 2000;
+
+    if (copied === true) {
+      setTimeout(() => {
+        setCopied(false);
+      }, DOISMS);
+    }
+  }, [copied]);
 
   const handleFavorite = () => {
     setFavorite(!favorite);

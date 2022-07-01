@@ -20,10 +20,16 @@ function FavoriteRecipes() {
     setPageTitle(title);
     setSearchPageButton(false);
     setData(favoritesData);
-  }, [type, favorite]);
+    const DOISMS = 2000;
+
+    if (copied === true) {
+      setTimeout(() => {
+        setCopied(false);
+      }, DOISMS);
+    }
+  }, [type, favorite, copied]);
 
   const handleCopy = (recipe) => {
-    console.log(recipe);
     if (recipe.type === 'food') {
       copy(`http://localhost:3000/foods/${recipe.id}`);
     } else {
@@ -34,7 +40,6 @@ function FavoriteRecipes() {
   };
 
   const handleFavorite = (id) => {
-    console.log(id);
     const newData = favoritesData.filter((recipes) => recipes.id !== id);
     if (favoritesData !== null) {
       localStorage.setItem('favoriteRecipes',
