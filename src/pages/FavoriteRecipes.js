@@ -54,33 +54,38 @@ function FavoriteRecipes() {
   return (
     <section>
       <Header />
-      <button
-        data-testid="filter-by-food-btn"
-        type="button"
-        onClick={ () => setType('food') }
-      >
-        Foods
-
-      </button>
-      <button
-        data-testid="filter-by-drink-btn"
-        type="button"
-        onClick={ () => setType('drink') }
-      >
-        Drinks
-
-      </button>
-      <button
-        data-testid="filter-by-all-btn"
-        type="button"
-        onClick={ () => setType('drink, food') }
-      >
-        All
-
-      </button>
+      <div className="explore-food-title-div">
+        <h4 className="explore-food-title">Liked</h4>
+      </div>
+      <div className="explore-buttons-div">
+        <button
+          data-testid="filter-by-food-btn"
+          type="button"
+          onClick={ () => setType('food') }
+          className="explore-button"
+        >
+          Foods
+        </button>
+        <button
+          data-testid="filter-by-drink-btn"
+          type="button"
+          onClick={ () => setType('drink') }
+          className="explore-button"
+        >
+          Drinks
+        </button>
+        <button
+          data-testid="filter-by-all-btn"
+          type="button"
+          onClick={ () => setType('drink, food') }
+          className="explore-button"
+        >
+          All
+        </button>
+      </div>
       { data && data.filter((types) => type.includes(types.type))
         .map((favoriteRecipes, index) => (
-          <div key={ favoriteRecipes.name }>
+          <div key={ favoriteRecipes.name } className="foodcard">
             <Link
               to={ `${favoriteRecipes.type}s/${favoriteRecipes.id}` }
             >

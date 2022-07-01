@@ -5,7 +5,6 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
 const EMPTY_RESULTS = `${'Sorry, we haven'}'${'t found any recipes for these filters.'}`;
-
 function Header() {
   const {
     pageTitle,
@@ -14,12 +13,11 @@ function Header() {
     setFilteredArray,
     explorer,
   } = useContext(Context);
-
   const [isSearching, setIsSearching] = useState(false);
+  // const [usuario, setUsuario] = useState('');
   const [query, setQuery] = useState('');
   const [radio, setRadio] = useState('Name');
   const history = useHistory();
-
   const clickToSearch = () => {
     if (!isSearching) {
       setIsSearching(true);
@@ -27,7 +25,6 @@ function Header() {
       setIsSearching(false);
     }
   };
-
   const fetchResults = async (URL) => {
     try {
       const response = await fetch(URL);
@@ -47,7 +44,6 @@ function Header() {
       global.alert(EMPTY_RESULTS);
     }
   };
-
   const handleFetch = async () => {
     let baseUrl = '';
     let baseFilter = '';
@@ -67,7 +63,6 @@ function Header() {
     const result = await fetchResults(URL);
     if (result !== undefined) setResults(result);
   };
-
   const handleSearch = () => {
     if (radio === 'First-Letter' && query.length > 1) {
       global.alert('Your search must have only 1 (one) character');
@@ -75,13 +70,12 @@ function Header() {
       handleFetch();
     }
   };
-
   useEffect(() => {
     const teste = async () => {
-      const email = JSON.parse(localStorage.getItem('user'));
-      if (email) {
-        setUsuario(email.email);
-      }
+      // const email = JSON.parse(localStorage.getItem('user'));
+      // if (email) {
+      //   setUsuario(email.email);
+      // }
       if (explorer === false) {
         if (pageTitle === 'Foods' || pageTitle === 'Explore Nationalities') {
           const resultMeal = await fetchResults('https://www.themealdb.com/api/json/v1/1/search.php?s=');
