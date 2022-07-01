@@ -1,11 +1,12 @@
-body {
-  margin: 0;
+@media only screen and (min-width: 360px) {
+  body {
+  background-color: #FFBA7C;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #FFBA7C;
 }
 
 code {
@@ -15,67 +16,67 @@ code {
 
 .section-login {
   display: flex;
+  border: solid 0.25em #919974;
+  border-radius: 2em;
+  color: #7C8046;
   flex-direction: column;
   margin: 15px 30px 15px 30px;
   padding: 1.25em;
   text-align: center;
-  color: #7C8046;
-  border: solid 0.25em #919974;
-  border-radius: 2em;
 }
 
 .section-login input {
   border: #919974 5px solid;
+  border-radius: 20px;
+  font-size: 16px;
   margin: 2px;
   padding: 10px;
-  font-size: 16px;
-  border-radius: 20px;
 }
 
 .section-login button {
-  padding: 08px;
-  font-size: 20px;
-  border-radius: 28px;
-  border: #7C8046 5px solid;
   background-color: #d18129;
+  border: #7C8046 5px solid;
+  border-radius: 28px;
   cursor: pointer;
+  font-size: 20px;
   margin-bottom: 10px;
+  padding: 08px;
 }
 
 .app-title {
-  font-size: 3em;
-  color: saddlebrown;
   background-color: sandybrown;
-  border-radius: 28px;
   border: solid 0.12em ;
+  border-radius: 28px;
+  color: saddlebrown;
+  font-size: 3em;
   margin-top: 0%;
 }
 
 .app-subtitle {
-  justify-content: center;
-  font-size: 1.25em;
-  margin-top: 0%;
   color: saddlebrown;
+  font-size: 1.25em;
+  justify-content: center;
+  margin-top: 0;
 }
 
 .group-info {
-  padding: 0.5em;
   background-color: sandybrown;
+  border: solid 0.15em #919974;
   border-radius: 2em;
   margin: 10px 30px 10px 30px;
-  border: solid 0.15em #919974;
+  padding: 0.5em;
 }
 
 .developed-by {
-  text-align: center;
-  font-size: 18px;
   color: saddlebrown;
+  font-size: 18px;
   height: 0.15rem;
+  text-align: center;
 }
 
 .group-14-minds {
-  font-size: 30px;
   color: saddlebrown;
+  font-size: 30px;
   text-align: center;
   text-decoration: overline underline;
   text-decoration-color: #7C8046;
@@ -93,39 +94,39 @@ code {
 
 .profile-header button {
   border-radius: 1em;
-  margin:5px;
   cursor: pointer;
+  margin:5px;
   width: 80%;
 }
 
 .app-name {
+  border-radius: 2em;
+  color: saddlebrown;
+  font-size: 1.25em;
   text-decoration: overline underline;
   text-align: center;
-  font-size: 1.25em;
-  color: saddlebrown;
-  border-radius: 2em;
 }
 
 .page-title {
-  text-align: center;
-  font-size: 1.15em;
   background-color: #d18129;
   border: solid 0.15em #7C8046;
+  font-size: 1.15em;
+  text-align: center;
 }
 
 .search-div {
-  display: grid;
   border: #7C8046 0.25em solid;
+  display: grid;
   margin: 0.15em;
 }
 
 .search-div input {
-  font-size: 1.25em;
-  text-align: center;
-  padding: 10px;
   border-radius: 1em;
-  margin:5px;
+  font-size: 1.25em;
   justify-self: center;
+  margin:5px;
+  padding: 10px;
+  text-align: center;
 }
 
 .search-div label {
@@ -133,8 +134,8 @@ code {
 }
 
 .search-div button {
-  font-size: 1em;
   cursor: pointer;
+  font-size: 1em;
 }
 
 .footer-div {
@@ -143,64 +144,64 @@ code {
 }
 
 .footer-div button {
+  cursor: pointer;
   flex-direction: row;
   width: 100%;
-  cursor: pointer;
 }
 
 .categories-div {
   border: solid 0.25em #7C8046;
-  margin: 0.25em 0 0.25em 0;
   display: flex;
   flex-direction: column-reverse;
+  margin: 0.25em 0 0.25em 0;
 }
 
 .categories-div h4 {
-  font-size: 1.15em;
-  text-align: center;
-  margin: 0%;
   background-color: #d18129;
   color: black;
+  font-size: 1.15em;
+  margin: 0%;
+  text-align: center;
 }
 
 .categories-div button {
   cursor: pointer;
-  width: 100%;
   font-size: 1em;
+  width: 100%;
 }
 
 .standard-text {
-  font-size: 1.25em;
-  text-decoration: underline;
   color: saddlebrown;
+  font-size: 1.25em;
   text-align: center;
+  text-decoration: underline;
 }
 
 .foodcard {
-  margin-bottom: 0.35em;
-  background-color: sandybrown;
-  display: flex;
   align-items: center;
-  width: 100%;
+  background-color: sandybrown;
+  border: 0.15em solid #7C8046;
+  display: flex;
   flex-flow: column;
-  border: 0.15em solid #7C8046
+  margin-bottom: 0.35em;
+  width: 100%;
 }
 
 .foodcard a {
-  padding: 10px;
   color: black;
-  text-decoration: none;
+  padding: 10px;
   text-align: center;
+  text-decoration: none;
 }
 
 .foodcard p {
+  background-color: #d18129;
+  border: 0.1em solid #7C8046;
   font-size: 1.15em;
   margin-bottom: 0;
   margin-top: 0;
-  text-align: center;
   padding: 0.2em;
-  background-color: #d18129;
-  border: 0.1em solid #7C8046;
+  text-align: center;
 }
 
 .imagem {
@@ -208,10 +209,10 @@ code {
 }
 
 .imagem-detalhes-comida {
-  text-align: center;
   border: solid 0.25em #7C8046;
-  width: 22em;
   border-radius: 2em;
+  text-align: center;
+  width: 22em;
 }
 
 .recipe-title {
@@ -225,17 +226,17 @@ code {
 
 .buttons-category {
   display: flex;
-  width: 100%;
   justify-content: space-around;
   margin: 0.75em;
+  width: 100%;
 }
 
 .recipe-category {
-  font-size: 1.5em;
-  color: black;
-  text-align: center;
   background-color: #d18129;
   border-radius: 20em;
+  color: black;
+  font-size: 1.5em;
+  text-align: center;
 }
 
 .ingredient-li {
@@ -244,19 +245,19 @@ code {
 }
 
 .start-button {
-  cursor: pointer;
-  bottom: 0em;
-  font-size: 1.25em;
-  border: #7C8046 solid 5px;
   background-color: #d18129;
+  border: #7C8046 solid 5px;
+  bottom: 0em;
+  cursor: pointer;
+  font-size: 1.25em;
   right: 15px;
 }
 
 .finish-button {
+  background-color: #d18129;
+  border: #7C8046 solid 5px;
   cursor: pointer;
   font-size: 1.25em;
-  border: #7C8046 solid 5px;
-  background-color: #d18129;
 }
 
 .imagem-comida-progresso {
@@ -265,38 +266,38 @@ code {
 }
 
 .explore-buttons-div {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .explore-button {
   background-color: #919974;
-  margin-top: 1em;
   font-size: 1.5em;
+  margin-top: 1em;
   width: 80%;
 }
 
 .explore-food-title-div {
-  display: flex;
   align-items: center;
+  display: flex;
   justify-content: center;
 }
 
 .explore-food-title {
-  font-size: 1.5em;
-  text-align: center;
-  color: black;
-  font-weight: 500;
   background-color: #919974;
   border-radius: 1.25em;
+  color: black;
+  font-size: 1.5em;
+  font-weight: 500;
   padding: 0.5em;
+  text-align: center;
 }
 
 .ingredients-card {
+  background-color: sandybrown;
   display: grid;
   margin: 15px 100px;
-  background-color: sandybrown;
 }
 
 .ingredients-card p {
@@ -316,10 +317,10 @@ code {
 }
 
 select {
-  text-align: center;
+  display: flex;
   font-size: 1.25em;
   margin: 10px;
-  display: flex;
+  text-align: center;
 }
 
 option {
@@ -330,8 +331,9 @@ option {
 .logout-button {
   background-color: saddlebrown;
   border: black 0.5em solid;
-  margin-top: 5em;
   color: whitesmoke;
   font-size: 1.15em;
+  margin-top: 2em;
   width: 80%;
+}
 }

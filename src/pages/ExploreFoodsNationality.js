@@ -12,19 +12,16 @@ function ExplorerFoodsNationality() {
   const [allCountries, setAllCountries] = useState([]);
   const [filterCountrie, setFilterCountrie] = useState([]);
   const [all, setAll] = useState(false);
-
   useEffect(() => {
     setPageTitle(title);
     setSearchPageButton(true);
     setExplorer(false);
-
     const allNationalities = async () => {
       const URL = 'https://www.themealdb.com/api/json/v1/1/list.php?a=list';
       const response = await fetch(URL);
       const responseJson = await response.json();
       setAllCountries(responseJson.meals);
     };
-
     allNationalities();
     const fi = async (countrie) => {
       const URL = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${countrie}`;
@@ -36,9 +33,7 @@ function ExplorerFoodsNationality() {
       fi(nationality);
     }
   }, [select, nationality]);
-
   const DOZE = 12;
-
   const handleNationality = ({ target }) => {
     if (target.value === 'All') {
       setAll('true');
@@ -48,7 +43,6 @@ function ExplorerFoodsNationality() {
       setNationality(target.value);
     }
   };
-
   return (
     <section>
       <Header />
@@ -103,9 +97,7 @@ function ExplorerFoodsNationality() {
                 <p data-testid={ `${index}-card-name` }>{foods.strMeal}</p>
               </Link>
             </div>)))}
-
       <Footer />
     </section>);
 }
-
 export default ExplorerFoodsNationality;

@@ -1,30 +1,30 @@
 .wrapper {
   display: flex;
-  overflow-x: auto;
-  width: 200px;
-  text-align: center;
   margin-left: 15px;
+  overflow-x: auto;
+  text-align: center;
+  width: 200px;
 }
 
 .wrapper::-webkit-scrollbar {
-  width: 0px;
+  width: 0;
 }
 
 .recomendation-card {
-  height: fit-content;
-  width: fit-content;
-  margin-right: 12px;
   border: 0.2em solid saddlebrown;
+  height: fit-content;
+  margin-right: 12px;
+  width: fit-content;
 }
 
 .recomendation-image {
-  width: 100px;
   margin-bottom: -04px;
+  width: 100px;
 }
 
 .recommendation-title {
+  background-color: sandybrown;
   font-size: 1.25em;
   margin-bottom: 0.5em;
   text-align: center;
-  background-color: sandybrown;
 }

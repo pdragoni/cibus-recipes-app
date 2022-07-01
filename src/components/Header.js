@@ -126,10 +126,10 @@ function Header() {
                 type="text"
                 placeholder="Search here"
               />
-              <label htmlFor="ingredients">
+              <label htmlFor="Ingredients">
                 <input
                   onChange={ ({ target }) => setRadio(target.id) }
-                  id="ingredients"
+                  id="Ingredients"
                   type="radio"
                   data-testid="ingredient-search-radio"
                   name="categories"
@@ -137,11 +137,11 @@ function Header() {
                 Ingredients
               </label>
               <label
-                htmlFor="name"
+                htmlFor="Name"
               >
                 <input
                   onChange={ ({ target }) => setRadio(target.id) }
-                  id="name"
+                  id="Name"
                   type="radio"
                   data-testid="name-search-radio"
                   name="categories"
@@ -149,11 +149,11 @@ function Header() {
                 Name
               </label>
               <label
-                htmlFor="first-letter"
+                htmlFor="First-letter"
               >
                 <input
                   onChange={ ({ target }) => setRadio(target.id) }
-                  id="first-Letter"
+                  id="First-Letter"
                   type="radio"
                   data-testid="first-letter-search-radio"
                   name="categories"
@@ -179,4 +179,5 @@ function Header() {
     </header>
   );
 }
+
 export default Header;
