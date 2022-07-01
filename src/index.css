@@ -292,3 +292,19 @@ code {
   border-radius: 1.25em;
   padding: 0.5em;
 }
+
+.ingredients-card {
+  display: grid;
+  margin: 15px 100px;
+  background-color: sandybrown;
+}
+
+.ingredients-card p {
+  font-size: 1.25em;
+  margin: 0;
+}
+
+.ingredients-card button {
+  background-color: transparent;
+
+}
