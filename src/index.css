@@ -244,9 +244,8 @@ code {
 }
 
 .start-button {
-  position: fixed;
   cursor: pointer;
-  bottom: 3em;
+  bottom: 0em;
   font-size: 1.25em;
   border: #7C8046 solid 5px;
   background-color: #d18129;
@@ -274,7 +273,7 @@ code {
 .explore-button {
   background-color: #919974;
   margin-top: 1em;
-  font-size: 1.25em;
+  font-size: 1.5em;
   width: 80%;
 }
 
@@ -326,4 +325,13 @@ select {
 option {
   font-size: 0.7em;
   max-height: fit-content;
+}
+
+.logout-button {
+  background-color: saddlebrown;
+  border: black 0.5em solid;
+  margin-top: 5em;
+  color: whitesmoke;
+  font-size: 1.15em;
+  width: 80%;
 }

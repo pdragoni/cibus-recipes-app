@@ -36,30 +36,35 @@ function Profile() {
     <div>
       <Header />
       <body>
-        <div data-testid="profile-email">
+        <p className="explore-food-title" data-testid="profile-email">
           {usuario}
+        </p>
+        <div className="explore-buttons-div">
+          <button
+            type="button"
+            data-testid="profile-done-btn"
+            className="explore-button"
+            onClick={ () => history.push('/done-recipes') }
+          >
+            Done Recipes
+          </button>
+          <button
+            type="button"
+            className="explore-button"
+            data-testid="profile-favorite-btn"
+            onClick={ () => history.push('/favorite-recipes') }
+          >
+            Favorite Recipes
+          </button>
+          <button
+            className="logout-button"
+            type="button"
+            data-testid="profile-logout-btn"
+            onClick={ logoutFunction }
+          >
+            Logout
+          </button>
         </div>
-        <button
-          type="button"
-          data-testid="profile-done-btn"
-          onClick={ () => history.push('/done-recipes') }
-        >
-          Done Recipes
-        </button>
-        <button
-          type="button"
-          data-testid="profile-favorite-btn"
-          onClick={ () => history.push('/favorite-recipes') }
-        >
-          Favorite Recipes
-        </button>
-        <button
-          type="button"
-          data-testid="profile-logout-btn"
-          onClick={ logoutFunction }
-        >
-          Logout
-        </button>
       </body>
       <Footer />
     </div>);
