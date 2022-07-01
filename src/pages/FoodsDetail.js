@@ -116,8 +116,6 @@ function FoodsDetail() {
 
   return (
     <section>
-      {/* {console.log(ingredients)}
-      {console.log(measure)} */}
       {foodCard.map((details, index) => (
         <div key={ index }>
           <p
@@ -163,7 +161,6 @@ function FoodsDetail() {
 
           </div>
           <h4 className="recipe-title" data-testid="recipe-title">{details.strMeal}</h4>
-
           <ul>
             { ingredients && ingredients.map((ingredient, i) => (
               <li

@@ -245,3 +245,7 @@ code {
   right: 15px;
 }
 
+.imagem-comida-progresso {
+  border-radius: 2em;
+  width: 22em;
+}
