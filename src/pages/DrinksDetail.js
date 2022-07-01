@@ -28,7 +28,6 @@ function DrinksDetail() {
     const response = await fetch(idURL);
     const responseJson = await response.json();
     setDrinkCard(responseJson.drinks);
-    console.log(responseJson.drinks);
   };
   const getRecomendation = async () => {
     const recomendURL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
@@ -58,10 +57,17 @@ function DrinksDetail() {
         setFavorite('true');
       }
     }
-  }, []);
+    const DOISMS = 2000;
+
+    if (copied === true) {
+      setTimeout(() => {
+        setCopied(false);
+      }, DOISMS);
+    }
+  }, [copied]);
+
   const handleFavorite = () => {
     setFavorite(!favorite);
-    console.log(drinkCard[0]);
     if (favorite === false) {
       const { idDrink,
         strCategory,
@@ -124,7 +130,7 @@ function DrinksDetail() {
             className="imagem-detalhes-comida"
           />
           <h1 data-testid="recipe-title">{details.strDrink}</h1>
-          <button type="button" data-testid="share-btn" onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied('true'); } }>
+          <button type="button" data-testid="share-btn" onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied(true); } }>
             <img src={ Share } alt="Share button" />
           </button>
           {copied && <p>Link copied!</p>}

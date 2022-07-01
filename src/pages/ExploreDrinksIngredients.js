@@ -32,7 +32,6 @@ function ExplorerDrinksIngredients() {
     const URL = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingrediente}`;
     const response = await fetch(URL);
     const responseJson = await response.json();
-    console.log(responseJson);
     setResults(responseJson.drinks);
     history.push('/drinks');
   };

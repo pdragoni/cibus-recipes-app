@@ -31,7 +31,6 @@ function FoodsDetail() {
     const idURL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${locationId}`;
     const response = await fetch(idURL);
     const responseJson = await response.json();
-    console.log(responseJson.meals);
     setFoodCard(responseJson.meals);
   };
 
@@ -52,7 +51,6 @@ function FoodsDetail() {
   };
 
   const favoritesData = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  console.log(favoritesData);
 
   useEffect(() => {
     setPageTitle(title);
@@ -67,7 +65,14 @@ function FoodsDetail() {
         setFavorite('true');
       }
     }
-  }, []);
+    const DOISMS = 2000;
+
+    if (copied === true) {
+      setTimeout(() => {
+        setCopied(false);
+      }, DOISMS);
+    }
+  }, [copied]);
 
   const handleFavorite = () => {
     setFavorite(!favorite);
@@ -117,8 +122,6 @@ function FoodsDetail() {
 
   return (
     <section>
-      {/* {console.log(ingredients)}
-      {console.log(measure)} */}
       {foodCard.map((details, index) => (
         <div key={ index }>
           <img
@@ -128,7 +131,7 @@ function FoodsDetail() {
             className="imagem-detalhes-comida"
           />
           <h4 data-testid="recipe-title">{details.strMeal}</h4>
-          <button type="button" data-testid="share-btn" onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied('true'); } }>
+          <button type="button" data-testid="share-btn" onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied(true); } }>
             <img src={ Share } alt="Share button" />
           </button>
           {copied && <p>Link copied!</p>}
@@ -189,11 +192,6 @@ function FoodsDetail() {
                       >
                         {resultado.strDrink}
                       </div>
-                      {/* <img
-                        src={ resultado.strDrinkThumb }
-                        alt="DrinkRecomendation"
-                        className="recomendation-image"
-                      /> */}
                     </div>)))
                 : <p>There are no recommendations</p>}
             </div>

@@ -29,7 +29,6 @@ function FoodsInProgress() {
     const idURL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${locationId}`;
     const response = await fetch(idURL);
     const responseJson = await response.json();
-    // console.log(responseJson.meals);
     setFoodCard(responseJson.meals);
   };
 
@@ -72,18 +71,22 @@ function FoodsInProgress() {
     const VINTE_OITO = 28;
     const newArray = foodCard.map((ingredient) => (
       Object.values(ingredient).slice(NOVE, VINTE_OITO)))[0];
-    console.log(newArray);
     setIngredients(newArray?.filter((details) => details));
     const TRINTA_E_DOIS = 29;
     const CINQUENTA_E_UM = 49;
     const newArray2 = foodCard.map((measures) => (
       Object.values(measures).slice(TRINTA_E_DOIS, CINQUENTA_E_UM)))[0];
-    console.log(newArray2);
     setMeasure(newArray2?.filter((details) => details !== ' '));
-  }, [foodCard]);
+    const DOISMS = 2000;
+
+    if (copied === true) {
+      setTimeout(() => {
+        setCopied(false);
+      }, DOISMS);
+    }
+  }, [foodCard, copied]);
 
   const checkboxClick = ({ target }) => {
-    console.log(ingredients.length);
     if (target.checked === true) {
       const newCount = ingredCount + 1;
       setIngredCount(newCount);
@@ -92,8 +95,7 @@ function FoodsInProgress() {
       setIngredCount(newCount);
     }
 
-    if (ingredients.length - 1 === ingredCount) {
-      console.log('if funciona');
+    if (ingredients.length - 1 === ingredCount) {;
       setFinishBtn(false);
     } else {
       setFinishBtn(true);
@@ -112,7 +114,7 @@ function FoodsInProgress() {
           />
           <h1 data-testid="recipe-title">{details.strMeal}</h1>
 
-          <button type="button" data-testid="share-btn" onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied('true'); } }>
+          <button type="button" data-testid="share-btn" onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied(true); } }>
             <img src={ Share } alt="Share button" />
           </button>
           {copied && <p>Link copied!</p>}

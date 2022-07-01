@@ -123,7 +123,14 @@ function DrinksInProgress() {
         setFavorite('true');
       }
     }
-  }, []);
+    const DOISMS = 2000;
+
+    if (copied === true) {
+      setTimeout(() => {
+        setCopied(false);
+      }, DOISMS);
+    }
+  }, [copied]);
 
   useEffect(() => {
     const ingredMeasures = setIngredMeasures(drinkCard);
@@ -140,7 +147,7 @@ function DrinksInProgress() {
           <button
             type="button"
             data-testid="share-btn"
-            onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied('true'); } }
+            onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied(true); } }
           >
             <img src={ Share } alt="Share button" />
           </button>

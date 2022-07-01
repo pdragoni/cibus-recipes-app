@@ -19,7 +19,14 @@ function DoneRecipes() {
     const storage = JSON.parse(localStorage.getItem('doneRecipes'));
     setCardRecipe(storage);
     setCardFilter(storage);
-  }, []);
+    const DOISMS = 2000;
+
+    if (copied === true) {
+      setTimeout(() => {
+        setCopied(false);
+      }, DOISMS);
+    }
+  }, [copied]);
 
   const handleClickFilter = (type) => {
     const filter = cardRecipe.filter((recipe) => recipe.type === type);
@@ -67,7 +74,6 @@ function DoneRecipes() {
                 alt="Recipe"
               />
             </Link>
-            {/* <p data-testid={ `${index}-horizontal-top-text` }>{ recipe.category }</p> */}
             { recipe.type === 'food' ? (
               <p data-testid={ `${index}-horizontal-top-text` }>
                 { `${recipe.nationality} - ${recipe.category}` }
