@@ -95,7 +95,7 @@ function FoodsInProgress() {
       setIngredCount(newCount);
     }
 
-    if (ingredients.length - 1 === ingredCount) {;
+    if (ingredients.length - 1 === ingredCount) {
       setFinishBtn(false);
     } else {
       setFinishBtn(true);
