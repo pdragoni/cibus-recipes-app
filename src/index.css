@@ -276,3 +276,19 @@ code {
   font-size: 1.25em;
   width: 80%;
 }
+
+.explore-food-title-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.explore-food-title {
+  font-size: 1.5em;
+  text-align: center;
+  color: black;
+  font-weight: 500;
+  background-color: #919974;
+  border-radius: 1.25em;
+  padding: 0.5em;
+}
