@@ -37,7 +37,7 @@ function Foods() {
                 />
               </Link>
             </div>)))
-        : <p>Meals</p>}
+        : <p className="standard-text">Choose a category to show results</p>}
       <Footer />
     </section>
   );

@@ -23,21 +23,21 @@ function Drinks() {
         ? (results
           .filter((element, index2) => index2 < DOZE)
           .map((resultado, index) => (
-            <div key={ index }>
+            <div key={ index } className="foodcard">
+              <p data-testid={ `${index}-card-name` }>{resultado.strDrink}</p>
               <Link
                 to={ `/drinks/${resultado.idDrink}` }
                 data-testid={ `${index}-recipe-card` }
               >
                 <img
-                  className="imagem"
+                  className="recomendation-image"
                   src={ resultado.strDrinkThumb }
                   alt={ resultado.strDrink }
                   data-testid={ `${index}-card-img` }
                 />
-                <p data-testid={ `${index}-card-name` }>{resultado.strDrink}</p>
               </Link>
             </div>)))
-        : <p>Drinks</p>}
+        : <p className="standard-text">Choose a category to show results</p>}
       <Footer />
     </section>
   );

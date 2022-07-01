@@ -158,7 +158,6 @@ function FoodsDetail() {
                     alt="button favorite"
                   />
                 </button>)}
-
           </div>
           <h4 className="recipe-title" data-testid="recipe-title">{details.strMeal}</h4>
           <ul>
@@ -194,16 +193,16 @@ function FoodsDetail() {
                       data-testid={ `${index3}-recomendation-card` }
                       className="recomendation-card"
                     >
-                      <p
+                      <div
                         data-testid={ `${index3}-recomendation-title` }
                       >
-                        <img
-                          src={ resultado.strDrinkThumb }
-                          alt="DrinkRecomendation"
-                          className="recomendation-image"
-                        />
                         {resultado.strDrink}
-                      </p>
+                      </div>
+                      <img
+                        src={ resultado.strDrinkThumb }
+                        alt="DrinkRecommendation"
+                        className="recomendation-image"
+                      />
                     </div>)))
                 : <p>There are no recommendations</p>}
             </div>

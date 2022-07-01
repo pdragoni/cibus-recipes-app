@@ -169,6 +169,13 @@ code {
   font-size: 1em;
 }
 
+.standard-text {
+  font-size: 1.25em;
+  text-decoration: underline;
+  color: saddlebrown;
+  text-align: center;
+}
+
 .foodcard {
   margin-bottom: 0.35em;
   background-color: sandybrown;

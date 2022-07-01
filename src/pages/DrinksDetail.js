@@ -95,7 +95,7 @@ function DrinksDetail() {
             .push(`${drink[0][`strMeasure${i}`]} ${drink[0][`strIngredient${i}`]}`);
         }
       }
-      console.log(ingredMeasures);
+      // console.log(ingredMeasures);
       return ingredMeasures;
     }
   };
@@ -117,50 +117,68 @@ function DrinksDetail() {
     <section>
       {drinkCard.map((details) => (
         <div key={ details.idDrink }>
+          <p
+            data-testid="recipe-category"
+            className="recipe-category"
+          >
+            {details.strCategory}
+          </p>
+          <p
+            data-testid="recipe-category"
+            className="recipe-category"
+          >
+            {details.strAlcoholic}
+          </p>
           <img
             data-testid="recipe-photo"
             src={ details.strDrinkThumb }
             alt={ details.strDrink }
             className="imagem-detalhes-comida"
           />
-          <h1 data-testid="recipe-title">{details.strDrink}</h1>
-          <button type="button" data-testid="share-btn" onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied('true'); } }>
-            <img src={ Share } alt="Share button" />
-          </button>
-          {copied && <p>Link copied!</p>}
-          {favorite
-            ? (
-              <button
-                type="button"
-                data-testid="favorite-btn"
-                src={ blackHeartIcon }
-                onClick={ handleFavorite }
-              >
-                <img src={ blackHeartIcon } alt="button favorite" />
-              </button>)
-            : (
-              <button
-                type="button"
-                data-testid="favorite-btn"
-                src={ whiteHeartIcon }
-                onClick={ handleFavorite }
-              >
-                <img src={ whiteHeartIcon } alt="button favorite" />
-              </button>)}
-          <p data-testid="recipe-category">{details.strCategory}</p>
-          <p data-testid="recipe-category">{details.strAlcoholic}</p>
+          <div className="buttons-category">
+            <button type="button" data-testid="share-btn" onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied('true'); } }>
+              <img src={ Share } alt="Share button" />
+            </button>
+            {copied && <p>Link copied!</p>}
+            {favorite
+              ? (
+                <button
+                  type="button"
+                  data-testid="favorite-btn"
+                  src={ blackHeartIcon }
+                  onClick={ handleFavorite }
+                >
+                  <img src={ blackHeartIcon } alt="button favorite" />
+                </button>)
+              : (
+                <button
+                  type="button"
+                  data-testid="favorite-btn"
+                  src={ whiteHeartIcon }
+                  onClick={ handleFavorite }
+                >
+                  <img src={ whiteHeartIcon } alt="button favorite" />
+                </button>)}
+          </div>
+          <h4 className="recipe-title" data-testid="recipe-title">{details.strDrink}</h4>
           <ul>
             { ingredients && ingredients.map((ingredient, i) => (
               <li
                 key={ ingredient }
                 data-testid={ `${i}-ingredient-name-and-measure` }
+                className="ingredient-li"
               >
                 {`${ingredient}`}
               </li>))}
           </ul>
-          <p data-testid="instructions">{details.strInstructions}</p>
+          <p
+            data-testid="instructions"
+            className="instructions"
+          >
+            {details.strInstructions}
+          </p>
           <div>
-            Recomendations
+            <h4 className="recommendation-title">Recommendations</h4>
             <div className="wrapper">
               { recomendations.length >= 1
                 ? (recomendations
@@ -176,9 +194,13 @@ function DrinksDetail() {
                       >
                         {resultado.strMeal}
                       </div>
-                      {/* <img src={ resultado.strMealThumb } alt="DrinkRecomendation" /> */}
+                      <img
+                        src={ resultado.strMealThumb }
+                        alt="FoodRecommendation"
+                        className="recomendation-image"
+                      />
                     </div>)))
-                : <p>Recomendations</p>}
+                : <p>There are no recommendations</p>}
             </div>
           </div>
           <button
@@ -196,4 +218,5 @@ function DrinksDetail() {
     </section>
   );
 }
+
 export default DrinksDetail;
