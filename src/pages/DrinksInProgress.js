@@ -92,6 +92,28 @@ function DrinksInProgress() {
     }
   };
 
+  const handleFinishRecipe = () => {
+    const storage = JSON.parse(localStorage.getItem('doneRecipes'));
+    const recipe = drinkCard[0];
+    let tag = [];
+    if (recipe.strTags !== null) tag = recipe.strTags;
+    const newObject = {
+      id: recipe.idDrink,
+      type: 'drink',
+      nationality: '',
+      category: recipe.strCategory,
+      alcoholicOrNot: recipe.strAlcoholic,
+      name: recipe.strDrink,
+      image: recipe.strDrinkThumb,
+      doneDate: recipe.dateModified,
+      tags: tag,
+    };
+    const finishRecipe = storage?.push(newObject);
+    console.log(finishRecipe);
+    localStorage.setItem('doneRecipes', JSON.stringify(storage));
+    history.push('/done-recipes');
+  };
+
   useEffect(() => {
     requestFetch();
     setToClipboard(pathname.toString().replace('/in-progress', ''));
@@ -101,7 +123,14 @@ function DrinksInProgress() {
         setFavorite('true');
       }
     }
-  }, []);
+    const DOISMS = 2000;
+
+    if (copied === true) {
+      setTimeout(() => {
+        setCopied(false);
+      }, DOISMS);
+    }
+  }, [copied]);
 
   useEffect(() => {
     const ingredMeasures = setIngredMeasures(drinkCard);
@@ -118,7 +147,7 @@ function DrinksInProgress() {
           <button
             type="button"
             data-testid="share-btn"
-            onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied('true'); } }
+            onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied(true); } }
           >
             <img src={ Share } alt="Share button" />
           </button>
@@ -173,7 +202,7 @@ function DrinksInProgress() {
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ finishBtn }
-        onClick={ () => history.push('/done-recipes') }
+        onClick={ handleFinishRecipe }
       >
         Finish Recipe
 

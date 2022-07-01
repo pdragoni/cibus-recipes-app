@@ -80,14 +80,12 @@ function Header() {
   useEffect(() => {
     const teste = async () => {
       const email = JSON.parse(localStorage.getItem('user'));
-      console.log(email);
       if (email) {
         setUsuario(email.email);
       }
       if (explorer === false) {
         if (pageTitle === 'Foods' || pageTitle === 'Explore Nationalities') {
           const resultMeal = await fetchResults('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-          console.log(resultMeal);
           setResults(resultMeal);
           setFilteredArray(resultMeal);
         } else {
@@ -120,15 +118,6 @@ function Header() {
         <span>{ usuario }</span>
       </label>
       <br />
-      {/* <button
-        name="btnSearch"
-        type="button"
-        data-testid="search-top-btn"
-        src={ searchIcon }
-        onClick={ clickToSearch }
-      >
-        <img src={ searchIcon } alt="imagem-de-busca" />
-      </button> */}
       { searchPageButton && (
         <button
           name="btnSearch"

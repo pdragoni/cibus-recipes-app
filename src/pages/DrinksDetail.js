@@ -34,7 +34,6 @@ function DrinksDetail() {
     const response = await fetch(recomendURL);
     const responseJson = await response.json();
     setRecomendations(responseJson.meals);
-    console.log(responseJson.meals);
   };
   const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
   const handleStarted = () => {
@@ -58,10 +57,17 @@ function DrinksDetail() {
         setFavorite('true');
       }
     }
-  }, []);
+    const DOISMS = 2000;
+
+    if (copied === true) {
+      setTimeout(() => {
+        setCopied(false);
+      }, DOISMS);
+    }
+  }, [copied]);
+
   const handleFavorite = () => {
     setFavorite(!favorite);
-    console.log(drinkCard[0]);
     if (favorite === false) {
       const { idDrink,
         strCategory,
@@ -124,7 +130,7 @@ function DrinksDetail() {
             className="imagem-detalhes-comida"
           />
           <h1 data-testid="recipe-title">{details.strDrink}</h1>
-          <button type="button" data-testid="share-btn" onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied('true'); } }>
+          <button type="button" data-testid="share-btn" onClick={ () => { copy(`http://localhost:3000${toClipBoard}`); setCopied(true); } }>
             <img src={ Share } alt="Share button" />
           </button>
           {copied && <p>Link copied!</p>}
